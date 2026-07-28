@@ -1,0 +1,61 @@
+name: Deploy IOTARU
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Ambil source code dari repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Install Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      # Install dependency
+      - name: Install dependencies
+        run: npm ci
+
+      # Build Astro SSR
+      - name: Build Astro
+        run: npm run build
+
+      # Setup SSH untuk koneksi ke VPS
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+
+          chmod 600 ~/.ssh/id_ed25519
+
+          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+
+      # Upload hasil build ke VPS
+      - name: Upload build to server
+        run: |
+          rsync -az --delete \
+          dist \
+          package.json \
+          package-lock.json \
+          ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/opt/iotaru/
+
+      # Install dependency production dan restart service
+      - name: Restart application
+        run: |
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
+            cd /opt/iotaru
+
+            npm ci --omit=dev
+
+            sudo systemctl restart iotaru
+          EOF
