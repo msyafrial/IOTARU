@@ -1,0 +1,71 @@
+---
+---
+
+<div class="preloader" id="preloader">
+  <div class="loading-container">
+    <div class="loading"></div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var preloader = document.getElementById('preloader');
+    if (!preloader) return;
+
+    var dismissed = false;
+
+    function dismissPreloader() {
+      if (dismissed) return;
+      dismissed = true;
+
+      preloader.style.opacity = '0';
+      preloader.style.visibility = 'hidden';
+      setTimeout(function() {
+        preloader.style.display = 'none';
+        window.dispatchEvent(new Event('preloader:done'));
+      }, 300);
+    }
+
+    // Check the actual hero element's computed background-image URL
+    var heroEl = document.getElementById('home');
+    if (heroEl) {
+      var style = getComputedStyle(heroEl);
+      var bgUrl = style.backgroundImage;
+      var match = bgUrl.match(/url\(["']?(.+?)["']?\)/);
+      if (match && match[1]) {
+        var bgImg = new Image();
+        bgImg.src = match[1];
+
+        function onHeroReady() {
+          requestAnimationFrame(function() {
+            requestAnimationFrame(dismissPreloader);
+          });
+        }
+
+        if (bgImg.complete) {
+          onHeroReady();
+        } else {
+          bgImg.onload = onHeroReady;
+        }
+      } else {
+        // No background-image found, dismiss immediately
+        requestAnimationFrame(dismissPreloader);
+      }
+    } else {
+      // No hero element, dismiss immediately
+      requestAnimationFrame(dismissPreloader);
+    }
+
+    // Fallback — max 4 seconds, then dismiss anyway
+    setTimeout(dismissPreloader, 4000);
+  });
+</script>
+
+<style>
+  .preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+</style>

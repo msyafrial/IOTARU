@@ -1,0 +1,16 @@
+{
+  "status": "init",
+  "type": "frontend",
+  "executionArgs": {
+    "projectName": "iotaru",
+    "projectPath": "D:\\dev\\astro\\iotaru",
+    "testIds": [],
+    "additionalInstruction": "Run all 30 high-priority tests against the IOTARU website",
+    "serverMode": "production",
+    "envs": {
+      "TESTSPRITE_API_KEY": "sk-user-Ifbq-hRkYX0mQBp9VKXpZBp8aE_C4M-6PNquAz2CKXj9aBAB-yj1qH1v3wdy8VhstRcKQNPF0xZTLqqTFN7Tazlh-sg2fdXcl_FUOoEoln-2heOGzFbGehz0rjQ5YwkUpEU"
+    }
+  },
+  "localEndpoint": "http://localhost:4321",
+  "apikey": "sk-user-Ifbq-hRkYX0mQBp9VKXpZBp8aE_C4M-6PNquAz2CKXj9aBAB-yj1qH1v3wdy8VhstRcKQNPF0xZTLqqTFN7Tazlh-sg2fdXcl_FUOoEoln-2heOGzFbGehz0rjQ5YwkUpEU"
+}

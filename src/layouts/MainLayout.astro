@@ -1,0 +1,69 @@
+---
+import '../styles/global.css';
+import criticalCSS from '../styles/critical.css?inline';
+
+const { title, description = 'IoT-driven automation and monitoring solutions for industries', image } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://iotaru.com');
+const socialImage = image ? new URL(image, Astro.site || 'https://iotaru.com') : new URL('/images/iotaru-og.png', Astro.site || 'https://iotaru.com');
+---
+
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="keywords" content="IoT, automation, monitoring, SCADA, sensor, industrial" />
+    <meta name="author" content="IOTARU" />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={`IOTARU - ${title}`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:site_name" content="IOTARU" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={`IOTARU - ${title}`} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+
+    <title>IOTARU - {title}</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.svg" />
+
+    <!-- Critical CSS - inlined for fast first paint -->
+    <style set:html={criticalCSS}></style>
+
+    <!-- Self-hosted fonts (no external CDN dependency) -->
+    <link href="/css/fonts.css" rel="stylesheet" />
+
+    <!-- Non-critical CSS - loaded async -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet" media="print" onload="this.media='all'" />
+    <link href="/css/custom.css" rel="stylesheet" media="print" onload="this.media='all'" />
+    <link href="/css/swiper-bundle.min.css" rel="stylesheet" media="print" onload="this.media='all'" />
+    <link href="/css/animate.css" rel="stylesheet" media="print" onload="this.media='all'" />
+    <link href="/css/font-awesome.min.css" rel="stylesheet" media="print" onload="this.media='all'" />
+    <link href="/css/mousecursor.css" rel="stylesheet" media="print" onload="this.media='all'" />
+  </head>
+
+  <body>
+    <main>
+      <slot />
+    </main>
+
+    <!-- Scripts loaded in order with defer -->
+    <script is:inline src="/js/jquery-3.7.1.min.js" defer></script>
+    <script is:inline src="/js/bootstrap.min.js" defer></script>
+    <script is:inline src="/js/swiper-bundle.min.js" defer></script>
+    <script is:inline src="/js/wow.min.js" defer></script>
+    <script is:inline src="/js/gsap.min.js" defer></script>
+    <script is:inline src="/js/ScrollTrigger.min.js" defer></script>
+    <script is:inline src="/js/SplitText.min.js" defer></script>
+    <script is:inline src="/js/SmoothScroll.js" defer></script>
+    <script is:inline src="/js/magiccursor.js" defer></script>
+    <script is:inline src="/js/jquery.waypoints.min.js" defer></script>
+    <script is:inline src="/js/jquery.counterup.min.js" defer></script>
+    <script is:inline src="/js/function.js" defer></script>
+  </body>
+</html>

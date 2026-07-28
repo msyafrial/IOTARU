@@ -1,0 +1,361 @@
+---
+import { getCollection } from 'astro:content';
+
+const products = await getCollection('products');
+
+const carouselProducts = products
+  .sort((a, b) => new Date(b.data.created).valueOf() - new Date(a.data.created).valueOf())
+  .slice(0, 6)
+  .map((product) => ({
+    title: product.data.title,
+    description: product.data.description,
+    image: product.data.image?.src || '/images/hero.jpg',
+    category: product.data.category,
+    link: `/products/${product.id}`,
+  }));
+---
+
+<section class="iot-ep-section">
+  <div class="iot-ep-wrap">
+    <div class="iot-ep-head">
+      <div class="iot-ep-title">
+        <h3>Explore Products</h3>
+        <h2>Our Latest IoT Solutions</h2>
+      </div>
+      <a href="/products" class="iot-ep-more">
+        Lihat Semua Produk
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </a>
+    </div>
+    <div class="iot-ep-scroll-container">
+      <button class="iot-ep-arrow iot-ep-prev" aria-label="Previous" disabled>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      </button>
+      <button class="iot-ep-arrow iot-ep-next" aria-label="Next">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+      </button>
+      <div class="iot-ep-scroll">
+        {carouselProducts.map((product) => (
+          <a href={product.link} class="iot-ep-card">
+            <div class="iot-ep-card-img">
+              <img src={product.image} alt={product.title} loading="lazy" />
+              <span class="iot-ep-card-tag">{product.category}</span>
+            </div>
+            <div class="iot-ep-card-txt">
+              <h3>{product.title}</h3>
+              <p>{product.description}</p>
+              <span class="iot-ep-card-btn">
+                View Details
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+    <div class="iot-ep-dots"></div>
+  </div>
+</section>
+
+<script>
+(function() {
+  const scroll = document.querySelector('.iot-ep-scroll');
+  const prevBtn = document.querySelector('.iot-ep-prev');
+  const nextBtn = document.querySelector('.iot-ep-next');
+  const dotsContainer = document.querySelector('.iot-ep-dots');
+  if (!scroll || !prevBtn || !nextBtn || !dotsContainer) return;
+
+  const card = scroll.querySelector('.iot-ep-card');
+  if (!card) return;
+
+  let scrollAmount = 0;
+  let cardWidth = 0;
+  let maxScroll = 0;
+  let dots = [];
+
+  function recalc() {
+    const style = getComputedStyle(scroll);
+    const gap = parseInt(style.gap) || 30;
+    cardWidth = card.offsetWidth + gap;
+    maxScroll = scroll.scrollWidth - scroll.clientWidth;
+  }
+
+  function createDots() {
+    recalc();
+    dotsContainer.innerHTML = '';
+    dots = [];
+    const totalCards = scroll.querySelectorAll('.iot-ep-card').length;
+    const visibleCards = Math.round(scroll.clientWidth / cardWidth);
+    const numDots = Math.max(1, totalCards - visibleCards + 1);
+
+    for (let i = 0; i < numDots; i++) {
+      const dot = document.createElement('button');
+      dot.className = 'iot-ep-dot';
+      dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+      if (i === 0) dot.classList.add('active');
+      dot.addEventListener('click', () => {
+        scroll.scrollTo({ left: i * cardWidth, behavior: 'smooth' });
+      });
+      dotsContainer.appendChild(dot);
+      dots.push(dot);
+    }
+  }
+
+  function updateState() {
+    scrollAmount = scroll.scrollLeft;
+    maxScroll = scroll.scrollWidth - scroll.clientWidth;
+    prevBtn.disabled = scrollAmount <= 5;
+    nextBtn.disabled = scrollAmount >= maxScroll - 5;
+
+    const activeIdx = Math.round(scrollAmount / cardWidth);
+    dots.forEach((d, i) => d.classList.toggle('active', i === activeIdx));
+  }
+
+  prevBtn.addEventListener('click', () => {
+    scroll.scrollTo({ left: scroll.scrollLeft - cardWidth, behavior: 'smooth' });
+  });
+
+  nextBtn.addEventListener('click', () => {
+    scroll.scrollTo({ left: scroll.scrollLeft + cardWidth, behavior: 'smooth' });
+  });
+
+  scroll.addEventListener('scroll', updateState, { passive: true });
+  window.addEventListener('resize', () => { recalc(); createDots(); updateState(); });
+
+  createDots();
+  updateState();
+})();
+</script>
+
+<style is:global>
+  .iot-ep-section {
+    background: var(--white-color);
+    padding: 80px 0;
+  }
+  .iot-ep-wrap {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+  .iot-ep-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 40px;
+  }
+  .iot-ep-title h3 {
+    position: relative;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: capitalize;
+    line-height: 1em;
+    background-color: var(--secondary-color);
+    border-radius: 100px;
+    padding: 8px 16px 8px 34px;
+    margin-bottom: 15px;
+  }
+  .iot-ep-title h3::before {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--accent-color);
+    border-radius: 50%;
+    width: 8px;
+    height: 8px;
+  }
+  .iot-ep-title h2 {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 0;
+    line-height: 1.2;
+  }
+  .iot-ep-more {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--primary-color);
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s;
+    white-space: nowrap;
+  }
+  .iot-ep-more:hover { color: var(--accent-color); }
+  .iot-ep-scroll-container {
+    position: relative;
+  }
+  .iot-ep-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    background: var(--white-color);
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .iot-ep-prev { left: 12px; }
+  .iot-ep-next { right: 12px; }
+  .iot-ep-arrow:hover:not(:disabled) {
+    background: var(--accent-color);
+    color: var(--primary-color);
+    box-shadow: 0 6px 24px rgba(255, 152, 0, 0.35);
+    transform: translateY(-50%) scale(1.1);
+  }
+  .iot-ep-arrow:active:not(:disabled) {
+    transform: translateY(-50%) scale(0.93);
+  }
+  .iot-ep-arrow:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  .iot-ep-scroll {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(320px, 1fr);
+    gap: 30px;
+    overflow: auto;
+    padding-bottom: 8px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+  }
+  .iot-ep-scroll::-webkit-scrollbar { display: none; }
+  .iot-ep-card {
+    display: block;
+    background: var(--white-color);
+    border-radius: 20px;
+    overflow: hidden;
+    text-decoration: none;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid var(--divider-color);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    height: 100%;
+    scroll-snap-align: start;
+  }
+  .iot-ep-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--accent-color);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+  }
+  .iot-ep-card-img {
+    position: relative;
+    aspect-ratio: 16 / 11;
+    overflow: hidden;
+    background: #f0f2f5;
+  }
+  .iot-ep-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .iot-ep-card:hover .iot-ep-card-img img {
+    transform: scale(1.06);
+  }
+  .iot-ep-card-tag {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    padding: 6px 14px;
+    background: var(--accent-color);
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--primary-color);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .iot-ep-card-txt {
+    padding: 24px;
+  }
+  .iot-ep-card-txt h3 {
+    color: var(--primary-color);
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    line-height: 1.3;
+    transition: color 0.3s ease;
+  }
+  .iot-ep-card:hover .iot-ep-card-txt h3 {
+    color: var(--accent-color);
+  }
+  .iot-ep-card-txt p {
+    color: var(--text-color);
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 18px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .iot-ep-card-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--accent-color);
+    font-size: 14px;
+    font-weight: 600;
+    transition: gap 0.3s ease;
+  }
+  .iot-ep-card-btn svg {
+    transition: transform 0.3s ease;
+  }
+  .iot-ep-card:hover .iot-ep-card-btn {
+    gap: 12px;
+  }
+  .iot-ep-card:hover .iot-ep-card-btn svg {
+    transform: translateX(3px);
+  }
+  .iot-ep-dots {
+    display: none;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 30px;
+  }
+  .iot-ep-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: none;
+    background: var(--divider-color);
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.3s ease;
+  }
+  .iot-ep-dot.active {
+    background: var(--primary-color);
+    width: 28px;
+    border-radius: 100px;
+  }
+  .iot-ep-dot:hover:not(.active) {
+    background: var(--accent-color);
+  }
+  @media (min-width: 768px) {
+    .iot-ep-title h2 { font-size: 48px; }
+    .iot-ep-dots { display: flex; }
+  }
+  @media (max-width: 767px) {
+    .iot-ep-section { padding: 50px 0; }
+    .iot-ep-scroll { grid-auto-columns: minmax(280px, 1fr); gap: 20px; }
+    .iot-ep-title h2 { font-size: 28px; }
+    .iot-ep-head { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .iot-ep-more { display: flex; margin-top: 0; }
+    .iot-ep-dots { display: none; }
+    .iot-ep-arrow { display: none; }
+  }
+</style>

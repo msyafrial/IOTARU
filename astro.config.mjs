@@ -1,5 +1,15 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import mdx from '@astrojs/mdx';
+import node from '@astrojs/node';
+import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
-export default defineConfig({});
+export default defineConfig({
+  adapter: node({ mode: 'standalone' }),
+  integrations: [
+    mdx(),
+    sitemap(),
+  ],
+  site: 'https://iotaru.com',
+});

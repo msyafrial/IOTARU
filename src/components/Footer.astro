@@ -1,0 +1,137 @@
+<footer id="contact" class="main-footer bg-section dark-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="footer-header">
+          <div class="footer-logo">
+            <img src="/images/logo.png" alt="">
+          </div>
+          <div class="footer-contact-form">
+            <form id="emailForm">
+              <div class="form-group">
+                <input type="text" id="emailMessage" class="form-control" placeholder="Enter your message" required>
+                <button type="submit" class="btn-default btn-highlighted">Send</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-4">
+        <div class="about-footer">
+          <div class="about-footer-content">
+            <h3>About Us</h3>
+            <p>
+              IOTARU Teknologi Nusantara is a trusted IoT solutions provider delivering secure, scalable, and intelligent systems for security, monitoring, and smart automation—empowering businesses and industries to operate smarter, safer, and more efficiently.
+            </p>
+          </div>
+          <div class="about-footer-contact">
+            <h4>Contact Us</h4>
+            <ul>
+              <li><i class="fa-solid fa-envelope"></i> <a href="mailto:syafrial@iotaru.com">syafrial@iotaru.com</a></li>
+              <li><i class="fa-solid fa-phone"></i> <a href="tel:+6283819510439">+62 838-1951-0439</a></li>
+              <li><i class="fa-brands fa-whatsapp"></i> <a href="https://wa.me/6283819510439">+62 838-1951-0439</a></li>
+            </ul>
+          </div>
+          <div class="footer-social-links">
+            <ul>
+              <li><a href="#"><i class="fa-brands fa-facebook-f"></i></a></li>
+              <li><a href="#"><i class="fa-brands fa-dribbble"></i></a></li>
+              <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
+              <li><a href="#"><i class="fa-brands fa-linkedin-in"></i></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-8">
+        <div class="footer-links-box">
+          <div class="footer-links">
+            <h3>Quick Links</h3>
+            <ul>
+              <li><a href="#home">Home</a></li>
+              <li><a href="#about">About Us</a></li>
+              <li><a href="#features">Solutions</a></li>
+              <li><a href="#products">Product</a></li>
+              <li><a href="#contact">Contact Us</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-links">
+            <h3>Legal</h3>
+            <ul>
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Terms & Conditions</a></li>
+              <li><a href="#">Cookie Policy</a></li>
+              <li><a href="#">Support</a></li>
+              <li><a href="#">Security Policy</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-links footer-newsletter-form">
+            <h3>Subscribe to Newsletter</h3>
+            <p>** Stay updated with product news, insights, and exclusive offers.</p>
+            <form id="newslettersForm" action="#" method="POST">
+              <div class="form-group">
+                <input type="email" name="mail" class="form-control" id="mail" placeholder="Enter Your E-mail" required maxlength="254">
+                <button type="submit" class="newsletter-btn"><i class="fa-regular fa-paper-plane"></i></button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-copyright">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="footer-copyright-text">
+              <p>Copyright © 2026 IOTARU TEKNOLOGI NUSANTARA. All Rights Reserved.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const emailForm = document.getElementById('emailForm');
+    const emailInput = document.getElementById('emailMessage');
+
+    if (emailForm instanceof HTMLFormElement && emailInput instanceof HTMLInputElement) {
+      emailForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const message = emailInput.value.trim();
+
+        if (message) {
+          const email = "syafrial@iotaru.com";
+          const subject = "Contact Form Message";
+          const body = message;
+          const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+          window.open(mailtoLink, "_blank");
+        } else {
+          alert("Please enter your message.");
+        }
+      });
+    }
+
+    const newsletterForm = document.getElementById('newslettersForm');
+    const newsletterInput = document.getElementById('mail');
+
+    if (newsletterForm instanceof HTMLFormElement && newsletterInput instanceof HTMLInputElement) {
+      newsletterForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const email = newsletterInput.value.trim();
+
+        if (email) {
+          const mailtoLink = `mailto:syafrial@iotaru.com?subject=${encodeURIComponent("Newsletter Subscription")}&body=${encodeURIComponent("Please subscribe me to the newsletter.\nEmail: " + email)}`;
+          window.open(mailtoLink, "_blank");
+          newsletterForm.reset();
+        } else {
+          alert("Please enter your email.");
+        }
+      });
+    }
+  </script>
+</footer>

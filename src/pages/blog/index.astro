@@ -1,0 +1,223 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+  .filter(p => p.data.pubDate)
+  .sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime());
+
+function formatDate(date: Date) {
+  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+}
+---
+
+<MainLayout title="Blog">
+  <Navbar />
+
+  <!-- Hero Section -->
+  <section class="hero hero-product bg-section dark-section" style="background-image: url(/images/hero-bg-image-6.webp); background-size: cover; background-position: center; background-repeat: no-repeat;">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="section-title section-title-center">
+            <h2 class="text-anime-style-3" data-cursor="-opaque">Our Blog</h2>
+            <p class="wow fadeInUp" data-wow-delay="0.2s" style="margin-top: 10px; color: rgba(255,255,255,0.8); font-size: 1em;">
+              Insights, guides, and news from the world of IoT.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Blog Grid -->
+  <section class="key-features bg-section">
+    <div class="container">
+      <div class="row section-row">
+        <div class="col-lg-12">
+          <div class="section-title section-title-center">
+            <h3 class="wow fadeInUp">Latest Posts</h3>
+            <h2 class="text-anime-style-3" data-cursor="-opaque">
+              Stay updated with IoT trends and tutorials
+            </h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        {posts.map((post, i) => (
+          <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay={`${i * 0.15}s`}>
+            <a href={`/blog/${post.id}`} class="blog-card">
+              <div class="blog-card-meta">
+                <span class="blog-card-date">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                  {formatDate(new Date(post.data.pubDate))}
+                </span>
+              </div>
+              <h3 class="blog-card-title">{post.data.title}</h3>
+              <p class="blog-card-desc">{post.data.description}</p>
+              {post.data.tags && post.data.tags.length > 0 && (
+                <div class="blog-card-tags">
+                  {post.data.tags.map(tag => (
+                    <span class="blog-tag">{tag}</span>
+                  ))}
+                </div>
+              )}
+              <span class="blog-card-btn">
+                Read More
+                <i class="fa-solid fa-arrow-right"></i>
+              </span>
+            </a>
+          </div>
+        ))}
+      </div>
+
+      {posts.length === 0 && (
+        <div class="row">
+          <div class="col-lg-12">
+            <p style="text-align: center; color: var(--text-color);">Blog posts coming soon.</p>
+          </div>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <Footer />
+</MainLayout>
+
+<style>
+  .blog-card {
+    display: flex;
+    flex-direction: column;
+    padding: 28px;
+    background: var(--white-color);
+    border-radius: 20px;
+    border: 1px solid var(--divider-color);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    text-decoration: none;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 100%;
+    margin-bottom: 30px;
+  }
+
+  .blog-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--accent-color);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+  }
+
+  .blog-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .blog-card-date {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.45);
+    font-weight: 500;
+  }
+
+  .blog-card-title {
+    color: var(--primary-color);
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    line-height: 1.4;
+    transition: color 0.3s ease;
+  }
+
+  .blog-card:hover .blog-card-title {
+    color: var(--accent-color);
+  }
+
+  .blog-card-desc {
+    color: var(--text-color);
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 16px;
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .blog-card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+
+  .blog-tag {
+    padding: 4px 10px;
+    background: rgba(255, 152, 0, 0.08);
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent-color);
+    letter-spacing: 0.3px;
+  }
+
+  .blog-card-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--accent-color);
+    font-size: 14px;
+    font-weight: 600;
+    transition: gap 0.3s ease;
+  }
+
+  .blog-card-btn i {
+    transition: transform 0.3s ease;
+  }
+
+  .blog-card:hover .blog-card-btn {
+    gap: 12px;
+  }
+
+  .blog-card:hover .blog-card-btn i {
+    transform: translateX(3px);
+  }
+
+  @media (max-width: 991px) {
+    .blog-card {
+      padding: 24px;
+    }
+    .blog-card-title {
+      font-size: 17px;
+    }
+  }
+
+  @media (max-width: 575px) {
+    .blog-card {
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .blog-card-title {
+      font-size: 16px;
+    }
+    .blog-card-desc {
+      font-size: 15px;
+      -webkit-line-clamp: 4;
+    }
+    .blog-card-date {
+      font-size: 13px;
+    }
+    .blog-tag {
+      font-size: 12px;
+      padding: 5px 12px;
+    }
+    .blog-card-btn {
+      font-size: 15px;
+    }
+  }
+</style>

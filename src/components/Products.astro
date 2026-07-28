@@ -1,0 +1,227 @@
+---
+import { Image } from 'astro:assets';
+import { getImage } from 'astro:assets';
+import alarm from '../assets/alarm.png';
+---
+<div id="products" class="why-choose-us bg-section dark-section">
+  <div class="container">
+    <div class="row section-row">
+      <div class="col-lg-12">
+        <div class="section-title section-title-center">
+          <h2 class="text-anime-style-3" data-cursor="-opaque">Featured Products & Solutions</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="why-choose-tab-box tab-content wow fadeInUp" data-wow-delay="0.2s" id="why-choosetab">
+          <div class="why-choose-nav">
+            <ul class="nav nav-tabs" id="mvTab" role="tablist">
+              <li class="nav-item">
+                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#first">
+                  <img src="/images/icon-why-choose-tab-1.svg" alt="">
+                  IOTARU SMART GUARD
+                </button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#second">
+                  <img src="/images/icon-why-choose-tab-2.svg" alt="">
+                  IOTARU SMART ALARM
+                </button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#thirds">
+                  <img src="/images/icon-why-choose-tab-3.svg" alt="">
+                  IOTARU SMART ACCESS
+                </button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#fourth">
+                  <img src="/images/icon-why-choose-tab-4.svg" alt="">
+                  IOTARU SMART ENERGY
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          <div class="why-choose-item-box tab-pane fade show active" id="first">
+            <div class="row align-items-center">
+              <div class="col-xl-6">
+                <div class="why-choose-tab-content">
+                  <div class="why-choose-tab-header-content">
+                    <p>
+                      <strong>IOTARU Smart Guard</strong> is an intelligent electronic locking system designed specifically for securing ATM machines and other critical access points. It combines encrypted Bluetooth access, real-time data reporting, and intelligent safety mechanisms to ensure secure, controlled, and auditable access at all times.
+                    </p>
+                  </div>
+
+                  <div class="why-choose-item-list">
+                    <div class="why-choose-item">
+                      <h3>Secure Bluetooth Access Control</h3>
+                      <p>
+                        Access is granted through a secure Android application using encrypted Bluetooth communication. Only registered and verified users are allowed, with support for one-time access and time-based authorization to enhance security and control.
+                      </p>
+                    </div>
+
+                    <div class="why-choose-item">
+                      <h3>Universal ATM Lock System</h3>
+                      <p>
+                        Designed with a universal lock tongue compatible with various ATM models. The system supports both electric operation and manual key override, ensuring continued access in case of motor or system failure.
+                      </p>
+                    </div>
+
+                    <div class="why-choose-item">
+                      <h3>Real-Time Access Data Reporting</h3>
+                      <p>
+                        Every access event is transmitted instantly via the user’s smartphone to the server, enabling real-time monitoring, logging, and audit trails for enhanced operational transparency.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="why-choose-item-btn">
+                    <a href="#contact" class="btn-default btn-highlighted">Request a Demo</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xl-6">
+                <div class="why-choose-tab-image guard-image">
+                  <figure>
+                    <img src="/images/guard.png" alt="IOTARU Smart Guard">
+                  </figure>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="why-choose-item-box tab-pane fade" id="second">
+            <div class="row align-items-center">
+              <div class="col-xl-6">
+                <div class="why-choose-tab-content">
+                  <div class="why-choose-tab-header-content">
+                    <p>
+                      <strong>IOTARU Smart Alarm</strong> is a cutting-edge security system designed to prevent vandalism and theft of cash from ATM machines. Equipped with advanced vibration and temperature sensors, it detects unauthorized tampering or environmental anomalies in real-time.
+                    </p>
+                  </div>
+
+                  <div class="why-choose-item-list">
+                    <div class="why-choose-item">
+                      <h3>Vibration & Temperature Sensors</h3>
+                      <p>
+                        Monitors for unusual vibrations or rapid temperature changes that could indicate tampering, vandalism, or attempted theft, providing early detection before damage occurs.
+                      </p>
+                    </div>
+
+                    <div class="why-choose-item">
+                      <h3>Real-Time 4G Data Transmission</h3>
+                      <p>
+                        Every alarm event is transmitted instantly via 4G to the central server, ensuring that security teams and technicians receive real-time notifications through the dashboard and WhatsApp alerts.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="why-choose-item-btn">
+                    <a href="#contact" class="btn-default btn-highlighted">Request a Demo</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xl-6">
+                <div class="why-choose-tab-image alarm-image">
+                  <figure>
+                    <Image src={alarm} alt="IOTARU Smart Alarm" />
+                  </figure>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="why-choose-item-box tab-pane fade" id="thirds">
+            <div class="row align-items-center">
+              <div class="col-xl-6">
+                <div class="why-choose-tab-content">
+                  <div class="why-choose-tab-header-content">
+                    <p>
+                      <strong>IOTARU Smart Access</strong> provides a secure, touchless access solution using encrypted Bluetooth technology. It ensures safety and convenience by allowing authorized users to open and close doors without physical keys.
+                    </p>
+                  </div>
+
+                  <div class="why-choose-item-list">
+                    <div class="why-choose-item">
+                      <h3>Touchless Bluetooth Access</h3>
+                      <p>
+                        Access doors safely and conveniently using BLE tags or the mobile app, eliminating the need for traditional keys while maintaining full security control.
+                      </p>
+                    </div>
+
+                    <div class="why-choose-item">
+                      <h3>Secure & Controlled Authorization</h3>
+                      <p>
+                        Only registered and verified users can access the system. Supports temporary or time-based access to ensure operational flexibility and auditability.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="why-choose-item-btn">
+                    <a href="#contact" class="btn-default btn-highlighted">Request a Demo</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xl-6">
+                <div class="why-choose-tab-image access-image">
+                  <figure>
+                    <img src="/images/access.jpeg" alt="IOTARU Smart Access">
+                  </figure>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="why-choose-item-box tab-pane fade" id="fourth">
+            <div class="row align-items-center">
+              <div class="col-xl-6">
+                <div class="why-choose-tab-content">
+                  <div class="why-choose-tab-header-content">
+                    <p>
+                      <strong>IOTARU Smart Energy</strong> enables organizations to monitor, analyze, and optimize energy consumption with precision. Identify inefficiencies, reduce operational costs, and support sustainability initiatives.
+                    </p>
+                  </div>
+
+                  <div class="why-choose-item-list">
+                    <div class="why-choose-item">
+                      <h3>Real-Time Energy Monitoring</h3>
+                      <p>
+                        Track energy usage in real time by department, equipment, or facility through a centralized dashboard.
+                      </p>
+                    </div>
+
+                    <div class="why-choose-item">
+                      <h3>Actionable Efficiency Insights</h3>
+                      <p>
+                        Advanced analytics provide clear recommendations to reduce energy waste and improve overall efficiency.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="why-choose-item-btn">
+                    <a href="#contact" class="btn-default btn-highlighted">Request a Demo</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xl-6">
+                <div class="why-choose-tab-image">
+                  <figure>
+                    <img src="/images/hero.jpg" alt="IOTARU Smart Energy">
+                  </figure>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

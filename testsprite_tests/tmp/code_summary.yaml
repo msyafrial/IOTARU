@@ -1,0 +1,211 @@
+version: "2"
+type: frontend
+tech_stack:
+  - TypeScript
+  - Astro 7.0.3
+  - Bootstrap CSS
+  - GSAP / ScrollTrigger / SplitText
+  - Swiper.js
+  - jQuery
+  - MDX
+routes:
+  - path: /
+    file: src/pages/index.astro
+    auth_required: false
+    description: Homepage with hero, product carousel, technology stack, about, features, what we do, how it works, CTA, FAQ
+  - path: /products/
+    file: src/pages/products/index.astro
+    auth_required: false
+    description: Searchable and filterable product catalog with pagination
+  - path: /products/[slug]
+    file: src/pages/products/[slug].astro
+    auth_required: false
+    description: Individual product detail page with specifications
+  - path: /solutions/
+    file: src/pages/solutions/index.astro
+    auth_required: false
+    description: Solutions overview with hero section and solution cards
+  - path: /solutions/[slug]
+    file: src/pages/solutions/[slug].astro
+    auth_required: false
+    description: Individual solution detail page
+  - path: /blog/
+    file: src/pages/blog/index.astro
+    auth_required: false
+    description: Blog listing page with articles
+  - path: /blog/[slug]
+    file: src/pages/blog/[slug].astro
+    auth_required: false
+    description: Individual blog article page
+  - path: /contact/
+    file: src/pages/contact/index.astro
+    auth_required: false
+    description: Contact form with mailto integration
+  - path: /404
+    file: src/pages/404.astro
+    auth_required: false
+    description: Custom 404 error page
+features:
+  - name: Navigation
+    description: Glass-morphism floating navbar with active states, mobile slide-in menu with backdrop blur, and sticky scroll effects
+    files:
+      - src/components/Navbar.astro
+      - public/css/custom.css
+    entry_route: /
+    user_interactions:
+      - Click navigation links to scroll or navigate to pages
+      - Click CTA button in navbar
+      - Open mobile menu on small screens
+      - Close mobile menu by clicking overlay or links
+      - Scroll down to see glass navbar effect with blur and glow
+    api_calls: []
+    auth_required: false
+  - name: Hero Section
+    description: Full-width hero with background image, animated heading via GSAP SplitText, feature list, and foreground image
+    files:
+      - src/components/Hero.astro
+      - src/styles/critical.css
+    entry_route: /
+    user_interactions:
+      - View animated heading text on page load
+      - See hero feature list items
+      - Scroll down to see hero content
+    api_calls: []
+    auth_required: false
+  - name: Product Carousel
+    description: Horizontal scrolling product showcase with arrow navigation, dot indicators, and auto-scroll
+    files:
+      - src/components/ProductCarousel.astro
+      - public/js/function.js
+    entry_route: /
+    user_interactions:
+      - Click left/right arrows to navigate products
+      - Click dot indicators to jump to specific product
+      - Scroll horizontally through products
+      - Click a product card to navigate to product detail
+    api_calls: []
+    auth_required: false
+  - name: Technology Stack
+    description: Grid of 12 technology cards showing hardware, software, protocols, and connectivity options
+    files:
+      - src/components/Technology.astro
+    entry_route: /
+    user_interactions:
+      - Hover over technology cards to see animation effect
+      - View technology category badges
+      - See counter statistics for uptime, monitoring, OTA
+    api_calls: []
+    auth_required: false
+  - name: Product Catalog
+    description: Searchable, filterable product listing with category pills, pagination, and 31 products across 5 categories
+    files:
+      - src/pages/products/index.astro
+      - src/components/ProductCard.astro
+      - src/components/Pagination.astro
+    entry_route: /products/
+    user_interactions:
+      - Type in search bar to filter products
+      - Click category filter pills to filter by category
+      - Click See All button to expand hidden category filters
+      - Click Clear button to clear search
+      - Click pagination buttons to navigate pages
+      - Click product cards to view details
+    api_calls: []
+    auth_required: false
+  - name: Product Detail
+    description: Individual product page with title, description, image, gallery, and specifications
+    files:
+      - src/pages/products/[slug].astro
+    entry_route: /products/[slug]
+    user_interactions:
+      - View product title, description, and image
+      - View product specifications table
+      - Navigate back to product listing
+      - Click related product cards
+    api_calls: []
+    auth_required: false
+  - name: Solutions Overview
+    description: Solutions page with split hero layout, animated stats, floating device cards, and solution grid
+    files:
+      - src/pages/solutions/index.astro
+    entry_route: /solutions/
+    user_interactions:
+      - View hero section with stats and protocol pills
+      - Click Explore Solutions anchor link
+      - Click Contact Us button
+      - Hover over solution cards
+      - Click solution cards to view details
+    api_calls: []
+    auth_required: false
+  - name: Solution Detail
+    description: Individual solution page with title, description, benefits table, and related solutions
+    files:
+      - src/pages/solutions/[slug].astro
+    entry_route: /solutions/[slug]
+    user_interactions:
+      - View solution content and benefits
+      - Navigate to related solutions
+      - Navigate back to solutions listing
+    api_calls: []
+    auth_required: false
+  - name: Blog
+    description: Blog listing with article cards and individual blog post pages
+    files:
+      - src/pages/blog/index.astro
+      - src/pages/blog/[slug].astro
+    entry_route: /blog/
+    user_interactions:
+      - View blog article cards
+      - Click article cards to read full posts
+      - Navigate back to blog listing
+    api_calls: []
+    auth_required: false
+  - name: Contact Form
+    description: Contact form with name, email, subject, and message fields that opens mailto client
+    files:
+      - src/pages/contact/index.astro
+      - public/js/function.js
+    entry_route: /contact/
+    user_interactions:
+      - Fill in name field
+      - Fill in email field
+      - Fill in subject field
+      - Fill in message field
+      - Click submit button to open email client
+      - See success message after submission
+    api_calls: []
+    auth_required: false
+  - name: Preloader
+    description: Loading animation that dismisses when hero background image is ready
+    files:
+      - src/components/Preloader.astro
+      - src/styles/critical.css
+    entry_route: /
+    user_interactions:
+      - See loading spinner on initial page load
+      - Wait for preloader to dismiss automatically
+    api_calls: []
+    auth_required: false
+  - name: Footer
+    description: Site footer with company info, navigation links, and social links
+    files:
+      - src/components/Footer.astro
+    entry_route: /
+    user_interactions:
+      - Click footer navigation links
+      - View company information
+    api_calls: []
+    auth_required: false
+known_limitations:
+  - issue: "Contact form uses mailto redirect instead of backend API submission"
+    location: "src/pages/contact/index.astro, public/js/function.js"
+    impact: "Form opens email client instead of sending data to server"
+  - issue: "No user authentication or admin dashboard"
+    location: "N/A"
+    impact: "No protected routes or user management"
+  - issue: "Product search is client-side URL parameter based, no full-text search backend"
+    location: "src/pages/products/index.astro"
+    impact: "Search only filters by product title match"
+  - issue: "GSAP SplitText is a paid Club GreenSock plugin, may not work in all environments"
+    location: "public/js/SplitText.min.js"
+    impact: "Hero text animations may not render if SplitText fails to load"

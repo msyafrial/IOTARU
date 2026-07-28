@@ -1,0 +1,831 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import Navbar from "../../components/Navbar.astro";
+import Footer from "../../components/Footer.astro";
+import { getCollection } from "astro:content";
+const solutions = (await getCollection("solutions")).sort((a, b) =>
+  a.data.title.localeCompare(b.data.title),
+);
+---
+
+<MainLayout title="Solutions">
+  <Navbar />
+
+  <!-- Hero Section -->
+  <section
+    class="solutions-hero dark-section"
+    style="background-image: url(/images/hero-bg-image-6.webp);"
+  >
+    <div class="container">
+      <div class="row align-items-center">
+        <!-- Left: Text Content -->
+        <div class="col-lg-5">
+          <div class="solutions-hero-content">
+            <span class="solutions-hero-badge hero-animate hero-delay-1"
+              >IoT Solutions</span
+            >
+            <h1
+              class="solutions-hero-title text-anime-style-3"
+              data-cursor="-opaque"
+            >
+              One Platform.<br />Every Device.
+            </h1>
+            <p class="solutions-hero-sub hero-animate hero-delay-2">
+              From smart homes to smart cities — we connect, monitor, and
+              automate your entire IoT ecosystem with one unified platform.
+            </p>
+            <div class="solutions-hero-actions hero-animate hero-delay-3">
+              <a href="#solutions-grid" class="solutions-hero-cta">
+                Explore Solutions
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </a>
+              <a href="#contact" class="solutions-hero-secondary">Contact Us</a>
+            </div>
+            <div class="solutions-hero-stats hero-animate hero-delay-4">
+              <div class="solutions-stat">
+                <span class="solutions-stat-number">500+</span>
+                <span class="solutions-stat-label">Devices Deployed</span>
+              </div>
+              <div class="solutions-stat">
+                <span class="solutions-stat-number">99.9%</span>
+                <span class="solutions-stat-label">Uptime SLA</span>
+              </div>
+              <div class="solutions-stat">
+                <span class="solutions-stat-number">24/7</span>
+                <span class="solutions-stat-label">Monitoring</span>
+              </div>
+            </div>
+            <div class="solutions-hero-protocols hero-animate hero-delay-5">
+              <span class="protocols-label">Trusted protocols:</span>
+              <div class="protocols-list">
+                <span class="protocol-pill">LoRa</span>
+                <span class="protocol-pill">WIFI</span>
+                <span class="protocol-pill">LAN</span>
+                <span class="protocol-pill">Zigbee</span>
+                <span class="protocol-pill">BLE</span>
+                <span class="protocol-pill">NB-IoT</span>
+                <span class="protocol-pill">MQTT</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Right: Visual -->
+        <div class="col-lg-6 offset-lg-1">
+          <div class="solutions-hero-visual hero-animate hero-delay-3">
+            <div class="hero-glow-orb">
+              <div class="glow-ring glow-ring-1"></div>
+              <div class="glow-ring glow-ring-2"></div>
+              <div class="glow-ring glow-ring-3"></div>
+              <div class="glow-center">
+                <svg
+                  width="48"
+                  height="48"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7z"
+                  ></path>
+                  <line x1="10" y1="22" x2="14" y2="22"></line>
+                </svg>
+              </div>
+            </div>
+            <!-- Floating Device Cards -->
+            <div class="floating-card floating-card-1">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                ><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"
+                ></path><polyline points="9 22 9 12 15 12 15 22"
+                ></polyline></svg
+              >
+              <span>Smart Home</span>
+            </div>
+            <div class="floating-card floating-card-2">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                ><rect x="2" y="7" width="20" height="14" rx="2" ry="2"
+                ></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"
+                ></path></svg
+              >
+              <span>Smart Office</span>
+            </div>
+            <div class="floating-card floating-card-3">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                ><circle cx="12" cy="12" r="10"></circle><line
+                  x1="2"
+                  y1="12"
+                  x2="22"
+                  y2="12"></line><path
+                  d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
+                ></path></svg
+              >
+              <span>Smart City</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Solutions Grid -->
+  <section id="solutions-grid" class="key-features bg-section">
+    <div class="container">
+      <div class="row section-row">
+        <div class="col-lg-12">
+          <div class="section-title section-title-center">
+            <h3 class="wow fadeInUp">What We Offer</h3>
+            <h2 class="text-anime-style-3" data-cursor="-opaque">
+              IoT solutions that transform how you live and work
+            </h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        {
+          solutions.map((solution, i) => (
+            <div
+              class="col-lg-4 col-md-6 wow fadeInUp"
+              data-wow-delay={`${i * 0.15}s`}
+            >
+              <a href={`/solutions/${solution.id}`} class="solution-card">
+                <div class="solution-card-icon">
+                  {solution.id === "smart-home" && (
+                    <svg
+                      width="32"
+                      height="32"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                      <polyline points="9 22 9 12 15 12 15 22" />
+                    </svg>
+                  )}
+                  {solution.id === "smart-office" && (
+                    <svg
+                      width="32"
+                      height="32"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+                      <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+                    </svg>
+                  )}
+                  {solution.id === "smart-city" && (
+                    <svg
+                      width="32"
+                      height="32"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7z" />
+                      <line x1="10" y1="22" x2="14" y2="22" />
+                    </svg>
+                  )}
+                  {!["smart-home", "smart-office", "smart-city"].includes(
+                    solution.id,
+                  ) && (
+                    <svg
+                      width="32"
+                      height="32"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <polygon points="12 2 2 7 12 12 22 7 12 2" />
+                      <polyline points="2 17 12 22 22 17" />
+                      <polyline points="2 12 12 17 22 12" />
+                    </svg>
+                  )}
+                </div>
+                <h3 class="solution-card-title">{solution.data.title}</h3>
+                <p class="solution-card-desc">{solution.data.description}</p>
+                <span class="solution-card-btn">
+                  Learn More
+                  <i class="fa-solid fa-arrow-right" />
+                </span>
+              </a>
+            </div>
+          ))
+        }
+      </div>
+
+      {
+        solutions.length === 0 && (
+          <div class="row">
+            <div class="col-lg-12">
+              <p style="text-align: center; color: var(--text-color);">
+                Solutions coming soon.
+              </p>
+            </div>
+          </div>
+        )
+      }
+    </div>
+  </section>
+
+  <Footer />
+</MainLayout>
+
+<style>
+  /* ============================
+     HERO ANIMATIONS (no FOUC)
+     ============================ */
+  .hero-animate {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: heroFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .hero-delay-1 {
+    animation-delay: 0.1s;
+  }
+  .hero-delay-2 {
+    animation-delay: 0.2s;
+  }
+  .hero-delay-3 {
+    animation-delay: 0.3s;
+  }
+  .hero-delay-4 {
+    animation-delay: 0.4s;
+  }
+  .hero-delay-5 {
+    animation-delay: 0.5s;
+  }
+
+  @keyframes heroFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ============================
+     SOLUTIONS HERO
+     ============================ */
+  .solutions-hero {
+    position: relative;
+    padding: 160px 0 100px;
+    background-color: var(--primary-color);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    overflow: hidden;
+  }
+
+  .solutions-hero::before {
+    content: "";
+    position: absolute;
+ inset: 0;
+  background: rgba(0 , 0, 0, 0.2);
+  z-index: 1;
+
+
+    pointer-events: none;
+  }
+
+  .solutions-hero-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .solutions-hero .container {
+    max-width: 1200px;
+  }
+
+  .solutions-hero-badge {
+    display: inline-block;
+    padding: 6px 16px;
+    background: rgba(255, 152, 0, 0.12);
+    border: 1px solid rgba(255, 152, 0, 0.2);
+    border-radius: 100px;
+    color: #ff9800;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: 24px;
+  }
+
+  .solutions-hero-title {
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+  }
+
+  .solutions-hero-sub {
+    font-size: 17px;
+    color: rgba(255, 255, 255, 0.65);
+    line-height: 1.7;
+    max-width: 480px;
+    margin-bottom: 32px;
+  }
+
+  .solutions-hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+
+  .solutions-hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 32px;
+    background: #ff9800;
+    color: #03171d;
+    font-size: 15px;
+    font-weight: 700;
+    border-radius: 100px;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .solutions-hero-cta:hover {
+    background: #ffa726;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(255, 152, 0, 0.35);
+  }
+
+  .solutions-hero-cta svg {
+    transition: transform 0.3s ease;
+  }
+
+  .solutions-hero-cta:hover svg {
+    transform: translateX(4px);
+  }
+
+  .solutions-hero-secondary {
+    display: inline-flex;
+    align-items: center;
+    padding: 14px 28px;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 15px;
+    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 100px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .solutions-hero-secondary:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+  }
+
+  .solutions-hero-stats {
+    display: flex;
+    gap: 32px;
+    margin-bottom: 36px;
+  }
+
+  .solutions-stat {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .solutions-stat-number {
+    font-size: 28px;
+    font-weight: 800;
+    color: #ff9800;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .solutions-stat-label {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+    letter-spacing: 0.3px;
+  }
+
+  .solutions-hero-protocols {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .protocols-label {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+  }
+
+  .protocols-list {
+    display: flex;
+    gap: 6px;
+  }
+
+  .protocol-pill {
+    padding: 4px 12px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 100px;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 11px;
+    text-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+
+  /* ============================
+     HERO VISUAL
+     ============================ */
+  .solutions-hero-visual {
+    position: relative;
+    height: 420px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-glow-orb {
+    position: relative;
+    width: 240px;
+    height: 240px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .glow-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 152, 0, 0.12);
+  }
+
+  .glow-ring-1 {
+    width: 100%;
+    height: 100%;
+    animation: pulseRing 4s ease-in-out infinite;
+  }
+
+  .glow-ring-2 {
+    width: 140%;
+    height: 140%;
+    border-color: rgba(255, 152, 0, 0.07);
+    animation: pulseRing 4s ease-in-out infinite 0.5s;
+  }
+
+  .glow-ring-3 {
+    width: 180%;
+    height: 180%;
+    border-color: rgba(255, 152, 0, 0.04);
+    animation: pulseRing 4s ease-in-out infinite 1s;
+  }
+
+  .glow-center {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 152, 0, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ff9800;
+    box-shadow:
+      0 0 40px rgba(255, 152, 0, 0.2),
+      0 0 80px rgba(255, 152, 0, 0.1);
+  }
+
+  @keyframes pulseRing {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.05);
+      opacity: 0.6;
+    }
+  }
+
+  /* Floating Cards */
+  .floating-card {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 18px;
+    background: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+    animation: floatCard 6s ease-in-out infinite;
+  }
+
+  .floating-card svg {
+    color: #ff9800;
+    flex-shrink: 0;
+  }
+
+  .floating-card-1 {
+    top: 30px;
+    right: 20px;
+    animation-delay: 0s;
+  }
+
+  .floating-card-2 {
+    bottom: 60px;
+    left: 10px;
+    animation-delay: 2s;
+  }
+
+  .floating-card-3 {
+    bottom: 20px;
+    right: 40px;
+    animation-delay: 4s;
+  }
+
+  @keyframes floatCard {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+
+  /* ============================
+     RESPONSIVE — TABLET (≤991px)
+     ============================ */
+  @media (max-width: 991px) {
+    .solutions-hero {
+      padding: 110px 0 50px;
+    }
+
+    .solutions-hero .container {
+      max-width: 100%;
+      padding: 0 20px;
+    }
+
+    .solutions-hero .row {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .solutions-hero .col-lg-5,
+    .solutions-hero .col-lg-6 {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+
+    .solutions-hero-content {
+      text-align: center;
+    }
+
+    .solutions-hero-sub {
+      max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .solutions-hero-actions {
+      justify-content: center;
+    }
+
+    .solutions-hero-stats {
+      justify-content: center;
+    }
+
+    .solutions-hero-protocols {
+      justify-content: center;
+    }
+
+    .solutions-hero-visual {
+      display: none;
+    }
+  }
+
+  /* ============================
+     RESPONSIVE — SMALL MOBILE (≤575px)
+     ============================ */
+  @media (max-width: 575px) {
+    .solutions-hero {
+      padding: 90px 0 40px;
+    }
+
+    .solutions-hero-badge {
+      font-size: 12px;
+      padding: 5px 14px;
+      margin-bottom: 16px;
+    }
+
+    .solutions-hero-title {
+      font-size: 30px;
+      margin-bottom: 14px;
+    }
+
+    .solutions-hero-sub {
+      font-size: 15px;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    .solutions-hero-actions {
+      flex-direction: row;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .solutions-hero-cta,
+    .solutions-hero-secondary {
+      width: auto;
+      flex: 1;
+      min-height: 48px;
+      padding: 12px 20px;
+      font-size: 14px;
+      justify-content: center;
+    }
+
+    .solutions-hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .solutions-stat {
+      align-items: center;
+    }
+
+    .solutions-stat-number {
+      font-size: 22px;
+    }
+
+    .solutions-stat-label {
+      font-size: 11px;
+    }
+
+    .solutions-hero-protocols {
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .protocols-list {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .protocol-pill {
+      font-size: 11px;
+      padding: 4px 10px;
+    }
+  }
+
+  /* ============================
+     SOLUTION CARDS (existing)
+     ============================ */
+  .solution-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 36px 28px;
+    background: var(--white-color);
+    border-radius: 20px;
+    border: 1px solid var(--divider-color);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    text-decoration: none;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 100%;
+    margin-bottom: 30px;
+  }
+
+  .solution-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--accent-color);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+  }
+
+  .solution-card-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    background: rgba(255, 152, 0, 0.08);
+    border-radius: 16px;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+    color: var(--accent-color);
+  }
+
+  .solution-card:hover .solution-card-icon {
+    background: var(--accent-color);
+    color: var(--primary-color);
+  }
+
+  .solution-card-title {
+    color: var(--primary-color);
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    line-height: 1.3;
+    transition: color 0.3s ease;
+  }
+
+  .solution-card:hover .solution-card-title {
+    color: var(--accent-color);
+  }
+
+  .solution-card-desc {
+    color: var(--text-color);
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .solution-card-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--accent-color);
+    font-size: 14px;
+    font-weight: 600;
+    transition: gap 0.3s ease;
+  }
+
+  .solution-card-btn i {
+    transition: transform 0.3s ease;
+  }
+
+  .solution-card:hover .solution-card-btn {
+    gap: 12px;
+  }
+
+  .solution-card:hover .solution-card-btn i {
+    transform: translateX(3px);
+  }
+</style>

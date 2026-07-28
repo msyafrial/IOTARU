@@ -1,0 +1,182 @@
+---
+import { Image } from 'astro:assets';
+
+import about1 from '../assets/about-us-image-1.jpg';
+import about2 from '../assets/about-us-image-2.jpg';
+import phone from '../assets/phone.webp';
+
+import iconArch from '../assets/icon-about-us-item-1.svg';
+import iconSecure from '../assets/icon-about-us-item-2.svg';
+import iconQuality from '../assets/icon-about-excellence.svg';
+
+const features = [
+  {
+    icon: iconArch,
+    title: 'End-to-End IoT Architecture',
+  },
+  {
+    icon: iconSecure,
+    title: 'Secure, Scalable & Customizable Systems',
+  },
+];
+---
+
+<section id="about" class="about-us">
+  <div class="container">
+    <div class="row">
+      
+      <!-- Images -->
+      <div class="col-xl-6">
+        <div class="about-us-image-box wow fadeInUp">
+
+          <div class="about-image-box-1">
+            <div class="about-us-image">
+              <figure class="image-anime reveal">
+                <Image
+                  src={about1}
+                  alt="IOTARU IoT Development"
+                  width={520}
+                  quality={80}
+                  format="webp"
+                  loading="lazy"
+                />
+              </figure>
+            </div>
+          </div>
+
+          <div class="about-image-box-2">
+
+            <div class="about-us-image">
+              <figure class="image-anime reveal">
+                <Image
+                  src={about2}
+                  alt="IoT Hardware & System"
+                  width={320}
+                  quality={75}
+                  format="webp"
+                  loading="lazy"
+                />
+              </figure>
+            </div>
+
+            <div class="about-us-image">
+              <figure class="image-anime reveal">
+                <Image
+                  src={phone}
+                  alt="Smart Security Solution"
+                  width={320}
+                  loading="lazy"
+                />
+              </figure>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="col-xl-6">
+        <div class="about-us-content">
+
+          <div class="section-title">
+            <h3 class="wow fadeInUp">
+              About Us
+            </h3>
+
+            <h2
+              class="text-anime-style-3"
+              data-cursor="-opaque"
+            >
+              Building reliable & intelligent IoT solutions
+              for real-world security
+            </h2>
+
+            <p
+              class="wow fadeInUp"
+              data-wow-delay="0.2s"
+            >
+              IOTARU TEKNOLOGI NUSANTARA is a technology company focused on
+              developing secure, scalable, and integrated Internet of Things
+              solutions. We design end-to-end systems that combine hardware,
+              firmware, and cloud platforms to deliver real-time monitoring and
+              smart security solutions.
+            </p>
+          </div>
+
+          <!-- Features -->
+          <div
+            class="about-us-item-list wow fadeInUp"
+            data-wow-delay="0.4s"
+          >
+            {features.map((feature) => (
+              <div class="about-us-item">
+                <div class="icon-box">
+                  <Image
+                    src={feature.icon}
+                    alt={feature.title}
+                    width={48}
+                    height={48}
+                  />
+                </div>
+
+                <div class="about-us-item-title">
+                  <h3>{feature.title}</h3>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <!-- Footer -->
+          <div
+            class="about-us-footer wow fadeInUp"
+            data-wow-delay="0.6s"
+          >
+            <div class="about-support-box">
+              <div class="about-support-box-content">
+                <h3>
+                  Technical Expertise You Can Trust
+                </h3>
+
+                <p>
+                  Our team consists of experienced engineers in embedded
+                  systems, IoT communication, and platform development—
+                  ready to support deployment, customization, and long-term
+                  system reliability.
+                </p>
+              </div>
+
+              <div class="about-us-btn">
+                <a
+                  href="/#about"
+                  class="btn-default"
+                >
+                  Learn More About Us
+                </a>
+              </div>
+            </div>
+
+            <div class="about-excellence-box">
+              <div class="icon-box">
+                <Image
+                  src={iconQuality}
+                  alt="Quality-Driven Engineering Approach"
+                  width={56}
+                  height={56}
+                />
+              </div>
+
+              <div class="about-excellence-box-title">
+                <h3>
+                  Quality-Driven Engineering Approach
+                </h3>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

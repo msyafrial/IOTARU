@@ -1,0 +1,59 @@
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter Tight', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  min-height: 100vh;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+::selection {
+  background: rgba(56, 189, 248, 0.25);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/* Fix navbar collapse on desktop */
+@media (min-width: 992px) {
+  .navbar-collapse.collapse {
+    display: flex !important;
+  }
+}
+
+/* Fix feature cards & product cards on mobile */
+@media (max-width: 767px) {
+  .feature-item,
+  .product-card-item,
+  .related-product-card {
+    height: auto !important;
+  }
+
+  .feature-item-body .icon-box,
+  .product-card-item .icon-box {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+  }
+
+  .feature-item-body .icon-box img,
+  .product-card-item .icon-box img {
+    max-width: 20px;
+    width: 100%;
+    height: auto;
+  }
+}
