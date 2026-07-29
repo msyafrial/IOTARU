@@ -8,7 +8,7 @@
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+  (function () {
     var preloader = document.getElementById('preloader');
     if (!preloader) return;
 
@@ -20,52 +20,58 @@
 
       preloader.style.opacity = '0';
       preloader.style.visibility = 'hidden';
-      setTimeout(function() {
+      setTimeout(function () {
         preloader.style.display = 'none';
         window.dispatchEvent(new Event('preloader:done'));
       }, 300);
     }
 
-    // Check the actual hero element's computed background-image URL
-    var heroEl = document.getElementById('home');
-    if (heroEl) {
-      var style = getComputedStyle(heroEl);
-      var bgUrl = style.backgroundImage;
-      var match = bgUrl.match(/url\(["']?(.+?)["']?\)/);
-      if (match && match[1]) {
-        var bgImg = new Image();
-        bgImg.src = match[1];
+    // Hard fallback: dismiss after max 5s no matter what
+    var hardTimeout = setTimeout(dismissPreloader, 5000);
 
-        function onHeroReady() {
-          requestAnimationFrame(function() {
-            requestAnimationFrame(dismissPreloader);
-          });
-        }
+    // Track both critical images: bg + hero.jpg
+    var BG_URL   = '/images/hero-bg-image-6.webp';
+    var HERO_URL = '/images/hero.jpg';
 
-        if (bgImg.complete) {
-          onHeroReady();
-        } else {
-          bgImg.onload = onHeroReady;
-        }
-      } else {
-        // No background-image found, dismiss immediately
-        requestAnimationFrame(dismissPreloader);
+    var bgLoaded   = false;
+    var heroLoaded = false;
+
+    function checkBothReady() {
+      if (bgLoaded && heroLoaded) {
+        clearTimeout(hardTimeout);
+        // Two rAF to ensure the browser has actually painted the frame
+        requestAnimationFrame(function () {
+          requestAnimationFrame(dismissPreloader);
+        });
       }
-    } else {
-      // No hero element, dismiss immediately
-      requestAnimationFrame(dismissPreloader);
     }
 
-    // Fallback — max 4 seconds, then dismiss anyway
-    setTimeout(dismissPreloader, 4000);
-  });
+    function loadImage(url, onDone) {
+      var img = new Image();
+      img.onload  = onDone;
+      img.onerror = onDone; // even on error, don't block preloader
+      img.src = url;
+      // If already cached by the browser, onload may fire synchronously
+      if (img.complete) onDone();
+    }
+
+    loadImage(BG_URL, function () {
+      bgLoaded = true;
+      checkBothReady();
+    });
+
+    loadImage(HERO_URL, function () {
+      heroLoaded = true;
+      checkBothReady();
+    });
+  })();
 </script>
 
 <style>
   .preloader {
     position: fixed;
     inset: 0;
-    z-index: 1000;
+    z-index: 9999;
     transition: opacity 0.3s ease, visibility 0.3s ease;
   }
 </style>

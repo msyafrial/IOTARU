@@ -2,6 +2,7 @@
 import MainLayout from "../../layouts/MainLayout.astro";
 import Navbar from "../../components/Navbar.astro";
 import Footer from "../../components/Footer.astro";
+
 import { getCollection } from "astro:content";
 const solutions = (await getCollection("solutions")).sort((a, b) =>
   a.data.title.localeCompare(b.data.title),
@@ -284,6 +285,7 @@ const solutions = (await getCollection("solutions")).sort((a, b) =>
     transform: translateY(20px);
     animation: heroFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
+  
 
   .hero-delay-1 {
     animation-delay: 0.1s;
@@ -328,10 +330,9 @@ const solutions = (await getCollection("solutions")).sort((a, b) =>
   .solutions-hero::before {
     content: "";
     position: absolute;
- inset: 0;
-  background: rgba(0 , 0, 0, 0.2);
-  z-index: 1;
-
+    inset: 0;
+    background: rgba(0, 0, 0, 0.2);
+    z-index: 1;
 
     pointer-events: none;
   }

@@ -1,79 +1,9 @@
 [
   {
     "id": "TC001",
-    "title": "Use the site navigation to move between core pages",
-    "description": "This verifies that a visitor can use the global navigation to reach the main browsing destinations.",
-    "category": "Navigation",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /"
-      },
-      {
-        "type": "action",
-        "description": "Click the navigation link for products"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the products catalog is displayed"
-      },
-      {
-        "type": "action",
-        "description": "Click the navigation link for solutions"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the solutions overview is displayed"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC002",
-    "title": "Submit a contact inquiry and launch the email client",
-    "description": "This verifies a visitor can complete the contact form with valid information and trigger the email-client handoff.",
-    "category": "Contact Form",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /contact/"
-      },
-      {
-        "type": "action",
-        "description": "Fill in the name field with a valid name"
-      },
-      {
-        "type": "action",
-        "description": "Fill in the email field with a valid email address"
-      },
-      {
-        "type": "action",
-        "description": "Fill in the subject field with a valid subject"
-      },
-      {
-        "type": "action",
-        "description": "Fill in the message field with a valid message"
-      },
-      {
-        "type": "action",
-        "description": "Submit the contact form"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify a mailto handoff is initiated"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the contact form no longer shows validation errors"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC003",
-    "title": "Navigate from the homepage to a product detail page",
-    "description": "This verifies that a visitor can use the homepage to open a product detail page and continue browsing from there.",
-    "category": "Homepage",
+    "title": "Open each main section from the homepage navigation",
+    "description": "A visitor can move from the homepage to the main site sections through global navigation and reach each destination page successfully.",
+    "category": "Global navigation and route integrity",
     "steps": [
       {
         "type": "action",
@@ -85,15 +15,241 @@
       },
       {
         "type": "action",
-        "description": "Click a product card in the featured product showcase"
+        "description": "Click the link to view the solutions section"
       },
       {
         "type": "assertion",
-        "description": "Verify a product detail page is displayed"
+        "description": "Verify the solutions overview is displayed"
       },
       {
         "type": "action",
-        "description": "Click the link to continue browsing products"
+        "description": "Click the link to view the products section"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the products catalog is displayed"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to view the blog section"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the blog listing is displayed"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to view the contact section"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the contact page is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC002",
+    "title": "Navigate across the main site sections from desktop navigation",
+    "description": "This verifies that a visitor can use the global navigation to reach the main site sections and land on the expected pages.",
+    "category": "Global Navigation",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation link to view the solutions section"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the solutions overview is displayed"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation link to view the products section"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the products catalog is displayed"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation link to view the blog section"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the blog listing is displayed"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation link to view the contact section"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the contact form is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC003",
+    "title": "Open the homepage hero content after loading",
+    "description": "A visitor can open the homepage, wait for loading to finish, and see the main hero content instead of the preloader.",
+    "category": "Global navigation and route integrity",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Wait for the preloader to dismiss"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the homepage hero content is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC004",
+    "title": "Wait for the homepage preloader to reveal the hero content",
+    "description": "This verifies that the homepage loading state dismisses and the hero content becomes available to a visitor.",
+    "category": "Global Loading Preloader",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Wait for the preloader to dismiss"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the homepage hero content is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC005",
+    "title": "Submit a contact inquiry successfully",
+    "description": "A prospective customer can fill out the contact form and submit an inquiry path successfully.",
+    "category": "Contact Inquiry Form",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /contact"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the name field with Alex Rivera"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with alex.rivera@example.com"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the message field with a brief inquiry about smart automation solutions"
+      },
+      {
+        "type": "action",
+        "description": "Submit the contact form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a contact submission confirmation is visible"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC006",
+    "title": "Reach every main section from the homepage navigation",
+    "description": "This verifies that a visitor can use the global navigation on the homepage to move between the primary site sections without losing access to content.",
+    "category": "Global Navigation",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Wait for the preloader to dismiss"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation link to view the solutions section"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the solutions overview is displayed"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation link to view the products section"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the products catalog is displayed"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation link to view the blog section"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the blog listing is displayed"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation link to view the contact section"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the contact form is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC007",
+    "title": "Use the mobile menu to move between sections",
+    "description": "A mobile visitor can open the hamburger menu, select different sections, and have the menu close while the destination page opens.",
+    "category": "Global navigation and route integrity",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Wait for the preloader to dismiss"
+      },
+      {
+        "type": "action",
+        "description": "Open the mobile navigation menu"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to view the solutions section"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the solutions overview is displayed"
+      },
+      {
+        "type": "action",
+        "description": "Open the mobile navigation menu"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to view the products section"
       },
       {
         "type": "assertion",
@@ -103,162 +259,18 @@
     "priority": "High"
   },
   {
-    "id": "TC004",
-    "title": "Send a valid contact inquiry through the mailto form",
-    "description": "This verifies that a visitor can submit the contact form with valid details and reach the email-client handoff state.",
-    "category": "Contact Form",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /contact/"
-      },
-      {
-        "type": "action",
-        "description": "Fill in the name field with Jordan Lee"
-      },
-      {
-        "type": "action",
-        "description": "Fill in the email field with jordan@example.com"
-      },
-      {
-        "type": "action",
-        "description": "Fill in the message field with a valid inquiry message"
-      },
-      {
-        "type": "action",
-        "description": "Submit the contact form"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify a successful mailto handoff is initiated"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the contact form confirms the inquiry was prepared"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC005",
-    "title": "Browse from homepage to a product detail page",
-    "description": "This verifies a visitor can start on the homepage, reach a product detail page from the main browse path, and continue browsing back to the product catalog.",
-    "category": "Homepage",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /"
-      },
-      {
-        "type": "action",
-        "description": "Wait for the homepage preloader to disappear"
-      },
-      {
-        "type": "action",
-        "description": "Click a product entry from the homepage product carousel"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify a product detail page is displayed"
-      },
-      {
-        "type": "action",
-        "description": "Click the link to return to the product listing"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the product catalog is displayed"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC006",
-    "title": "Submit a contact inquiry successfully",
-    "description": "This verifies that a visitor can fill out the contact form, submit it, and see successful mailto handoff feedback.",
-    "category": "Contact Form",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /contact/"
-      },
-      {
-        "type": "action",
-        "description": "Fill in the name field with Alex Jordan"
-      },
-      {
-        "type": "action",
-        "description": "Fill in the email field with alex.jordan@example.com"
-      },
-      {
-        "type": "action",
-        "description": "Fill in the subject field with Product inquiry"
-      },
-      {
-        "type": "action",
-        "description": "Fill in the message field with I would like to learn more about your IoT solutions."
-      },
-      {
-        "type": "action",
-        "description": "Submit the form"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify a success confirmation is visible"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the email client handoff is initiated"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC007",
-    "title": "Browse the products catalog and open a product detail page",
-    "description": "This verifies that a buyer can search and filter the catalog, page through results, and open a matching product detail page.",
-    "category": "Products Catalog",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /products/"
-      },
-      {
-        "type": "action",
-        "description": "Fill in a product name fragment into the search field"
-      },
-      {
-        "type": "action",
-        "description": "Select a product category filter"
-      },
-      {
-        "type": "action",
-        "description": "Click the next page control in the catalog pagination"
-      },
-      {
-        "type": "action",
-        "description": "Click a product card in the filtered results"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify a product detail page is displayed"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify product specifications are displayed"
-      }
-    ],
-    "priority": "High"
-  },
-  {
     "id": "TC008",
-    "title": "Open a solution detail page from the solutions overview",
-    "description": "This verifies that a visitor can browse the solutions overview and open a solution detail page for evaluation.",
-    "category": "Solutions Overview",
+    "title": "Open a solution from the overview grid",
+    "description": "This verifies that a visitor can browse the solutions overview and open an individual solution detail page from a card.",
+    "category": "Solutions Overview and Detail Pages",
     "steps": [
       {
         "type": "action",
-        "description": "Navigate to /solutions/"
+        "description": "Navigate to /solutions"
+      },
+      {
+        "type": "action",
+        "description": "Scroll through the solution grid"
       },
       {
         "type": "action",
@@ -266,74 +278,16 @@
       },
       {
         "type": "assertion",
-        "description": "Verify a solution detail page is displayed"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify solution benefits are displayed"
+        "description": "Verify the selected solution detail page is displayed"
       }
     ],
     "priority": "High"
   },
   {
     "id": "TC009",
-    "title": "Search the product catalog and open a matching product",
-    "description": "This verifies a visitor can search the catalog by product name, see the results narrow, and open a matching product detail page.",
-    "category": "Product Catalog",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /products/"
-      },
-      {
-        "type": "action",
-        "description": "Fill in the product search field with a product name"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the filtered product list is displayed"
-      },
-      {
-        "type": "action",
-        "description": "Click a product card from the filtered results"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify a product detail page is displayed"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC010",
-    "title": "Open a solution from the overview",
-    "description": "This verifies that a visitor can browse the solutions overview and open a solution detail page from a card.",
-    "category": "Solution Detail",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /solutions/"
-      },
-      {
-        "type": "action",
-        "description": "Click a solution card"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify a solution detail page is displayed"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the solution benefits are displayed"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC011",
-    "title": "Use the mobile menu to reach a page from the homepage",
-    "description": "This verifies that a mobile visitor can open the slide-in menu and navigate to a core page.",
-    "category": "Navigation",
+    "title": "Use the mobile navigation to move to a site section",
+    "description": "This verifies that a mobile visitor can open the hamburger menu, select a section, and arrive on the chosen page.",
+    "category": "Global Navigation",
     "steps": [
       {
         "type": "action",
@@ -345,564 +299,49 @@
       },
       {
         "type": "action",
-        "description": "Choose the blog link from the mobile menu"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the blog listing is displayed"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC012",
-    "title": "Explore solutions and open a solution detail page",
-    "description": "This verifies a visitor can move from the solutions overview into a specific solution detail page.",
-    "category": "Solutions Overview",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /solutions/"
-      },
-      {
-        "type": "action",
-        "description": "Click the explore solutions link"
-      },
-      {
-        "type": "action",
-        "description": "Click a solution card"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify a solution detail page is displayed"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC013",
-    "title": "Filter the catalog by category and browse the result set",
-    "description": "This verifies a visitor can narrow products by category and see only products from the selected category.",
-    "category": "Product Catalog",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /products/"
-      },
-      {
-        "type": "action",
-        "description": "Select a category filter"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the product list is narrowed to the selected category"
-      },
-      {
-        "type": "action",
-        "description": "Click a product card from the filtered results"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify a product detail page is displayed"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC014",
-    "title": "Browse the blog listing and open an article",
-    "description": "This verifies that a visitor can view blog cards and open a full article from the listing.",
-    "category": "Blog",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /blog/"
-      },
-      {
-        "type": "action",
-        "description": "Click an article card"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify a blog article page is displayed"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the article content is displayed"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC015",
-    "title": "Open the contact page from solutions",
-    "description": "This verifies a visitor can reach the contact page from the solutions overview using the primary call to action.",
-    "category": "Solutions Overview",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /solutions/"
-      },
-      {
-        "type": "action",
-        "description": "Click the contact action"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the contact page is displayed"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC016",
-    "title": "Read a blog article and return to the article listing",
-    "description": "This verifies that a reader can open a technical article, read it, and return to the blog listing to choose another post.",
-    "category": "Blog",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /blog/"
-      },
-      {
-        "type": "action",
-        "description": "Click a blog article card"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify a blog article page is displayed"
-      },
-      {
-        "type": "action",
-        "description": "Click the link to return to the blog listing"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the blog listing is displayed"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC017",
-    "title": "Move through product catalog pages",
-    "description": "This verifies a visitor can use pagination to browse beyond the first set of products.",
-    "category": "Product Catalog",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /products/"
-      },
-      {
-        "type": "action",
-        "description": "Click the next page control"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify a different set of products is displayed"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC018",
-    "title": "Review solution details and benefits",
-    "description": "This verifies that a visitor can read a solution page and understand its description and benefits.",
-    "category": "Solution Detail",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /solutions/"
-      },
-      {
-        "type": "action",
-        "description": "Click a solution card"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the solution description is displayed"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the solution benefits are displayed"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC019",
-    "title": "Review product details and related products",
-    "description": "This verifies a visitor can inspect product information on a detail page and continue browsing through related products.",
-    "category": "Product Detail",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /products/"
-      },
-      {
-        "type": "action",
-        "description": "Click a product card"
-      },
-      {
-        "type": "action",
-        "description": "Review the product specifications section"
-      },
-      {
-        "type": "action",
-        "description": "Click a related product card"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify another product detail page is displayed"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC020",
-    "title": "Use the homepage product carousel controls to browse featured products",
-    "description": "This verifies that a visitor can move through the homepage product carousel and open a featured product from it.",
-    "category": "Product Carousel",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /"
-      },
-      {
-        "type": "action",
-        "description": "Click the carousel navigation control to move to the next featured product"
-      },
-      {
-        "type": "action",
-        "description": "Click the carousel navigation control to move to another featured product"
-      },
-      {
-        "type": "action",
-        "description": "Select a carousel position indicator"
-      },
-      {
-        "type": "action",
-        "description": "Click a product card in the carousel"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify a product detail page is displayed"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC021",
-    "title": "Return to the product list from a product detail page",
-    "description": "This verifies a visitor can open a product detail page and navigate back to keep browsing the catalog.",
-    "category": "Product Detail",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /products/"
-      },
-      {
-        "type": "action",
-        "description": "Click a product card"
-      },
-      {
-        "type": "action",
-        "description": "Click the link to return to the product listing"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the product catalog is displayed"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC022",
-    "title": "Open a related solution from a solution page",
-    "description": "This verifies that a visitor can move from one solution detail page to another using related solutions.",
-    "category": "Solution Detail",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /solutions/"
-      },
-      {
-        "type": "action",
-        "description": "Click a solution card"
-      },
-      {
-        "type": "action",
-        "description": "Click a related solution"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify another solution detail page is displayed"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the related solutions section is displayed"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC023",
-    "title": "Clear product filters to return to the full catalog",
-    "description": "This verifies that a visitor can remove catalog filters and return to the broader product listing.",
-    "category": "Products Catalog",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /products/"
-      },
-      {
-        "type": "action",
-        "description": "Fill in a product name fragment into the search field"
-      },
-      {
-        "type": "action",
-        "description": "Select a product category filter"
-      },
-      {
-        "type": "action",
-        "description": "Click the control to clear filters"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the full product listing is displayed"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the filter controls remain available"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC024",
-    "title": "Clear catalog search results to restore the full list",
-    "description": "This verifies a visitor can remove a search term and return to the full catalog browsing state.",
-    "category": "Product Catalog",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /products/"
-      },
-      {
-        "type": "action",
-        "description": "Fill in the product search field with a product name"
-      },
-      {
-        "type": "action",
-        "description": "Clear the search term"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the full product catalog is displayed"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC025",
-    "title": "Contact the company from a solution detail page",
-    "description": "This verifies that a visitor can move from a solution detail page to the contact page to start an inquiry.",
-    "category": "Solutions Overview",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /solutions/"
-      },
-      {
-        "type": "action",
-        "description": "Click a solution card"
-      },
-      {
-        "type": "action",
-        "description": "Click the contact inquiry call to action"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the contact page is displayed"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the contact form is displayed"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC026",
-    "title": "Expand hidden catalog filters and switch category",
-    "description": "This verifies a visitor can reveal additional filters and use them to update the product list.",
-    "category": "Product Catalog",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /products/"
-      },
-      {
-        "type": "action",
-        "description": "Expand the hidden category filters"
-      },
-      {
-        "type": "action",
-        "description": "Select another category filter"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the product list is updated to the chosen category"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC027",
-    "title": "Return to the solutions overview after reading a solution",
-    "description": "This verifies that a visitor can go back to the solutions listing and continue browsing after opening a solution detail page.",
-    "category": "Solution Detail",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /solutions/"
-      },
-      {
-        "type": "action",
-        "description": "Click a solution card"
-      },
-      {
-        "type": "action",
-        "description": "Return to the solutions overview"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the solutions listing is displayed"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify solution cards are displayed"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC028",
-    "title": "Open the product catalog from the footer",
-    "description": "This test verifies that a visitor can use a footer link to reach the product catalog from the homepage.",
-    "category": "Footer",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /"
-      },
-      {
-        "type": "action",
-        "description": "Scroll to the footer"
-      },
-      {
-        "type": "action",
-        "description": "Click the footer link to the product catalog"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the product catalog is displayed"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC029",
-    "title": "Show contact form validation when required fields are missing",
-    "description": "This verifies that a visitor is guided to complete required contact details before sending an inquiry.",
-    "category": "Contact Form",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /contact/"
-      },
-      {
-        "type": "action",
-        "description": "Submit the contact form without filling required fields"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify validation errors are displayed"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the form remains on the contact page"
-      }
-    ],
-    "priority": "Medium"
-  },
-  {
-    "id": "TC030",
-    "title": "Show validation when a required contact field is missing",
-    "description": "This verifies that the contact form blocks submission and shows validation feedback when a required field is left blank.",
-    "category": "Contact Form",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /contact/"
-      },
-      {
-        "type": "action",
-        "description": "Fill in the name field with Alex Jordan"
-      },
-      {
-        "type": "action",
-        "description": "Fill in the email field with alex.jordan@example.com"
-      },
-      {
-        "type": "action",
-        "description": "Fill in the subject field with Product inquiry"
-      },
-      {
-        "type": "action",
-        "description": "Submit the form"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify a validation error is visible"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the form is not submitted"
-      }
-    ],
-    "priority": "Medium"
-  },
-  {
-    "id": "TC031",
-    "title": "Open the solutions overview from the footer",
-    "description": "This test verifies that a visitor can use a footer link to reach the solutions overview from the homepage.",
-    "category": "Footer",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /"
-      },
-      {
-        "type": "action",
-        "description": "Scroll to the footer"
-      },
-      {
-        "type": "action",
-        "description": "Click the footer link to the solutions overview"
+        "description": "Click the navigation link to view the solutions section"
       },
       {
         "type": "assertion",
         "description": "Verify the solutions overview is displayed"
       }
     ],
-    "priority": "Medium"
+    "priority": "High"
   },
   {
-    "id": "TC032",
-    "title": "Open the contact page from the footer",
-    "description": "This test verifies that a visitor can use a footer link to reach the contact page from the homepage.",
-    "category": "Footer",
+    "id": "TC010",
+    "title": "Browse a product and open its detail page from the catalog",
+    "description": "A visitor can open the products catalog, select a product card, and reach the corresponding product detail page.",
+    "category": "Products Catalog and Product Detail Pages",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /products"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to the product grid"
+      },
+      {
+        "type": "action",
+        "description": "Click a product card"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the selected product detail page is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify product specifications and features are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC011",
+    "title": "Open and close the mobile navigation menu",
+    "description": "This verifies that a mobile visitor can open the hamburger menu, close it again, and remain on the current page.",
+    "category": "Global Navigation",
     "steps": [
       {
         "type": "action",
@@ -910,161 +349,206 @@
       },
       {
         "type": "action",
-        "description": "Scroll to the footer"
+        "description": "Open the mobile navigation menu"
       },
       {
         "type": "action",
-        "description": "Click the footer link to the contact page"
+        "description": "Close the mobile navigation menu"
       },
       {
         "type": "assertion",
-        "description": "Verify the contact page is displayed"
+        "description": "Verify the homepage remains displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC012",
+    "title": "Open a product detail page directly",
+    "description": "A visitor can load a product detail page directly and see the product content render correctly.",
+    "category": "Products Catalog and Product Detail Pages",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /products"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to the product grid"
+      },
+      {
+        "type": "action",
+        "description": "Click a product card"
+      },
+      {
+        "type": "action",
+        "description": "Verify the selected product detail page is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify product specifications and features are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC013",
+    "title": "Review solution details after opening a solution card",
+    "description": "This verifies that the selected solution page shows the expected detail content for a visitor who came from the overview grid.",
+    "category": "Solutions Overview and Detail Pages",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /solutions"
+      },
+      {
+        "type": "action",
+        "description": "Scroll through the solution grid"
+      },
+      {
+        "type": "action",
+        "description": "Click a solution card"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify solution benefits are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify included components are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC014",
+    "title": "Browse a blog post and read the full article",
+    "description": "A visitor can open the blog listing, select an article, and read the full post content on its detail page.",
+    "category": "Blog Listing and Blog Posts",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /blog"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to the article list"
+      },
+      {
+        "type": "action",
+        "description": "Click a blog post card"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the selected article page is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the full article content is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC015",
+    "title": "Open a solution detail page directly",
+    "description": "This verifies that a visitor can access a solution detail page directly and see the page content render correctly.",
+    "category": "Solutions Overview and Detail Pages",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /solutions"
+      },
+      {
+        "type": "action",
+        "description": "Click a solution card"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the selected solution detail page is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC016",
+    "title": "Open a direct solution detail page from a shared link",
+    "description": "A visitor can load a solution detail page directly and see the solution content render for the selected slug.",
+    "category": "Global navigation and route integrity",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /solutions"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to the solutions grid"
+      },
+      {
+        "type": "action",
+        "description": "Click a solution card"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the selected solution detail page is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify solution benefits and components are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC017",
+    "title": "Open a blog post directly",
+    "description": "A visitor can load a blog article directly and see the article content render correctly.",
+    "category": "Blog Listing and Blog Posts",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /blog"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to the article list"
+      },
+      {
+        "type": "action",
+        "description": "Click a blog post card"
+      },
+      {
+        "type": "action",
+        "description": "Verify the selected article page is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the full article content is displayed"
       }
     ],
     "priority": "Medium"
   },
   {
-    "id": "TC033",
-    "title": "Keep browsing after selecting a footer link",
-    "description": "This verifies that a visitor can use footer navigation to continue exploring the site from the homepage.",
-    "category": "Navigation",
+    "id": "TC018",
+    "title": "See validation feedback when required contact fields are missing",
+    "description": "A visitor can try to submit the contact form with incomplete information and see validation feedback instead of a successful submission.",
+    "category": "Contact Inquiry Form",
     "steps": [
       {
         "type": "action",
-        "description": "Navigate to /"
+        "description": "Navigate to /contact"
       },
       {
         "type": "action",
-        "description": "Scroll to the footer"
+        "description": "Fill in the name field with Alex Rivera"
       },
       {
         "type": "action",
-        "description": "Click a footer link to a core page"
+        "description": "Submit the contact form"
       },
       {
         "type": "assertion",
-        "description": "Verify the selected destination page is displayed"
-      }
-    ],
-    "priority": "Medium"
-  },
-  {
-    "id": "TC034",
-    "title": "Open a footer navigation destination",
-    "description": "This test verifies that a visitor can use a footer navigation link to open another page successfully.",
-    "category": "Footer",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /"
-      },
-      {
-        "type": "action",
-        "description": "Scroll to the footer"
-      },
-      {
-        "type": "action",
-        "description": "Click a footer navigation link"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the linked page is displayed"
-      }
-    ],
-    "priority": "Medium"
-  },
-  {
-    "id": "TC035",
-    "title": "Open the blog listing from the footer",
-    "description": "This test verifies that a visitor can use a footer link to reach the blog listing from the homepage.",
-    "category": "Footer",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /"
-      },
-      {
-        "type": "action",
-        "description": "Scroll to the footer"
-      },
-      {
-        "type": "action",
-        "description": "Click the footer link to the blog listing"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the blog listing is displayed"
-      }
-    ],
-    "priority": "Medium"
-  },
-  {
-    "id": "TC036",
-    "title": "See the sticky navigation effect while scrolling the homepage",
-    "description": "This verifies that the global navigation remains available and changes appearance as the visitor scrolls the homepage.",
-    "category": "Navigation",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /"
-      },
-      {
-        "type": "action",
-        "description": "Scroll down the page"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the navigation remains visible while scrolling"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the sticky glass-style navigation effect is visible"
-      }
-    ],
-    "priority": "Medium"
-  },
-  {
-    "id": "TC037",
-    "title": "View company information in the footer",
-    "description": "This test verifies that a visitor can scroll to the footer on the homepage and see the company information displayed there.",
-    "category": "Footer",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /"
-      },
-      {
-        "type": "action",
-        "description": "Scroll to the footer"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify company information is displayed in the footer"
-      }
-    ],
-    "priority": "Low"
-  },
-  {
-    "id": "TC038",
-    "title": "Open a social destination from the footer",
-    "description": "This test verifies that a visitor can use a footer social link to open its destination successfully.",
-    "category": "Footer",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /"
-      },
-      {
-        "type": "action",
-        "description": "Scroll to the footer"
-      },
-      {
-        "type": "action",
-        "description": "Click a footer social link"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the destination page is displayed"
+        "description": "Verify contact form validation feedback is visible"
       }
     ],
     "priority": "Low"

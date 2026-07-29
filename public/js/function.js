@@ -1,17 +1,14 @@
-(function($) {
+(function ($) {
     "use strict";
 
     var $window = $(window);
     var $body = $('body');
 
-    /* Preloader Effect */
-    $window.on('load', function() {
-        $(".preloader").fadeOut(600);
-    });
+    /* Preloader is now managed by Preloader.astro */
 
     /* Sticky Header */
     if ($('.active-sticky-header').length) {
-        $window.on('resize', function() {
+        $window.on('resize', function () {
             setHeaderHeight();
         });
 
@@ -19,7 +16,7 @@
             $("header.active-sticky-header").css("height", $('header.active-sticky-header .header-sticky').outerHeight());
         }
 
-        $window.on("scroll", function() {
+        $window.on("scroll", function () {
             var fromTop = $(window).scrollTop();
             setHeaderHeight();
             var headerHeight = $('header.active-sticky-header .header-sticky').outerHeight()
@@ -29,7 +26,7 @@
     }
 
     if ($("a[href='#top']").length) {
-        $(document).on("click", "a[href='#top']", function() {
+        $(document).on("click", "a[href='#top']", function () {
             $("html, body").animate({
                 scrollTop: 0
             }, "slow");
@@ -142,8 +139,8 @@
 
     /* Skill Bar */
     if ($('.skills-progress-bar').length) {
-        $('.skills-progress-bar').waypoint(function() {
-            $('.skillbar').each(function() {
+        $('.skills-progress-bar').waypoint(function () {
+            $('.skillbar').each(function () {
                 $(this).find('.count-bar').animate({
                     width: $(this).attr('data-percent')
                 }, 2000);
@@ -199,7 +196,7 @@
 
             if (textheading.length === 0) return;
             gsap.registerPlugin(SplitText);
-            textheading.each(function(index, el) {
+            textheading.each(function (index, el) {
 
                 el.split = new SplitText(el, {
                     type: "lines,words,chars",
@@ -332,7 +329,7 @@
     /* Contact form — mailto redirect */
     var $contactform = $("#contactForm");
     if ($contactform.length) {
-        $contactform.on("submit", function(e) {
+        $contactform.on("submit", function (e) {
             e.preventDefault();
             var name = $("#name").val().trim();
             var email = $("#email").val().trim();
@@ -354,7 +351,7 @@
 
     /* Our Pricing Tab JS Start  */
     if ($('.our-pricing-box').length) {
-        $('#planToggle').change(function() {
+        $('#planToggle').change(function () {
             if ($(this).is(':checked')) {
                 $('#monthly').addClass('d-none');
                 $('#yearly').removeClass('d-none');
@@ -374,13 +371,13 @@
 
         if ($about_us_item_prime.length) {
             $about_us_item_prime.on({
-                mouseenter: function() {
+                mouseenter: function () {
                     if (!$(this).hasClass('active')) {
                         $about_us_item_prime.removeClass('active');
                         $(this).addClass('active');
                     }
                 },
-                mouseleave: function() {
+                mouseleave: function () {
                     // Optional: Add logic for mouse leave if needed
                 }
             });

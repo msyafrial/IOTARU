@@ -1,0 +1,472 @@
+---
+import { Image } from 'astro:assets';
+import MainLayout from '../../layouts/MainLayout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Technology from '../../components/Technology.astro';
+import CTA from '../../components/CTA.astro';
+import Footer from '../../components/Footer.astro';
+
+import about1 from '../../assets/about-us-image-1.jpg';
+import about2 from '../../assets/about-us-image-2.jpg';
+import about3 from '../../assets/about-us-image-3.jpg';
+import phone from '../../assets/phone.webp';
+import howItWorkImg from '../../assets/how-it-work-image.jpg';
+
+import iconArch from '../../assets/icon-about-us-item-1.svg';
+import iconSecure from '../../assets/icon-about-us-item-2.svg';
+import iconQuality from '../../assets/icon-about-excellence.svg';
+
+const values = [
+  {
+    icon: '/images/icon-feature-item-1.svg',
+    title: 'End-to-End IoT System',
+    desc: 'Kami merancang ekosistem IoT lengkap — dari perangkat keras, firmware, konektivitas, hingga platform cloud dalam satu solusi terintegrasi.',
+  },
+  {
+    icon: '/images/icon-feature-item-2.svg',
+    title: 'Security-First Architecture',
+    desc: 'Setiap sistem dibangun dengan prinsip keamanan berlapis — enkripsi data, autentikasi perangkat, dan pembaruan firmware yang aman.',
+  },
+  {
+    icon: '/images/icon-feature-item-3.svg',
+    title: 'Scalable & Customizable',
+    desc: 'Solusi kami dirancang untuk tumbuh bersama bisnis Anda — dari puluhan hingga ribuan perangkat yang terhubung di berbagai lokasi.',
+  },
+  {
+    icon: '/images/icon-feature-item-4.svg',
+    title: 'Real-Time Monitoring',
+    desc: 'Dashboard terpusat memungkinkan pemantauan status perangkat, analitik data, dan notifikasi instan secara real-time.',
+  },
+  {
+    icon: '/images/icon-feature-item-5.svg',
+    title: 'Reliable & Proven',
+    desc: 'Dibangun menggunakan teknologi industri yang telah terbukti — STM32, ESP32, LoRa, MQTT, dan protokol standar lainnya.',
+  },
+  {
+    icon: '/images/icon-feature-item-6.svg',
+    title: 'Expert Engineering Team',
+    desc: 'Tim kami terdiri dari insinyur berpengalaman di bidang embedded systems, IoT communication, dan pengembangan platform cloud.',
+  },
+];
+
+const milestones = [
+  { number: '31+', label: 'Produk IoT' },
+  { number: '3', label: 'Solusi Industri' },
+  { number: '24/7', label: 'Monitoring Sistem' },
+  { number: '100%', label: 'Security-First' },
+];
+---
+
+<MainLayout
+  title="About Us"
+  description="IOTARU Teknologi Nusantara — penyedia solusi IoT terpercaya untuk keamanan, monitoring, dan otomasi industri yang aman, skalabel, dan cerdas."
+>
+  <Navbar />
+
+  <!-- Hero Section -->
+  <section
+    class="hero hero-product bg-section dark-section"
+    style="background-image: url(/images/hero-bg-image-6.webp); background-size: cover; background-position: center; background-repeat: no-repeat;"
+  >
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="section-title section-title-center">
+            <h3 class="wow fadeInUp">Who We Are</h3>
+            <h2 class="text-anime-style-3" data-cursor="-opaque">
+              About IOTARU Teknologi Nusantara
+            </h2>
+            <p
+              class="wow fadeInUp"
+              data-wow-delay="0.2s"
+              style="margin-top: 10px; color: rgba(255,255,255,0.8); font-size: 1.1em; max-width: 700px; margin-left: auto; margin-right: auto;"
+            >
+              Membangun solusi IoT yang aman, skalabel, dan cerdas untuk keamanan,
+              monitoring, dan otomasi industri di era digital.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Company Story Section -->
+  <section id="about" class="about-us">
+    <div class="container">
+      <div class="row">
+
+        <!-- Images -->
+        <div class="col-xl-6">
+          <div class="about-us-image-box wow fadeInUp">
+
+            <div class="about-image-box-1">
+              <div class="about-us-image">
+                <figure class="image-anime reveal">
+                  <Image
+                    src={about1}
+                    alt="IOTARU IoT Development"
+                    width={520}
+                    quality={80}
+                    format="webp"
+                    loading="lazy"
+                  />
+                </figure>
+              </div>
+            </div>
+
+            <div class="about-image-box-2">
+              <div class="about-us-image">
+                <figure class="image-anime reveal">
+                  <Image
+                    src={about2}
+                    alt="IoT Hardware & System"
+                    width={320}
+                    quality={75}
+                    format="webp"
+                    loading="lazy"
+                  />
+                </figure>
+              </div>
+
+              <div class="about-us-image">
+                <figure class="image-anime reveal">
+                  <Image
+                    src={phone}
+                    alt="Smart Security Solution"
+                    width={320}
+                    loading="lazy"
+                  />
+                </figure>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Content -->
+        <div class="col-xl-6">
+          <div class="about-us-content">
+
+            <div class="section-title">
+              <h3 class="wow fadeInUp">Our Story</h3>
+              <h2 class="text-anime-style-3" data-cursor="-opaque">
+                Membangun solusi IoT yang andal & cerdas untuk keamanan nyata
+              </h2>
+              <p class="wow fadeInUp" data-wow-delay="0.2s">
+                IOTARU TEKNOLOGI NUSANTARA adalah perusahaan teknologi yang berfokus
+                pada pengembangan solusi Internet of Things yang aman, skalabel, dan
+                terintegrasi. Kami merancang sistem end-to-end yang menggabungkan
+                perangkat keras, firmware, dan platform cloud untuk menghadirkan
+                monitoring real-time dan solusi keamanan cerdas.
+              </p>
+              <p class="wow fadeInUp" data-wow-delay="0.3s">
+                Didirikan dengan visi untuk memberdayakan bisnis dan industri melalui
+                teknologi IoT yang dapat diandalkan, kami berkomitmen untuk memberikan
+                solusi yang tidak hanya canggih secara teknis, tetapi juga mudah
+                dioperasikan dan dipelihara dalam jangka panjang.
+              </p>
+            </div>
+
+            <!-- Feature List -->
+            <div class="about-us-item-list wow fadeInUp" data-wow-delay="0.4s">
+              <div class="about-us-item">
+                <div class="icon-box">
+                  <Image src={iconArch} alt="End-to-End IoT Architecture" width={48} height={48} />
+                </div>
+                <div class="about-us-item-title">
+                  <h3>End-to-End IoT Architecture</h3>
+                </div>
+              </div>
+              <div class="about-us-item">
+                <div class="icon-box">
+                  <Image src={iconSecure} alt="Secure, Scalable & Customizable Systems" width={48} height={48} />
+                </div>
+                <div class="about-us-item-title">
+                  <h3>Secure, Scalable & Customizable Systems</h3>
+                </div>
+              </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="about-us-footer wow fadeInUp" data-wow-delay="0.6s">
+              <div class="about-support-box">
+                <div class="about-support-box-content">
+                  <h3>Technical Expertise You Can Trust</h3>
+                  <p>
+                    Tim kami terdiri dari insinyur berpengalaman di bidang embedded
+                    systems, komunikasi IoT, dan pengembangan platform — siap mendukung
+                    deployment, kustomisasi, dan keandalan sistem jangka panjang.
+                  </p>
+                </div>
+                <div class="about-us-btn">
+                  <a href="/contact" class="btn-default">Hubungi Kami</a>
+                </div>
+              </div>
+
+              <div class="about-excellence-box">
+                <div class="icon-box">
+                  <Image
+                    src={iconQuality}
+                    alt="Quality-Driven Engineering Approach"
+                    width={56}
+                    height={56}
+                  />
+                </div>
+                <div class="about-excellence-box-title">
+                  <h3>Quality-Driven Engineering Approach</h3>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats / Numbers Section -->
+  <section class="key-features bg-section">
+    <div class="container">
+      <div class="row section-row">
+        <div class="col-lg-12">
+          <div class="section-title section-title-center">
+            <h3 class="wow fadeInUp">By The Numbers</h3>
+            <h2 class="text-anime-style-3" data-cursor="-opaque">
+              IOTARU dalam angka
+            </h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        {milestones.map((item, i) => (
+          <div class="col-xl-3 col-md-6">
+            <div class="feature-item wow fadeInUp" data-wow-delay={`${i * 0.15}s`} style="text-align: center; padding: 40px 20px;">
+              <div class="feature-item-content">
+                <h2 style="font-size: 3rem; font-weight: 800; color: var(--primary-color, #38bdf8); margin-bottom: 8px;">
+                  {item.number}
+                </h2>
+                <h3 style="font-size: 1rem; font-weight: 600; opacity: 0.85;">{item.label}</h3>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Vision & Mission Section -->
+  <section class="about-us" style="padding-top: 0;">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-6">
+          <div class="about-us-content">
+            <div class="section-title">
+              <h3 class="wow fadeInUp">Visi & Misi</h3>
+              <h2 class="text-anime-style-3" data-cursor="-opaque">
+                Mendorong transformasi digital melalui IoT yang aman
+              </h2>
+            </div>
+
+            <div class="how-work-item-list wow fadeInUp" data-wow-delay="0.2s">
+              <div class="how-work-item">
+                <div class="how-work-item-header">
+                  <div class="how-work-item-no"><h3>Visi</h3></div>
+                  <div class="how-work-item-title">
+                    <h3>Menjadi pemimpin solusi IoT terpercaya di Indonesia</h3>
+                  </div>
+                </div>
+                <div class="how-work-item-content">
+                  <p>
+                    Menjadi perusahaan teknologi IoT terdepan yang memberdayakan
+                    bisnis dan industri Indonesia dengan solusi cerdas, aman, dan
+                    berkelanjutan untuk masa depan yang lebih terhubung.
+                  </p>
+                </div>
+              </div>
+
+              <div class="how-work-item">
+                <div class="how-work-item-header">
+                  <div class="how-work-item-no"><h3>Misi</h3></div>
+                  <div class="how-work-item-title">
+                    <h3>Menghadirkan solusi IoT end-to-end yang andal</h3>
+                  </div>
+                </div>
+                <div class="how-work-item-content">
+                  <p>
+                    Merancang, membangun, dan mendeploy sistem IoT yang menggabungkan
+                    keamanan tingkat enterprise, skalabilitas, dan kemudahan operasional
+                    untuk membantu organisasi beroperasi lebih cerdas dan efisien.
+                  </p>
+                </div>
+              </div>
+
+              <div class="how-work-item">
+                <div class="how-work-item-header">
+                  <div class="how-work-item-no"><h3>Nilai</h3></div>
+                  <div class="how-work-item-title">
+                    <h3>Security, Reliability & Innovation</h3>
+                  </div>
+                </div>
+                <div class="how-work-item-content">
+                  <p>
+                    Kami berpegang pada tiga nilai inti: keamanan sebagai fondasi,
+                    keandalan sebagai standar, dan inovasi sebagai pendorong untuk
+                    terus memberikan solusi terbaik bagi pelanggan kami.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="how-it-work-footer wow fadeInUp" data-wow-delay="0.6s">
+              <div class="how-it-work-btn">
+                <a href="/contact" class="btn-default">Diskusikan Proyek Anda</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-6">
+          <div class="how-it-work-image wow fadeInUp" data-wow-delay="0.4s">
+            <figure class="image-anime reveal">
+              <Image
+                src={howItWorkImg}
+                alt="IOTARU Vision & Mission"
+                width={600}
+                quality={80}
+                format="webp"
+                loading="lazy"
+              />
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Core Values / Features Section -->
+  <div class="key-features bg-section">
+    <div class="container">
+      <div class="row section-row">
+        <div class="col-lg-12">
+          <div class="section-title section-title-center">
+            <h3 class="wow fadeInUp">Core Values</h3>
+            <h2 class="text-anime-style-3" data-cursor="-opaque">
+              Mengapa memilih IOTARU sebagai mitra IoT Anda
+            </h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        {values.map((val, i) => (
+          <div class="col-xl-4 col-md-6">
+            <div class="feature-item wow fadeInUp" data-wow-delay={`${(i % 3) * 0.2}s`}>
+              <div class="feature-item-content">
+                <h3>{val.title}</h3>
+                <p>{val.desc}</p>
+              </div>
+              <div class="feature-item-body">
+                <div class="icon-box">
+                  <img src={val.icon} alt={val.title} />
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- Technology Stack -->
+  <Technology />
+
+  <!-- Team / About Image Section -->
+  <section class="about-us" style="padding-bottom: 0;">
+    <div class="container">
+      <div class="row section-row">
+        <div class="col-lg-12">
+          <div class="section-title section-title-center">
+            <h3 class="wow fadeInUp">Our Team</h3>
+            <h2 class="text-anime-style-3" data-cursor="-opaque">
+              Tim insinyur berpengalaman di balik IOTARU
+            </h2>
+            <p class="wow fadeInUp" data-wow-delay="0.2s">
+              Kami adalah tim yang terdiri dari para insinyur, developer, dan spesialis
+              IoT yang berdedikasi untuk menghadirkan solusi teknologi terbaik bagi
+              pelanggan kami di seluruh Indonesia.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xl-4 col-md-6">
+          <div class="wow fadeInUp" data-wow-delay="0s">
+            <figure class="image-anime reveal" style="border-radius: 12px; overflow: hidden; margin-bottom: 24px;">
+              <Image
+                src={about1}
+                alt="IOTARU Engineering Team"
+                width={400}
+                quality={80}
+                format="webp"
+                loading="lazy"
+                style="width: 100%; height: 280px; object-fit: cover;"
+              />
+            </figure>
+            <div style="text-align: center; padding: 0 16px 32px;">
+              <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 6px;">Hardware Engineering</h3>
+              <p style="opacity: 0.7; font-size: 0.9rem;">Embedded systems, firmware, dan desain PCB untuk perangkat IoT industri.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-4 col-md-6">
+          <div class="wow fadeInUp" data-wow-delay="0.2s">
+            <figure class="image-anime reveal" style="border-radius: 12px; overflow: hidden; margin-bottom: 24px;">
+              <Image
+                src={about2}
+                alt="IOTARU Software Team"
+                width={400}
+                quality={80}
+                format="webp"
+                loading="lazy"
+                style="width: 100%; height: 280px; object-fit: cover;"
+              />
+            </figure>
+            <div style="text-align: center; padding: 0 16px 32px;">
+              <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 6px;">Software & Cloud Platform</h3>
+              <p style="opacity: 0.7; font-size: 0.9rem;">Backend, dashboard monitoring, dan integrasi platform cloud yang skalabel.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-4 col-md-6">
+          <div class="wow fadeInUp" data-wow-delay="0.4s">
+            <figure class="image-anime reveal" style="border-radius: 12px; overflow: hidden; margin-bottom: 24px;">
+              <Image
+                src={about3}
+                alt="IOTARU Deployment Team"
+                width={400}
+                quality={80}
+                format="webp"
+                loading="lazy"
+                style="width: 100%; height: 280px; object-fit: cover;"
+              />
+            </figure>
+            <div style="text-align: center; padding: 0 16px 32px;">
+              <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 6px;">Deployment & Support</h3>
+              <p style="opacity: 0.7; font-size: 0.9rem;">Instalasi lapangan, commissioning, dan dukungan teknis 24/7 untuk sistem yang berjalan.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <CTA />
+
+  <Footer />
+</MainLayout>

@@ -1,16 +1,17 @@
 {
-  "status": "init",
+  "status": "commited",
   "type": "frontend",
+  "scope": "codebase",
+  "localEndpoint": "http://localhost:4321/solutions",
   "executionArgs": {
     "projectName": "iotaru",
-    "projectPath": "D:\\dev\\astro\\iotaru",
+    "projectPath": "d:\\dev\\astro\\iotaru",
     "testIds": [],
-    "additionalInstruction": "Run all 30 high-priority tests against the IOTARU website",
-    "serverMode": "production",
+    "additionalInstruction": "Buka halaman /solutions dan pastikan hero text berada di tengah (align-items-center). Pastikan layout tidak shift saat page loading. Ambil screenshot awal.",
+    "serverMode": "development",
     "envs": {
-      "TESTSPRITE_API_KEY": "sk-user-Ifbq-hRkYX0mQBp9VKXpZBp8aE_C4M-6PNquAz2CKXj9aBAB-yj1qH1v3wdy8VhstRcKQNPF0xZTLqqTFN7Tazlh-sg2fdXcl_FUOoEoln-2heOGzFbGehz0rjQ5YwkUpEU"
+      "API_KEY": "sk-user-cYP3pUWSGyboRgGXtamwCKXHX6yWNahZoYstUdlVLiuB8C8yNFX-QAXuPbANtfh_vZTbnLkPSALJKa-Z6AkazPXgQII4-HHzCL-LlB7pMi1HU6Sozq4AUhb5EWh28H98y6w"
     }
   },
-  "localEndpoint": "http://localhost:4321",
-  "apikey": "sk-user-Ifbq-hRkYX0mQBp9VKXpZBp8aE_C4M-6PNquAz2CKXj9aBAB-yj1qH1v3wdy8VhstRcKQNPF0xZTLqqTFN7Tazlh-sg2fdXcl_FUOoEoln-2heOGzFbGehz0rjQ5YwkUpEU"
+  "serverPort": 9783
 }

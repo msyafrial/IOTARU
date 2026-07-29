@@ -17,9 +17,12 @@
 /* 02. General css */
 html,
 body {
+    margin:0;
     width: 100%;
     overflow-x: clip;
 }
+
+
 
 body {
     font-family: var(--default-font);
@@ -40,7 +43,12 @@ p {
     margin-bottom: 1.5em;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-weight: 600;
     line-height: 1.2em;
     color: var(--primary-color);
@@ -59,19 +67,44 @@ a {
     text-decoration: none;
 }
 
-a:hover, a:focus {
+a:hover,
+a:focus {
     text-decoration: none;
     outline: 0;
+}
+
+::-webkit-scrollbar-track {
+    background-color: var(--primary-color);
+    border-left: 1px solid var(--primary-color);
+}
+
+::-webkit-scrollbar {
+    width: 7px;
+    background-color: var(--primary-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent-color);
 }
 
 .container {
     max-width: 1500px;
 }
 
-.container, .container-fluid, .container-lg, .container-md,
-.container-sm, .container-xl, .container-xxl {
-    padding-right: 15px;
-    padding-left: 15px;
+.container,
+.container-fluid,
+.container-lg,
+.container-md,
+.container-sm,
+.container-xl,
+.container-xxl {
+    /* --bs-gutter-x: 1.5rem; */
+    /* --bs-gutter-y: 0; */
+    /* width: 100%; */
+    /* padding-right: calc(var(--bs-gutter-x) * .5); */
+    /* padding-left: calc(var(--bs-gutter-x) * .5); */
+    margin-right: auto;
+    margin-left: auto;
 }
 
 .row {
@@ -79,7 +112,10 @@ a:hover, a:focus {
     margin-left: -15px;
 }
 
-.row > * {
+.row>* {
+    flex-shrink: 0;
+    width: 100%;
+    max-width: 100%;
     padding-right: 15px;
     padding-left: 15px;
 }
@@ -87,6 +123,10 @@ a:hover, a:focus {
 /* Section Title */
 .section-title {
     margin-bottom: 40px;
+}
+
+.section-title-center {
+    text-align: center;
 }
 
 .section-title h3 {
@@ -552,6 +592,7 @@ a:hover, a:focus {
 }
 
 @media (min-width: 992px) {
+
     .glass-mobile-menu,
     .glass-mobile-overlay {
         display: none !important;
@@ -565,6 +606,7 @@ header.main-header {
     left: 0 !important;
     right: 0 !important;
     z-index: 999;
+    padding: 16px 24px;
 }
 
 /* Bootstrap critical grid (prevent layout shift) */
@@ -573,25 +615,47 @@ header.main-header {
     flex-wrap: wrap;
 }
 
-.col-lg-5 {
-    flex: 0 0 41.666%;
-    max-width: 41.666%;
+.align-items-center {
+    align-items: center !important;
 }
 
-.col-lg-6 {
-    flex: 0 0 50%;
-    max-width: 50%;
+@media (min-width: 768px) {
+    .col-md-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
 }
 
-.col-lg-12 {
-    flex: 0 0 100%;
-    max-width: 100%;
-}
+@media (min-width: 992px) {
+    .col-lg-4 {
+        flex: 0 0 33.333333%;
+        max-width: 33.333333%;
+    }
 
-.offset-lg-1 {
-    margin-left: 8.333%;
-}
+    .col-lg-5 {
+        flex: 0 0 41.666667%;
+        max-width: 41.666667%;
+    }
 
+    .col-lg-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+
+    .col-lg-8 {
+        flex: 0 0 66.666667%;
+        max-width: 66.666667%;
+    }
+
+    .col-lg-12 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .offset-lg-1 {
+        margin-left: 8.333333%;
+    }
+}
 
 
 /* WOW.js - prevent flash before animation */
@@ -702,6 +766,10 @@ header.main-header {
     border-radius: 14px 14px 0 0;
 }
 
+.solutions-hero .container {
+    max-width: 1200px;
+}
+
 /* Preloader */
 .preloader {
     position: fixed;
@@ -739,8 +807,13 @@ header.main-header {
 }
 
 @keyframes rotate-loading {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 /* Responsive critical (above-fold mobile) */
