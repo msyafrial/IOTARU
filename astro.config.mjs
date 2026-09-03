@@ -11,5 +11,8 @@ export default defineConfig({
     mdx(),
     sitemap(),
   ],
+  // Prefetch saat hover: halaman tujuan di-download di background sehingga
+  // navigasi View Transitions terasa instan.
+  prefetch: { prefetchAll: false, defaultStrategy: 'hover' },
   site: 'https://iotaru.com',
 });

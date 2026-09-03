@@ -49,11 +49,12 @@
           <div class="footer-links">
             <h3>Quick Links</h3>
             <ul>
-              <li><a href="#home">Home</a></li>
-              <li><a href="#about">About Us</a></li>
-              <li><a href="#features">Solutions</a></li>
-              <li><a href="#products">Product</a></li>
-              <li><a href="#contact">Contact Us</a></li>
+              <li><a href="/">Home</a></li>
+              <li><a href="/about">About Us</a></li>
+              <li><a href="/solutions">Solutions</a></li>
+              <li><a href="/products">Products</a></li>
+              <li><a href="/blog">Blog</a></li>
+              <li><a href="/contact">Contact Us</a></li>
             </ul>
           </div>
 
@@ -96,42 +97,49 @@
   </div>
 
   <script>
-    const emailForm = document.getElementById('emailForm');
-    const emailInput = document.getElementById('emailMessage');
+    function initFooter() {
+      const emailForm = document.getElementById('emailForm');
+      const emailInput = document.getElementById('emailMessage');
 
-    if (emailForm instanceof HTMLFormElement && emailInput instanceof HTMLInputElement) {
-      emailForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-        const message = emailInput.value.trim();
+      if (emailForm instanceof HTMLFormElement && emailInput instanceof HTMLInputElement) {
+        emailForm.addEventListener('submit', function (e) {
+          e.preventDefault();
+          const message = emailInput.value.trim();
 
-        if (message) {
-          const email = "syafrial@iotaru.com";
-          const subject = "Contact Form Message";
-          const body = message;
-          const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-          window.open(mailtoLink, "_blank");
-        } else {
-          alert("Please enter your message.");
-        }
-      });
+          if (message) {
+            const email = "syafrial@iotaru.com";
+            const subject = "Contact Form Message";
+            const body = message;
+            const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.open(mailtoLink, "_blank");
+          } else {
+            alert("Please enter your message.");
+          }
+        });
+      }
+
+      const newsletterForm = document.getElementById('newslettersForm');
+      const newsletterInput = document.getElementById('mail');
+
+      if (newsletterForm instanceof HTMLFormElement && newsletterInput instanceof HTMLInputElement) {
+        newsletterForm.addEventListener('submit', function (e) {
+          e.preventDefault();
+          const email = newsletterInput.value.trim();
+
+          if (email) {
+            const mailtoLink = `mailto:syafrial@iotaru.com?subject=${encodeURIComponent("Newsletter Subscription")}&body=${encodeURIComponent("Please subscribe me to the newsletter.\nEmail: " + email)}`;
+            window.open(mailtoLink, "_blank");
+            newsletterForm.reset();
+          } else {
+            alert("Please enter your email.");
+          }
+        });
+      }
     }
 
-    const newsletterForm = document.getElementById('newslettersForm');
-    const newsletterInput = document.getElementById('mail');
-
-    if (newsletterForm instanceof HTMLFormElement && newsletterInput instanceof HTMLInputElement) {
-      newsletterForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-        const email = newsletterInput.value.trim();
-
-        if (email) {
-          const mailtoLink = `mailto:syafrial@iotaru.com?subject=${encodeURIComponent("Newsletter Subscription")}&body=${encodeURIComponent("Please subscribe me to the newsletter.\nEmail: " + email)}`;
-          window.open(mailtoLink, "_blank");
-          newsletterForm.reset();
-        } else {
-          alert("Please enter your email.");
-        }
-      });
-    }
+    // View Transitions: astro:page-load ter-fire pada load awal + setelah
+    // setiap swap. Duplikasi submit listener di elemen baru tidak mungkin
+    // (form dibuat ulang per halaman), jadi init ulang aman.
+    document.addEventListener('astro:page-load', initFooter);
   </script>
 </footer>

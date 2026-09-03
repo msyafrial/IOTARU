@@ -4,11 +4,28 @@ on:
   push:
     branches:
       - main
+    # Push tag v1.2.3 -> build image versi 1.2.3 (rilis permanen)
+    tags:
+      - 'v*'
+
+# Satu run per ref: push baru ke main membatalkan run main lama,
+# tanpa mengganggu build rilis (tag) yang sedang jalan.
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  REGISTRY: ghcr.io
 
 jobs:
-  deploy:
+  build-and-push:
     runs-on: ubuntu-latest
 
+    # WAJIB: izin push package ke GHCR pakai GITHUB_TOKEN bawaan
+    # (tidak perlu membuat secret tambahan)
+    permissions:
+      contents: write    # membuat GitHub Release saat push tag
+      packages: write    # push image ke GHCR
     steps:
       # Ambil source code dari repository
       - name: Checkout code
@@ -25,37 +42,53 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # Build Astro SSR
+      # Build Astro — hasilnya dist/client (aset statis) + dist/server (SSR entry)
       - name: Build Astro
         run: npm run build
 
-      # Setup SSH untuk koneksi ke VPS
-      - name: Setup SSH
-        run: |
-          mkdir -p ~/.ssh
+      # GHCR mewajibkan nama image lowercase
+      - name: Set image name (lowercase)
+        run: echo "IMAGE_NAME=${REGISTRY}/${GITHUB_REPOSITORY,,}" >> "$GITHUB_ENV"
 
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+      # Penamaan versi otomatis:
+      # - push main        -> :latest, :sha-<commit>
+      # - push tag v1.2.3  -> :1.2.3, :1.2, :latest
+      - name: Determine image tags
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.IMAGE_NAME }}
+          tags: |
+            type=raw,value=latest
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=sha,prefix=sha-,enable=${{ github.ref == 'refs/heads/main' }}
 
-          chmod 600 ~/.ssh/id_ed25519
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      # Upload hasil build ke VPS
-      - name: Upload build to server
-        run: |
-          rsync -az --delete \
-          dist \
-          package.json \
-          package-lock.json \
-          ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/opt/iotaru/
+      # Build & push image dengan semua tag dari metadata-action
+      - name: Build and push image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
-      # Install dependency production dan restart service
-      - name: Restart application
-        run: |
-          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
-            cd /opt/iotaru
-
-            npm ci --omit=dev
-
-            sudo systemctl restart iotaru
-          EOF
+      # Riwayat versi: GitHub Release otomatis (changelog dari commit)
+      # hanya dibuat saat push tag v*
+      - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true

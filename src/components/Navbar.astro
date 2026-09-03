@@ -1,4 +1,38 @@
 ---
+// Dropdown items sourced from content collections at build time.
+import { getCollection } from 'astro:content';
+
+const solutions = (await getCollection('solutions')).sort((a, b) =>
+  a.data.title.localeCompare(b.data.title)
+);
+
+const products = (await getCollection('products'))
+  .filter(p => Boolean(p.data.created))
+  .sort((a, b) => new Date(b.data.created ?? 0).getTime() - new Date(a.data.created ?? 0).getTime())
+  .slice(0, 6); // featured in dropdown — full catalog lives on /products
+
+const productCategories = [...new Set(
+  (await getCollection('products')).map(p => p.data.category)
+)].sort();
+
+const allProductsCount = (await getCollection('products')).length;
+
+// Server-side active state: hitung dari URL saat render agar link aktif
+// benar sejak first paint (tanpa blink Home → About/Blog yang disebabkan
+// perbaikan di client via JS).
+const rawPath = Astro.url.pathname;
+const currentPath = rawPath.length > 1 && rawPath.endsWith('/') ? rawPath.slice(0, -1) : rawPath;
+const isActive = (href: string): boolean => {
+  if (href === '/') return currentPath === '/';
+  return currentPath === href || currentPath.startsWith(href + '/');
+};
+
+// Inline SVG path per solution title (stroke icons, 24x24 viewBox).
+const SOLUTION_ICON: Record<string, string> = {
+  'Smart City': 'M12 3v18M3 12h18M5.5 8l-2 8M18.5 8l2 8M8.5 8l-2 8M15.5 8l2 8',
+  'Smart Home': 'M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z',
+  'Smart Office': 'M4 22h16M6 22V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v18M10 7h1m2 0h1m-4 4h1m2 0h1',
+};
 ---
 
 <header class="main-header">
@@ -10,26 +44,95 @@
       </a>
 
       <!-- Desktop Nav -->
-      <nav class="glass-nav-menu">
-        <a href="/" class="glass-nav-link active">
+      <nav class="glass-nav-menu" aria-label="Main navigation">
+        <a href="/" class:list={['glass-nav-link', { active: isActive('/') }]} data-nav-home>
           <span class="glass-nav-link-text">Home</span>
         </a>
-        <a href="/about" class="glass-nav-link">
+        <a href="/about" class:list={['glass-nav-link', { active: isActive('/about') }]}>
           <span class="glass-nav-link-text">About Us</span>
         </a>
-        <a href="/solutions" class="glass-nav-link">
-          <span class="glass-nav-link-text">Solutions</span>
-        </a>
-        <a href="/products" class="glass-nav-link">
-          <span class="glass-nav-link-text">Products</span>
-        </a>
-        <a href="/blog" class="glass-nav-link">
+
+        <!-- Solutions dropdown -->
+        <div class="glass-nav-item has-dropdown">
+          <a href="/solutions" class:list={['glass-nav-link', { active: isActive('/solutions') }]} aria-haspopup="true" aria-expanded="false">
+            <span class="glass-nav-link-text">Solutions</span>
+            <svg class="glass-nav-caret" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </a>
+          <div class="glass-dropdown" role="menu" hidden>
+            <div class="glass-dropdown-body">
+              {solutions.map((s) => (
+                <a href={`/solutions/${s.id}`} class="glass-dropdown-item" role="menuitem">
+                  <span class="glass-dropdown-icon" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d={SOLUTION_ICON[s.data.title] ?? 'M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7z'}></path>
+                    </svg>
+                  </span>
+                  <span class="glass-dropdown-copy">
+                    <span class="glass-dropdown-title">{s.data.title}</span>
+                    <span class="glass-dropdown-desc">{s.data.description.split('—')[0].split('.')[0]}</span>
+                  </span>
+                </a>
+              ))}
+            </div>
+            <a href="/solutions" class="glass-dropdown-footer" role="menuitem">
+              View all solutions
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Products dropdown -->
+        <div class="glass-nav-item has-dropdown">
+          <a href="/products" class:list={['glass-nav-link', { active: isActive('/products') }]} aria-haspopup="true" aria-expanded="false">
+            <span class="glass-nav-link-text">Products</span>
+            <svg class="glass-nav-caret" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </a>
+          <div class="glass-dropdown glass-dropdown-wide" role="menu" hidden>
+            <div class="glass-dropdown-body glass-dropdown-grid">
+              {products.map((p) => (
+                <a href={`/products/${p.id}`} class="glass-dropdown-item" role="menuitem">
+                  <span class="glass-dropdown-icon" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                      <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                    </svg>
+                  </span>
+                  <span class="glass-dropdown-copy">
+                    <span class="glass-dropdown-title">{p.data.title.replace(/^IOTARU\s/, '')}</span>
+                    <span class="glass-dropdown-desc">{p.data.category}</span>
+                  </span>
+                </a>
+              ))}
+            </div>
+            <div class="glass-dropdown-cats" aria-hidden="true">
+              {productCategories.map((cat) => (
+                <span class="glass-dropdown-cat-chip">{cat}</span>
+              ))}
+            </div>
+            <a href="/products" class="glass-dropdown-footer" role="menuitem">
+              View all {allProductsCount} products
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <a href="/blog" class:list={['glass-nav-link', { active: isActive('/blog') }]}>
           <span class="glass-nav-link-text">Blog</span>
         </a>
       </nav>
 
       <!-- CTA -->
-      <a href="#contact" class="glass-nav-cta">
+      <a href="/contact" class="glass-nav-cta">
         <span>Contact Us</span>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -65,31 +168,62 @@
   </div>
 
   <nav class="glass-mobile-nav">
-    <a href="/" class="glass-mobile-link">
+    <a href="/" class:list={['glass-mobile-link', { active: isActive('/') }]}>
       <span class="glass-mobile-icon">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
       </span>
       <span class="glass-mobile-text">Home</span>
     </a>
-    <a href="/about" class="glass-mobile-link">
+    <a href="/about" class:list={['glass-mobile-link', { active: isActive('/about') }]}>
       <span class="glass-mobile-icon">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
       </span>
       <span class="glass-mobile-text">About Us</span>
     </a>
-    <a href="/solutions" class="glass-mobile-link">
-      <span class="glass-mobile-icon">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7z"></path><line x1="10" y1="22" x2="14" y2="22"></line></svg>
-      </span>
-      <span class="glass-mobile-text">Solutions</span>
-    </a>
-    <a href="/products" class="glass-mobile-link">
-      <span class="glass-mobile-icon">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-      </span>
-      <span class="glass-mobile-text">Products</span>
-    </a>
-    <a href="/blog" class="glass-mobile-link">
+
+    <!-- Solutions accordion -->
+    <div class="glass-mobile-group">
+      <button class:list={['glass-mobile-link', 'glass-mobile-group-btn', { active: isActive('/solutions') }]} type="button" aria-expanded="false" data-submenu-toggle="submenu-solutions">
+        <span class="glass-mobile-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7z"></path><line x1="10" y1="22" x2="14" y2="22"></line></svg>
+        </span>
+        <span class="glass-mobile-text">Solutions</span>
+        <svg class="glass-mobile-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+      <div class="glass-mobile-submenu" id="submenu-solutions" hidden>
+        <div class="glass-mobile-submenu-inner">
+          <a href="/solutions" class="glass-mobile-sublink">All Solutions</a>
+          {solutions.map((s) => (
+            <a href={`/solutions/${s.id}`} class="glass-mobile-sublink">{s.data.title}</a>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- Products accordion -->
+    <div class="glass-mobile-group">
+      <button class:list={['glass-mobile-link', 'glass-mobile-group-btn', { active: isActive('/products') }]} type="button" aria-expanded="false" data-submenu-toggle="submenu-products">
+        <span class="glass-mobile-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+        </span>
+        <span class="glass-mobile-text">Products</span>
+        <svg class="glass-mobile-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+      <div class="glass-mobile-submenu" id="submenu-products" hidden>
+        <div class="glass-mobile-submenu-inner">
+          <a href="/products" class="glass-mobile-sublink">All Products</a>
+          {productCategories.map((cat) => (
+            <a href={`/products/?category=${encodeURIComponent(cat)}`} class="glass-mobile-sublink">{cat}</a>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <a href="/blog" class:list={['glass-mobile-link', { active: isActive('/blog') }]}>
       <span class="glass-mobile-icon">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
       </span>
@@ -98,7 +232,7 @@
   </nav>
 
   <div class="glass-mobile-footer">
-    <a href="#contact" class="glass-mobile-cta">
+    <a href="/contact" class="glass-mobile-cta">
       <span>Contact Us</span>
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
     </a>
@@ -119,11 +253,11 @@
 
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+  function initNavbar() {
     var nav = document.getElementById('glassNav');
-    var toggle = document.getElementById('glassNavToggle');
-    var mobileMenu = document.getElementById('glassMobileMenu');
-    var overlay = document.getElementById('glassMobileOverlay');
+    var toggle = document.getElementById('glassNavToggle') as HTMLElement | null;
+    var mobileMenu = document.getElementById('glassMobileMenu') as HTMLElement | null;
+    var overlay = document.getElementById('glassMobileOverlay') as HTMLElement | null;
     var closeBtn = document.getElementById('glassMobileClose');
     var mobileLinks = document.querySelectorAll('.glass-mobile-link');
 
@@ -140,14 +274,18 @@
 
     // Mobile menu
     function openMobile() {
+      if (!toggle || !mobileMenu || !overlay) return;
       toggle.classList.add('active');
+      toggle.setAttribute('aria-expanded', 'true');
       mobileMenu.classList.add('active');
       overlay.classList.add('active');
       document.body.style.overflow = 'hidden';
     }
 
     function closeMobile() {
+      if (!toggle || !mobileMenu || !overlay) return;
       toggle.classList.remove('active');
+      toggle.setAttribute('aria-expanded', 'false');
       mobileMenu.classList.remove('active');
       overlay.classList.remove('active');
       setTimeout(function() {
@@ -157,26 +295,220 @@
 
     if (toggle) {
       toggle.addEventListener('click', function() {
-        mobileMenu.classList.contains('active') ? closeMobile() : openMobile();
+        if (mobileMenu && mobileMenu.classList.contains('active')) {
+          closeMobile();
+        } else {
+          openMobile();
+        }
       });
     }
 
     if (closeBtn) closeBtn.addEventListener('click', closeMobile);
     if (overlay) overlay.addEventListener('click', closeMobile);
-    mobileLinks.forEach(function(link) { link.addEventListener('click', closeMobile); });
-
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && mobileMenu.classList.contains('active')) closeMobile();
-    });
-
-    // Set active nav link based on current path
-    var currentPath = window.location.pathname;
-    document.querySelectorAll('.glass-nav-link').forEach(function(link) {
-      link.classList.remove('active');
-      var href = link.getAttribute('href');
-      if (href === currentPath || (currentPath === '/' && href === '/')) {
-        link.classList.add('active');
+    mobileLinks.forEach(function(link) {
+      // Accordion toggle buttons should NOT close the menu on click.
+      if (!link.classList.contains('glass-mobile-group-btn')) {
+        link.addEventListener('click', closeMobile);
       }
     });
-  });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && mobileMenu && mobileMenu.classList.contains('active')) closeMobile();
+    });
+
+    // Mobile accordions (single-open)
+    document.querySelectorAll('[data-submenu-toggle]').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var submenuId = btn.getAttribute('data-submenu-toggle');
+        if (!submenuId) return;
+        var submenu = document.getElementById(submenuId);
+        var isOpen = btn.classList.contains('open');
+        // Close other groups first
+        document.querySelectorAll('.glass-mobile-group-btn.open').forEach(function(other) {
+          if (other !== btn) {
+            other.classList.remove('open');
+            other.setAttribute('aria-expanded', 'false');
+            var otherId = other.getAttribute('data-submenu-toggle');
+            var otherSub = otherId ? document.getElementById(otherId) : null;
+            if (otherSub) otherSub.style.maxHeight = '0px';
+          }
+        });
+        btn.classList.toggle('open', !isOpen);
+        btn.setAttribute('aria-expanded', String(!isOpen));
+        if (submenu) {
+          // Rilis `hidden` saat pertama kali dibuka (anti-FOUC; custom.css
+          // dijamin sudah aktif karena user baru bisa berinteraksi sekarang)
+          submenu.removeAttribute('hidden');
+          submenu.style.maxHeight = isOpen ? '0px' : submenu.scrollHeight + 'px';
+        }
+      });
+    });
+
+    // Link aktif sudah disetel server-side (isActive di frontmatter) —
+    // tidak perlu JS; tidak ada lagi blink Home → halaman tujuan.
+
+    // Keep aria-expanded in sync with the CSS hover/focus dropdown state
+    document.querySelectorAll<HTMLElement>('.glass-nav-item.has-dropdown').forEach(function(item) {
+      const trigger = item.querySelector<HTMLElement>('.glass-nav-link');
+      if (!trigger) return;
+      item.addEventListener('mouseenter', function() {
+        trigger.setAttribute('aria-expanded', 'true');
+      });
+      item.addEventListener('mouseleave', function() {
+        trigger.setAttribute('aria-expanded', 'false');
+      });
+      item.addEventListener('focusin', function() {
+        trigger.setAttribute('aria-expanded', 'true');
+      });
+      item.addEventListener('focusout', function() {
+        trigger.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    // --- Desktop dropdowns (portal ke <body>) ---
+    // Panel dipindah ke body agar backdrop-filter (frosted glass) bekerja:
+    // di dalam .glass-nav (yang punya backdrop-filter sendiri), blur descendant
+    // mati karena ancestor membentuk "backdrop root".
+    var isDesktop = function() { return window.innerWidth >= 992; };
+    // Perangkat dengan pointer hover (mouse/trackpad) — bukan layar sentuh.
+    // Di desktop klik langsung navigasi; di perangkat sentuh tap toggle dropdown.
+    var hoverCapable = function() { return window.matchMedia('(hover: hover)').matches; };
+
+    // FOUC guard: custom.css dimuat async (trik media="print"), jadi rule
+    // penyembunyi .glass-dropdown/.glass-mobile-submenu baru berlaku setelah
+    // ia aktif. Panel server-rendered membawa atribut `hidden` (UA display:none
+    // sejak paint pertama) dan hanya dilepas di sini, saat custom.css siap.
+    // PENTING: jangan pernah lepas hidden sebelum CSS aktif — itu justru
+    // memicu flash unstyled pada jaringan lambat.
+    function cssReady(cb: () => void) {
+      const link = document.querySelector<HTMLLinkElement>('link[href*="custom.css"]');
+      if (!link) { cb(); return; }
+      if (link.media === 'all') { cb(); return; }
+      let done = false;
+      const fire = () => {
+        if (done) return;
+        done = true;
+        clearInterval(poll);
+        cb();
+      };
+      // Event load link = stylesheet selesai dimuat (lalu inline onload menukar media)
+      link.addEventListener('load', fire, { once: true });
+      // Polling cadangan untuk race condition (mis. onload terlewat)
+      const poll = setInterval(function check() {
+        if (link.media === 'all') fire();
+      }, 60);
+    }
+
+    const dropdownItems = Array.from(document.querySelectorAll<HTMLElement>('.glass-nav-item.has-dropdown'));
+    const closeTimers = new WeakMap();
+    const panelByItem = new WeakMap(); // panel sudah di-portal ke body, simpan referensi
+
+    dropdownItems.forEach(function(item: HTMLElement) {
+      const triggerEl = item.querySelector<HTMLElement>('.glass-nav-link');
+      const panelEl = item.querySelector<HTMLElement>('.glass-dropdown');
+      if (!triggerEl || !panelEl) return;
+      const trigger: HTMLElement = triggerEl;
+      const panel: HTMLElement = panelEl;
+
+      // Portal: pindahkan panel ke body sekali di awal
+      if (panel.parentElement !== document.body) {
+        document.body.appendChild(panel);
+        panel.setAttribute('data-owner', trigger.getAttribute('href') || '');
+      }
+      panelByItem.set(item, panel);
+
+      // Rilis `hidden` hanya setelah custom.css aktif (anti-FOUC)
+      cssReady(function() { panel.removeAttribute('hidden'); });
+
+      function place() {
+        var r = trigger.getBoundingClientRect();
+        panel.style.left = (r.left + r.width / 2) + 'px';
+        panel.style.top = (r.bottom + 14) + 'px';
+      }
+
+      function open() {
+        if (!isDesktop()) return;
+        // tutup dropdown lain
+        dropdownItems.forEach(function(other) {
+          if (other !== item) closeNow(other);
+        });
+        place();
+        panel.classList.add('open');
+        item.classList.add('open');
+        trigger.setAttribute('aria-expanded', 'true');
+      }
+
+      function close() {
+        var t = setTimeout(function() {
+          panel.classList.remove('open');
+          item.classList.remove('open');
+          trigger.setAttribute('aria-expanded', 'false');
+        }, 120); // delay kecil: izinkan mouse berpindah ke panel
+        closeTimers.set(item, t);
+      }
+
+      function closeNow(target: HTMLElement) {
+        var t = closeTimers.get(target);
+        if (t) { clearTimeout(t); closeTimers.delete(target); }
+        var p = panelByItem.get(target);
+        var tr = target.querySelector('.glass-nav-link');
+        if (p) p.classList.remove('open');
+        if (target.classList) target.classList.remove('open');
+        if (tr) tr.setAttribute('aria-expanded', 'false');
+      }
+
+      function cancelClose() {
+        var t = closeTimers.get(item);
+        if (t) { clearTimeout(t); closeTimers.delete(item); }
+      }
+
+      item.addEventListener('mouseenter', open);
+      item.addEventListener('mouseleave', close);
+      // Hover ke panel sendiri (sudah di body) tetap menjaga terbuka
+      panel.addEventListener('mouseenter', cancelClose);
+      panel.addEventListener('mouseleave', close.bind(item));
+
+      // Klik pada trigger: di desktop (pointer hover) langsung navigasi ke
+      // halaman induk (mis. /solutions) — dropdown dibuka via hover/fokus.
+      // Di perangkat sentuh (tanpa hover), tap membuka/menutup dropdown.
+      trigger.addEventListener('click', function(e) {
+        if (hoverCapable()) return; // desktop: biarkan default (navigasi)
+        e.preventDefault(); // sentuh: toggle dropdown, jangan navigasi
+        panel.classList.contains('open') ? closeNow(item) : open();
+      });
+      // Fokus (Tab) hanya membuka dropdown di perangkat ber-hover; di layar
+      // sentuh focus dari tap akan bentrok dengan handler click toggle.
+      trigger.addEventListener('focus', function() {
+        if (hoverCapable()) open();
+      });
+      trigger.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeNow(item);
+      });
+      panel.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          closeNow(item);
+          trigger.focus();
+        }
+      });
+      item.addEventListener('focusout', function(e) {
+        const fe = e as FocusEvent;
+        const to = fe.relatedTarget as Node | null;
+        if (!item.contains(to) && !panel.contains(to)) closeNow(item);
+      });
+
+      // Reposisi saat resize/scroll (panel fixed)
+      window.addEventListener('resize', function() {
+        if (panel.classList.contains('open')) place();
+      });
+      window.addEventListener('scroll', function() {
+        if (panel.classList.contains('open')) place();
+      }, { passive: true });
+    });
+  }
+
+  // View Transitions: DOMContentLoaded tidak ter-fire pada navigasi
+  // client-side; astro:page-load ter-fire pada load awal DAN setelah
+  // setiap swap. Navbar aktif sudah disetel server-side sehingga init
+  // ulang tiap navigasi aman (elemen listener per-halaman dibuat baru).
+  document.addEventListener('astro:page-load', initNavbar);
 </script>

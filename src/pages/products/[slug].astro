@@ -243,7 +243,11 @@ const allImages = [mainImage, ...galleryImages];
 </MainLayout>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+  function initGallery() {
+    // Teardown: interval autoplay halaman sebelumnya tetap hidup lintas swap
+    // (window tidak di-replace), hentikan sebelum init ulang.
+    if ((window as any).__galleryAutoplay) clearInterval((window as any).__galleryAutoplay);
+
     const slidesContainer = document.getElementById('gallerySlidesContainer');
     const slides = document.querySelectorAll('.gallery-main-slide');
     const thumbSlides = document.querySelectorAll('.thumb-slide');
@@ -313,10 +317,16 @@ const allImages = [mainImage, ...galleryImages];
       });
     });
 
-    document.addEventListener('keydown', (e) => {
+    // Listener document bertahan lintas swap → dedupe via registry agar
+    // tidak menumpuk setiap kali initGallery berjalan.
+    if ((window as any).__galleryKeydown) {
+      document.removeEventListener('keydown', (window as any).__galleryKeydown);
+    }
+    (window as any).__galleryKeydown = (e: KeyboardEvent) => {
       if (e.key === 'ArrowLeft') { prevSlide(); resetAutoPlay(); }
       if (e.key === 'ArrowRight') { nextSlide(); resetAutoPlay(); }
-    });
+    };
+    document.addEventListener('keydown', (window as any).__galleryKeydown);
 
     let startX = 0;
     let isDragging = false;
@@ -342,7 +352,8 @@ const allImages = [mainImage, ...galleryImages];
     });
 
     function startAutoPlay() {
-      autoPlayInterval = setInterval(nextSlide, 5000);
+      (window as any).__galleryAutoplay = setInterval(nextSlide, 5000);
+      autoPlayInterval = (window as any).__galleryAutoplay;
     }
 
     function resetAutoPlay() {
@@ -429,13 +440,6 @@ const allImages = [mainImage, ...galleryImages];
       });
     });
 
-    document.addEventListener('keydown', (e) => {
-      if (!lightboxOverlay.classList.contains('active')) return;
-      if (e.key === 'Escape') closeLightbox();
-      if (e.key === 'ArrowLeft') lightboxPrev();
-      if (e.key === 'ArrowRight') lightboxNext();
-    });
-
     let lightboxStartX = 0;
     let lightboxSwiping = false;
 
@@ -467,12 +471,33 @@ const allImages = [mainImage, ...galleryImages];
       });
     }
 
-    window.addEventListener('popstate', (e) => {
+    // Dedupe: listener document (keydown lightbox) + window (popstate)
+    // bertahan lintas swap, ganti referensi lamanya sebelum pasang baru.
+    if ((window as any).__galleryLightboxKeydown) {
+      document.removeEventListener('keydown', (window as any).__galleryLightboxKeydown);
+    }
+    (window as any).__galleryLightboxKeydown = (e: KeyboardEvent) => {
+      if (!lightboxOverlay.classList.contains('active')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') lightboxPrev();
+      if (e.key === 'ArrowRight') lightboxNext();
+    };
+    document.addEventListener('keydown', (window as any).__galleryLightboxKeydown);
+
+    if ((window as any).__galleryPopstate) {
+      window.removeEventListener('popstate', (window as any).__galleryPopstate);
+    }
+    (window as any).__galleryPopstate = () => {
       if (lightboxOpen) {
         closeLightbox();
       }
-    });
-  });
+    };
+    window.addEventListener('popstate', (window as any).__galleryPopstate);
+  }
+
+  // View Transitions: DOMContentLoaded tidak ter-fire pada navigasi
+  // client-side; astro:page-load ter-fire pada load awal DAN setelah swap.
+  document.addEventListener('astro:page-load', initGallery);
 </script>
 
 <style>

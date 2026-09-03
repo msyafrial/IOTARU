@@ -1,3 +1,20 @@
+function initSite() {
+    // === TEARDOWN: bersihkan state global dari halaman sebelumnya ===
+    // Saat navigasi View Transitions, window & document TIDAK di-replace
+    // (hanya DOM halamannya), jadi ScrollTrigger/Swiper/WOW lama yang masih
+    // menunjuk elemen mati harus dimatikan sebelum init ulang pada DOM baru.
+    if (window.ScrollTrigger) {
+        ScrollTrigger.getAll().forEach(function (t) { t.kill(); });
+    }
+    window.__iotaruSwipers = window.__iotaruSwipers || [];
+    window.__iotaruSwipers.forEach(function (s) {
+        try { s.destroy(true, true); } catch (e) { /* noop */ }
+    });
+    window.__iotaruSwipers = [];
+    if (window.__iotaruWow && typeof window.__iotaruWow.reset === 'function') {
+        try { window.__iotaruWow.reset(); } catch (e) { /* noop */ }
+    }
+
 (function ($) {
     "use strict";
 
@@ -6,8 +23,10 @@
 
     /* Preloader is now managed by Preloader.astro */
 
-    /* Sticky Header */
-    if ($('.active-sticky-header').length) {
+    /* Sticky Header — dibind sekali saja (window persisten lintas swap);
+       handler membaca ulang DOM header saat event berjalan */
+    if (!window.__iotaruStickyBound) {
+        window.__iotaruStickyBound = true;
         $window.on('resize', function () {
             setHeaderHeight();
         });
@@ -26,18 +45,21 @@
     }
 
     if ($("a[href='#top']").length) {
-        $(document).on("click", "a[href='#top']", function () {
-            $("html, body").animate({
-                scrollTop: 0
-            }, "slow");
-            return false;
-        });
+        // Delegated di document (persisten lintas swap) → bind sekali saja.
+        if (!window.__iotaruTopBound) {
+            window.__iotaruTopBound = true;
+            $(document).on("click", "a[href='#top']", function () {
+                $("html, body").animate({
+                    scrollTop: 0
+                }, "slow");
+                return false;
+            });
+        }
     }
 
     /* testimonial Slider JS */
     if ($('.testimonial-slider').length) {
-        const testimonial_slider = new Swiper('.testimonial-slider .swiper', {
-            slidesPerView: 1,
+        const testimonial_slider = new Swiper('.testimonial-slider .swiper', {            slidesPerView: 1,
             speed: 1000,
             spaceBetween: 30,
             loop: true,
@@ -64,6 +86,7 @@
                 }
             }
         });
+        window.__iotaruSwipers.push(testimonial_slider);
     }
 
     /* Hero Company Support Slider Prime JS */
@@ -88,6 +111,7 @@
                 },
             }
         });
+        window.__iotaruSwipers.push(hero_company_supports_slider_prime);
     }
 
     /* testimonial Slider Prime JS */
@@ -109,6 +133,7 @@
                 },
             }
         });
+        window.__iotaruSwipers.push(testimonial_slider_prime);
     }
 
     /* testimonial Slider Royal JS */
@@ -135,6 +160,7 @@
 
             }
         });
+        window.__iotaruSwipers.push(testimonial_slider_royal);
     }
 
     /* Skill Bar */
@@ -347,7 +373,14 @@
     }
 
     /* Animated Wow Js */
-    new WOW().init();
+    var wowInstance = new WOW({
+        // Elemen .wow yang sudah dianimasikan di halaman sebelumnya tetap
+        // 'animated' — reset flag sebelum init di halaman baru.
+        mobile: true,
+        callback: function () { }
+    });
+    wowInstance.init();
+    window.__iotaruWow = wowInstance;
 
     /* Our Pricing Tab JS Start  */
     if ($('.our-pricing-box').length) {
@@ -386,3 +419,28 @@
     /* About US Item List End */
 
 })(jQuery);
+}
+
+// View Transitions: astro:page-load ter-fire pada load awal DAN setelah
+// setiap navigasi client-side (DOMContentLoaded tidak ter-fire lagi).
+// JANGAN memanggil initSite() langsung di sini — itu akan membuat Swiper
+// ganda saat load pertama karena event juga ter-fire saat load awal.
+// Guard __iotaruInitDone: loader (MainLayout) memanggil initSite langsung
+// setelah semua script selesai dimuat (cold-load fix) — tanpa guard ini,
+// astro:page-load berikutnya akan double-init di halaman yang sama.
+document.addEventListener('astro:page-load', function () {
+    if (window.__iotaruInitDone) return;
+    window.__iotaruInitDone = true;
+    initSite();
+});
+
+// KUNJUNGAN PERTAMA (cache dingin / jaringan lambat): script ini dieksekusi
+// SETELAH astro:page-load sudah ter-fire (loader berat menunggu preloader:done),
+// sehingga listener di atas TIDAK akan ter-panggil. Loader MainLayout memanggil
+// initSite manual via window.__iotaruInitSite setelah rantai script selesai.
+// Fallback ini untuk skenario di luar loader (mis. eksekusi manual).
+if (window.__iotaruPageLoadFired && !window.__iotaruInitDone) {
+    window.__iotaruInitDone = true;
+    initSite();
+}
+window.__iotaruInitSite = initSite;

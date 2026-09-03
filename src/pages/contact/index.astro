@@ -1,103 +1,189 @@
 ---
+import { Image } from 'astro:assets';
 import MainLayout from '../../layouts/MainLayout.astro';
 import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
+
+/* Ikon teknologi (sample "brand strip") */
+import stImg from '../../assets/stack/st.png';
+import espImg from '../../assets/stack/esp32.png';
+import freertosImg from '../../assets/stack/freeRTOS.webp';
+import mqttImg from '../../assets/stack/mqtt.png';
+import loraImg from '../../assets/stack/lora.png';
+import bleImg from '../../assets/stack/ble.png';
+import ebyteImg from '../../assets/stack/ebyte.png';
+import simcomImg from '../../assets/stack/simcom.png';
+
+const stackLogos = [
+  { src: stImg, alt: 'STM32' },
+  { src: espImg, alt: 'ESP32' },
+  { src: freertosImg, alt: 'FreeRTOS' },
+  { src: mqttImg, alt: 'MQTT' },
+  { src: loraImg, alt: 'LoRa' },
+  { src: bleImg, alt: 'BLE' },
+  { src: ebyteImg, alt: 'Ebyte' },
+  { src: simcomImg, alt: 'SIMCom' },
+];
 ---
 
 <MainLayout title="Contact Us">
   <Navbar />
 
-  <!-- Page Hero Section -->
-  <section class="hero bg-section dark-section" style="background-image: url(/images/hero-bg-image-6.webp); background-size: cover; background-position: center; background-repeat: no-repeat; min-height: 400px; display: flex; align-items: center;">
+  <section class="hero bg-section dark-section contact-hero">
     <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="section-title section-title-center" style="padding-top: 120px;">
-            <h2 class="text-anime-style-3" data-cursor="-opaque">Contact Us</h2>
-            <p class="wow fadeInUp" data-wow-delay="0.2s" style="margin-top: 15px; color: rgba(255,255,255,0.8); font-size: 1.1em;">
-              Get in touch with our team for demos, partnerships, or technical support.
-            </p>
+      <div class="contact-hero-grid">
+        <div class="contact-hero-copy">
+          <h2 class="text-anime-style-3" data-cursor="-opaque">Lihat sistem IOTARU bekerja — langsung di lingkungan Anda</h2>
+          <p class="contact-hero-sub wow fadeInUp" data-wow-delay="0.2s">Dalam 30 menit demo, tim kami menunjukkan monitoring real-time, integrasi sensor, dan dashboard siap pakai untuk industri Anda.</p>
+          <div class="contact-hero-brands wow fadeInUp" data-wow-delay="0.3s">
+            <p class="brands-label">Teknologi yang kami andalkan</p>
+            <div class="brands-row">
+              {stackLogos.map((logo) => (
+                <span class="brand-chip"><Image src={logo.src} alt={logo.alt} width={96} /></span>
+              ))}
+            </div>
+          </div>
+          <ul class="contact-hero-trust wow fadeInUp" data-wow-delay="0.4s">
+            <li><strong>31+</strong> Produk IoT</li>
+            <li><strong>3</strong> Solusi Industri</li>
+            <li><strong>24/7</strong> Monitoring</li>
+          </ul>
+
+          <!-- Info kontak: pindah ke kolom kiri agar masuk first view -->
+          <div class="contact-hero-info wow fadeInUp" data-wow-delay="0.5s">
+            <a href="mailto:syafrial@iotaru.com" class="info-item">
+              <span class="info-icon"><i class="fa-solid fa-envelope" aria-hidden="true"></i></span>
+              <span class="info-text"><small>Email</small>syafrial@iotaru.com</span>
+            </a>
+            <a href="https://wa.me/6283819510439" target="_blank" rel="noopener" class="info-item">
+              <span class="info-icon"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></span>
+              <span class="info-text"><small>WhatsApp</small>+62 838-1951-0439</span>
+            </a>
+            <a href="#contact-map" class="info-item">
+              <span class="info-icon"><i class="fa-solid fa-location-dot" aria-hidden="true"></i></span>
+              <span class="info-text"><small>Address</small>Kalisari, Pasar Rebo, Jakarta Timur</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="contact-hero-form wow fadeInUp" id="demo-form" data-wow-delay="0.25s">
+          <div class="form-card">
+            <div class="form-card-head">
+              <span class="form-card-icon" aria-hidden="true"><i class="fa-solid fa-calendar-check"></i></span>
+              <div>
+                <h3>Book a Free Demo</h3>
+                <p>Isi formulir — tim kami menghubungi Anda dalam 1×24 jam kerja.</p>
+              </div>
+            </div>
+            <!-- novalidate: validasi custom modern (inline errors + alert glass)
+                 menggantikan bubble native browser -->
+            <form id="contactForm" novalidate>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="name">Nama</label>
+                  <div class="input-wrap">
+                    <span class="input-icon" aria-hidden="true"><i class="fa-solid fa-user"></i></span>
+                    <input type="text" id="name" name="name" class="form-control" placeholder="John Doe" required maxlength="100" autocomplete="name">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <div class="input-wrap">
+                    <span class="input-icon" aria-hidden="true"><i class="fa-solid fa-envelope"></i></span>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="hello@example.com" required maxlength="254" autocomplete="email" inputmode="email">
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="whatsapp">WhatsApp</label>
+                  <div class="input-wrap">
+                    <span class="input-icon" aria-hidden="true"><i class="fa-brands fa-whatsapp"></i></span>
+                    <input type="tel" id="whatsapp" name="whatsapp" class="form-control" placeholder="+62 812-3456-7890" maxlength="20" autocomplete="tel" inputmode="tel">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="subject">Saya tertarik pada</label>
+                  <div class="custom-select" id="interestSelect">
+                    <button type="button" class="custom-select-btn" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="interestLabel">
+                      <span class="custom-select-icon" aria-hidden="true"><i class="fa-solid fa-bullseye"></i></span>
+                      <span class="custom-select-value">Demo Produk</span>
+                      <svg class="custom-select-caret" width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden="true">
+                        <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </button>
+                    <ul class="custom-select-list" role="listbox" aria-labelledby="interestLabel" hidden>
+                      <li role="option" aria-selected="true" data-value="Demo Produk" class="is-selected">
+                        <i class="fa-solid fa-display" aria-hidden="true"></i>
+                        <span class="opt-copy"><strong>Demo Produk</strong><small>Lihat langsung perangkat &amp; dashboard</small></span>
+                        <i class="fa-solid fa-check opt-check" aria-hidden="true"></i>
+                      </li>
+                      <li role="option" data-value="Solusi Industri">
+                        <i class="fa-solid fa-industry" aria-hidden="true"></i>
+                        <span class="opt-copy"><strong>Solusi Industri</strong><small>Smart city, home &amp; office</small></span>
+                        <i class="fa-solid fa-check opt-check" aria-hidden="true"></i>
+                      </li>
+                      <li role="option" data-value="Kemitraan">
+                        <i class="fa-solid fa-handshake" aria-hidden="true"></i>
+                        <span class="opt-copy"><strong>Kemitraan</strong><small>Reseller, distributor, integrator</small></span>
+                        <i class="fa-solid fa-check opt-check" aria-hidden="true"></i>
+                      </li>
+                      <li role="option" data-value="Dukungan Teknis">
+                        <i class="fa-solid fa-headset" aria-hidden="true"></i>
+                        <span class="opt-copy"><strong>Dukungan Teknis</strong><small>Bantuan produk &amp; instalasi</small></span>
+                        <i class="fa-solid fa-check opt-check" aria-hidden="true"></i>
+                      </li>
+                      <li role="option" data-value="Lainnya">
+                        <i class="fa-solid fa-comments" aria-hidden="true"></i>
+                        <span class="opt-copy"><strong>Lainnya</strong><small>Diskusi kebutuhan spesifik</small></span>
+                        <i class="fa-solid fa-check opt-check" aria-hidden="true"></i>
+                      </li>
+                    </ul>
+                    <input type="hidden" name="subject" value="Demo Produk">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="message">Pesan</label>
+                <div class="input-wrap is-textarea">
+                  <span class="input-icon" aria-hidden="true"><i class="fa-solid fa-comment-dots"></i></span>
+                  <textarea id="message" name="message" class="form-control" rows="3" placeholder="Ceritakan kebutuhan proyek Anda" required maxlength="2000" spellcheck="true"></textarea>
+                </div>
+              </div>
+              <button type="submit" class="contact-submit">
+                <span class="button-glow" aria-hidden="true"></span>
+                <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
+                <span>Book My Demo</span>
+              </button>
+              <p id="msgSubmit" role="status" aria-live="polite"></p>
+              <p class="form-note"><i class="fa-solid fa-lock" aria-hidden="true"></i> Data Anda aman &amp; hanya digunakan untuk keperluan demo.</p>
+            </form>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Contact Section -->
-  <section class="key-features bg-section">
+  <!-- Peta lokasi (Google Maps embed) -->
+  <section class="contact-map-section" id="contact-map" aria-label="Lokasi kantor IOTARU">
     <div class="container">
-      <div class="row">
-        <div class="col-lg-8">
-          <div class="contact-form-box wow fadeInUp">
-            <h3>Send us a message</h3>
-            <form id="contactForm">
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="name">Name</label>
-                  <input type="text" id="name" name="name" class="form-control" placeholder="Your name" required maxlength="100">
-                </div>
-                <div class="form-group">
-                  <label for="email">Email</label>
-                  <input type="email" id="email" name="email" class="form-control" placeholder="Your email" required maxlength="254">
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="subject">Subject</label>
-                  <input type="text" id="subject" name="subject" class="form-control" placeholder="Subject" required maxlength="200">
-              </div>
-              <div class="form-group">
-                <label for="message">Message</label>
-                  <textarea id="message" name="message" class="form-control" rows="5" placeholder="Your message" required maxlength="2000"></textarea>
-              </div>
-              <button type="submit" class="btn-default btn-highlighted">Send Message</button>
-            </form>
+      <div class="contact-map-card wow fadeInUp">
+        <div class="map-head">
+          <span class="map-head-icon" aria-hidden="true"><i class="fa-solid fa-location-dot"></i></span>
+          <div class="map-head-copy">
+            <h3>Kunjungi Kami</h3>
+            <p>Jalan Intisari Raya, RT.2/RW.9, Kalisari, Pasar Rebo, Kota Jakarta Timur, DKI Jakarta, ID 13780</p>
           </div>
+          <a href="https://www.google.com/maps/search/?api=1&query=Jalan+Intisari+Raya+Kalisari+Pasar+Rebo+Jakarta+Timur" target="_blank" rel="noopener" class="map-directions">
+            Petunjuk Arah <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+          </a>
         </div>
-
-        <div class="col-lg-4">
-          <div class="contact-info-box wow fadeInUp" data-wow-delay="0.2s">
-            <h3>Contact Information</h3>
-            
-            <div class="contact-info-item">
-              <div class="icon-box">
-                <i class="fa-solid fa-envelope"></i>
-              </div>
-              <div class="contact-info-content">
-                <h4>Email</h4>
-                <a href="mailto:syafrial@example.com">syafrial@example.com</a>
-              </div>
-            </div>
-
-            <div class="contact-info-item">
-              <div class="icon-box">
-                <i class="fa-solid fa-phone"></i>
-              </div>
-              <div class="contact-info-content">
-                <h4>Phone</h4>
-                <a href="tel:+6283819510439">+62 838-1951-0439</a>
-              </div>
-            </div>
-
-            <div class="contact-info-item">
-              <div class="icon-box">
-                <i class="fa-brands fa-whatsapp"></i>
-              </div>
-              <div class="contact-info-content">
-                <h4>WhatsApp</h4>
-                <a href="https://wa.me/6283819510439">+62 838-1951-0439</a>
-              </div>
-            </div>
-
-            <div class="contact-info-item">
-              <div class="icon-box">
-                <i class="fa-solid fa-location-dot"></i>
-              </div>
-              <div class="contact-info-content">
-                <h4>Address</h4>
-                <p>Indonesia</p>
-              </div>
-            </div>
-          </div>
+        <div class="map-frame">
+          <iframe
+            src="https://www.google.com/maps?q=Jalan%20Intisari%20Raya%2C%20Kalisari%2C%20Pasar%20Rebo%2C%20Kota%20Jakarta%20Timur&output=embed"
+            width="100%" height="100%" style="border:0;" allowfullscreen
+            loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            title="Peta lokasi kantor IOTARU — Jalan Intisari Raya, Kalisari, Pasar Rebo, Jakarta Timur"></iframe>
         </div>
       </div>
     </div>
@@ -107,153 +193,1252 @@ import Footer from '../../components/Footer.astro';
 </MainLayout>
 
 <style>
-  .contact-form-box {
-    background-color: var(--white-color);
-    border-radius: 20px;
-    padding: 50px;
+/* ==========================================================
+   CONTACT PAGE — hero konversi: copy + form demo glass di
+   first view. Aturan: 8pt-grid, tap ≥48px, input 16px
+   (anti iOS-zoom), focus ring, CTA full-width mobile.
+   ========================================================== */
+
+/* ---------- HERO ---------- */
+.hero.contact-hero {
+  background-image: url(/images/hero-bg-image-6.webp);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 140px 0 80px;
+  margin-top: 20px;
+}
+
+/* Tanpa overlay gelap — bg image dipertahankan apa adanya.
+   Keterbacaan dicapai lewat foreground: text-shadow pada teks
+   dan chip putih pada logo (bukan dengan menggelapkan bg). */
+
+.contact-hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 480px;
+  column-gap: 64px;
+  align-items: start;
+}
+
+/* ---------- COPY ---------- */
+/* Teks diberi shadow halus agar terbaca tanpa overlay gelap */
+.hero.contact-hero h2 {
+  color: var(--white-color);
+  font-size: 44px;
+  line-height: 1.18;
+  margin-bottom: 0;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.55), 0 1px 3px rgba(0,0,0,0.4);
+}
+
+.contact-hero .contact-hero-sub {
+  margin: 18px 0 0;
+  color: rgba(255,255,255,0.9);
+  font-size: 1.05em;
+  line-height: 1.65;
+  max-width: 520px;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5), 0 1px 2px rgba(0,0,0,0.3);
+}
+
+/* Brand strip — pindah ke kolom kiri, terlihat di first view */
+.contact-hero-brands {
+  margin-top: 24px;
+}
+
+.brands-label {
+  color: rgba(255,255,255,0.75);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+.brands-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Chip putih solid — logo tampil warna asli (hak cipta brand) */
+.brand-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  min-width: 88px;
+  padding: 10px 18px;
+  background: var(--white-color);
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  transition: all 0.3s ease-in-out;
+}
+
+.brand-chip img {
+  max-height: 30px;
+  max-width: 60px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  transition: all 0.3s ease-in-out;
+}
+
+.brand-chip:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+}
+
+/* Trust */
+.contact-hero-trust {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 40px;
+  margin: 20px 0 0;
+  padding: 16px 0 0;
+  border-top: 1px solid rgba(255,255,255,0.25);
+  list-style: none;
+}
+
+.contact-hero-trust li {
+  color: rgba(255,255,255,0.8);
+  font-size: 15px;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+.contact-hero-trust strong {
+  color: var(--white-color);
+  font-size: 22px;
+  font-weight: 700;
+  margin-right: 6px;
+}
+
+/* ---------- FORM CARD (glass) ---------- */
+.contact-hero-form {
+  scroll-margin-top: 110px;
+}
+
+/* ---------- FORM CARD (glass ala navbar) ---------- */
+/* Formula glass sama dengan .glass-nav (custom.css): bg dark alpha
+   + blur + saturate + border tipis — satu bahasa visual dengan navbar. */
+.contact-hero-form {
+  scroll-margin-top: 110px;
+}
+
+.form-card {
+  position: relative;
+  background: rgba(3, 23, 29, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 24px;
+  padding: 32px;
+  backdrop-filter: blur(24px) saturate(180%);
+  box-shadow: 0 12px 40px rgba(3, 23, 29, 0.35), 0 0 20px rgba(255, 152, 0, 0.04);
+}
+
+.form-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 24px;
+  right: 24px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  pointer-events: none;
+}
+
+.form-card-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.form-card-icon {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: rgba(255,152,0,0.16);
+  border: 1px solid rgba(255,152,0,0.3);
+}
+
+.form-card-icon i {
+  color: var(--accent-color);
+  font-size: 17px;
+}
+
+.form-card-head h3 {
+  color: var(--white-color);
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.form-card-head p {
+  color: rgba(255,255,255,0.8);
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 0;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-group { margin-bottom: 16px; }
+
+.form-group label {
+  display: block;
+  color: rgba(255,255,255,0.85);
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+/* ---------- INPUT MODERN (ikon kiri + ring fokus 4px, adaptasi modern-form) ---------- */
+.input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: rgba(255,255,255,0.45);
+  pointer-events: none;
+  transition: color 0.2s ease;
+  z-index: 1;
+}
+
+.input-wrap.is-textarea {
+  align-items: flex-start;
+}
+
+.input-wrap.is-textarea .input-icon {
+  top: 15px;
+  transform: none;
+}
+
+.form-control {
+  width: 100%;
+  height: 46px;
+  padding: 0 14px 0 42px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 10px;
+  color: var(--white-color);
+  font-size: 15px;
+  font-family: var(--default-font);
+  line-height: 1.2;
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-control::placeholder {
+  color: rgba(255,255,255,0.4);
+}
+
+.form-control:hover:not(:focus) {
+  border-color: rgba(255,255,255,0.35);
+}
+
+.form-control:focus {
+  outline: none;
+  background: rgba(255,255,255,0.12);
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 4px rgba(255,152,0,0.18);
+}
+
+/* ---------- VALIDASI MODERN ---------- */
+/* Valid live (terisi & lolos aturan): border + ikon hijau */
+.form-control:not(:placeholder-shown):not(.is-invalid):valid {
+  border-color: rgba(74, 222, 128, 0.5);
+}
+
+.input-wrap:has(.form-control:not(:placeholder-shown):not(.is-invalid):valid) .input-icon {
+  color: #4ade80;
+}
+
+/* State invalid per-field (class .is-invalid dari inline validation) */
+.form-control.is-invalid,
+.form-control.is-invalid:focus {
+  border-color: #f87171;
+  background: rgba(248, 113, 113, 0.06);
+  box-shadow: 0 0 0 4px rgba(248, 113, 113, 0.14);
+}
+
+.input-wrap:has(.form-control.is-invalid) .input-icon {
+  color: #f87171;
+}
+
+/* Shake sekali saat field ditandai invalid (retrigger via reflow di JS) */
+@keyframes csShake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-5px); }
+  40% { transform: translateX(5px); }
+  60% { transform: translateX(-3px); }
+  80% { transform: translateX(3px); }
+}
+
+.form-control.shake {
+  animation: csShake 0.35s ease;
+}
+
+/* ---------- SLOT ALERT TETAP (anti layout-shift) ---------- */
+/* Slot di bawah tombol SELALU mencadangkan ruang untuk alert — tinggi card
+   tidak berubah saat alert muncul/hilang. Alert mengisi slot (absolute). */
+#msgSubmit {
+  position: relative;
+  height: 84px;
+  margin: 12px 0 0;
+}
+
+/* ---------- ALERT PROFESIONAL (icon chip + close + auto-dismiss) ---------- */
+/* PENTING: alert di-inject via innerHTML sehingga TIDAK punya atribut
+   data-astro-cid — rule scoped tidak akan pernah mengenainya. Semua
+   selector alert WAJIB dibungkus :global() (class unik milik halaman ini). */
+:global(.form-alert) {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 44px 10px 16px;
+  border-radius: 14px;
+  font-size: 13.5px;
+  line-height: 1.45;
+  overflow: hidden;
+  animation: formAlertIn 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:global(.form-alert.is-leaving) {
+  animation: formAlertOut 0.25s ease forwards;
+  pointer-events: none;
+}
+
+@keyframes formAlertIn {
+  from { opacity: 0; transform: translateY(-8px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes formAlertOut {
+  to { opacity: 0; transform: translateY(-8px); }
+}
+
+:global(.alert-icon) {
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 14px;
+}
+
+:global(.alert-body) {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+:global(.alert-body strong) {
+  color: inherit;
+  font-weight: 600;
+}
+
+:global(.alert-body span) {
+  opacity: 0.85;
+}
+
+:global(.alert-close) {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  color: inherit;
+  opacity: 0.55;
+  font-size: 13px;
+  cursor: pointer;
+  transition: opacity 0.2s ease, background 0.2s ease;
+}
+
+:global(.alert-close:hover) {
+  opacity: 1;
+  background: rgba(255,255,255,0.08);
+}
+
+/* Progress bar auto-dismiss (hanya success) */
+:global(.alert-progress) {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 100%;
+  transform-origin: left;
+  animation: alertProgress 6s linear forwards;
+}
+
+@keyframes alertProgress {
+  to { transform: scaleX(0); }
+}
+
+:global(.form-alert-error) {
+  background: rgba(248, 113, 113, 0.10);
+  border: 1px solid rgba(248, 113, 113, 0.32);
+  color: #fecaca;
+}
+
+:global(.form-alert-error .alert-icon) {
+  background: rgba(248, 113, 113, 0.16);
+  border: 1px solid rgba(248, 113, 113, 0.4);
+  color: #f87171;
+}
+
+:global(.form-alert-error .alert-progress) {
+  background: #f87171;
+}
+
+:global(.form-alert-success) {
+  background: rgba(74, 222, 128, 0.10);
+  border: 1px solid rgba(74, 222, 128, 0.32);
+  color: #bbf7d0;
+}
+
+:global(.form-alert-success .alert-icon) {
+  background: rgba(74, 222, 128, 0.16);
+  border: 1px solid rgba(74, 222, 128, 0.4);
+  color: #4ade80;
+}
+
+:global(.form-alert-success .alert-progress) {
+  background: #4ade80;
+}
+
+select.form-control {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23ffffff' stroke-opacity='0.5' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 40px;
+  cursor: pointer;
+}
+
+select.form-control option {
+  color: var(--primary-color);
+  background: var(--white-color);
+}
+
+/* ---------- CUSTOM DROPDOWN "Saya tertarik pada" ---------- */
+.custom-select {
+  position: relative;
+}
+
+.custom-select-btn {
+  width: 100%;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 14px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 10px;
+  color: var(--white-color);
+  font-size: 15px;
+  font-family: var(--default-font);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.custom-select-btn:hover {
+  border-color: rgba(255,255,255,0.35);
+}
+
+.custom-select.open .custom-select-btn,
+.custom-select-btn:focus-visible {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 4px rgba(255,152,0,0.18);
+}
+
+.custom-select-icon {
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9px;
+  background: rgba(255, 152, 0, 0.16);
+  border: 1px solid rgba(255, 152, 0, 0.3);
+  color: var(--accent-color);
+  font-size: 14px;
+}
+
+.custom-select-value {
+  flex: 1;
+  font-weight: 600;
+}
+
+.custom-select-caret {
+  color: rgba(255,255,255,0.5);
+  transition: transform 0.25s ease;
+}
+
+.custom-select.open .custom-select-caret {
+  transform: rotate(180deg);
+  color: var(--accent-color);
+}
+
+/* Panel dropdown: glass portal — dipindah ke <body> via JS agar
+   backdrop-filter bekerja (pola yang sama dengan .glass-dropdown navbar). */
+.custom-select-list {
+  position: fixed;
+  min-width: 280px;
+  margin: 0;
+  padding: 8px;
+  list-style: none;
+  background: rgba(3, 23, 29, 0.85);
+  backdrop-filter: blur(30px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  box-shadow: 0 12px 40px rgba(3, 23, 29, 0.45);
+  z-index: 1300;
+}
+
+.custom-select-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  color: rgba(255,255,255,0.85);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.custom-select-list li:hover,
+.custom-select-list li:focus-visible {
+  background: rgba(255, 152, 0, 0.14);
+  outline: none;
+}
+
+.custom-select-list li > i:first-child {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.07);
+  color: var(--accent-color);
+  font-size: 13px;
+}
+
+.opt-copy {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.35;
+}
+
+.opt-copy strong {
+  color: var(--white-color);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.opt-copy small {
+  color: rgba(255,255,255,0.55);
+  font-size: 12px;
+}
+
+.opt-check {
+  color: var(--accent-color);
+  font-size: 13px;
+  visibility: hidden;
+}
+
+li.is-selected .opt-check {
+  visibility: visible;
+}
+
+li.is-selected {
+  background: rgba(255, 152, 0, 0.1);
+}
+
+textarea.form-control {
+  resize: vertical;
+  height: auto;
+  min-height: 92px;
+  padding: 13px 14px 13px 42px;
+}
+
+/* ---------- SUBMIT BUTTON (glow sweep + lift, adaptasi modern-form) ---------- */
+.contact-submit {
+  position: relative;
+  width: 100%;
+  height: 52px;
+  margin-top: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--accent-color);
+  color: var(--primary-color);
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: var(--default-font);
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  overflow: hidden;
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contact-submit i {
+  font-size: 14px;
+}
+
+.button-glow {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+  pointer-events: none;
+}
+
+.contact-submit:hover {
+  background: #ffab2e;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(255,152,0,0.35), 0 2px 6px rgba(255,152,0,0.2);
+}
+
+.contact-submit:hover .button-glow {
+  transform: translateX(100%);
+}
+
+.contact-submit:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.contact-submit:focus-visible {
+  outline: 2px solid var(--white-color);
+  outline-offset: 2px;
+}
+
+.form-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255,255,255,0.7);
+  font-size: 12.5px;
+  margin: 14px 0 0;
+}
+
+.form-note i {
+  font-size: 11px;
+  color: var(--accent-color);
+}
+
+/* ---------- INFO KONTAK (kolom kiri, first view) ---------- */
+/* Horizontal kompak: muat dalam fold desktop (≥800px tinggi) */
+.contact-hero-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.25);
+}
+
+.info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: var(--white-color);
+  font-size: 13.5px;
+  text-decoration: none;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+.info-icon {
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9px;
+  background: rgba(3, 23, 29, 0.55);
+  border: 1px solid rgba(255,255,255,0.25);
+  backdrop-filter: blur(6px);
+}
+
+.info-icon i {
+  color: var(--accent-color);
+  font-size: 13px;
+}
+
+.info-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.4;
+  padding-top: 2px;
+}
+
+.info-text small {
+  color: rgba(255,255,255,0.7);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+a.info-item:hover { color: var(--accent-color); }
+a.info-item:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+/* ---------- PETA LOKASI ---------- */
+.contact-map-section {
+  padding: 24px 0 80px;
+  background: var(--primary-color);
+}
+
+.contact-map-card {
+  background: rgba(3, 23, 29, 0.6);
+  backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 0 12px 40px rgba(3, 23, 29, 0.35);
+}
+
+.map-head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.map-head-icon {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: rgba(255, 152, 0, 0.14);
+  border: 1px solid rgba(255, 152, 0, 0.3);
+  color: var(--accent-color);
+  font-size: 18px;
+}
+
+.map-head-copy {
+  flex: 1;
+  min-width: 220px;
+}
+
+.map-head-copy h3 {
+  color: var(--white-color);
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.map-head-copy p {
+  color: rgba(255,255,255,0.65);
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 0;
+}
+
+.map-directions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 100px;
+  background: rgba(255, 152, 0, 0.12);
+  border: 1px solid rgba(255, 152, 0, 0.3);
+  color: var(--accent-color);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.map-directions:hover {
+  background: var(--accent-color);
+  color: var(--primary-color);
+}
+
+.map-directions:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 3px;
+}
+
+.map-frame {
+  height: 360px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.map-frame iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  filter: grayscale(0.3) contrast(1.05);
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 1199px) {
+  .contact-hero-grid {
+    grid-template-columns: 1fr 420px;
+    column-gap: 48px;
   }
-  
-  .contact-form-box h3 {
-    color: var(--primary-color);
-    font-size: 28px;
-    font-weight: 600;
-    margin-bottom: 35px;
+}
+
+@media (max-width: 991px) {
+  .hero.contact-hero { padding: 120px 0 64px; }
+  .contact-hero-grid {
+    grid-template-columns: 1fr;
+    row-gap: 40px;
   }
-  
-  .form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 25px;
+  .hero.contact-hero h2 { font-size: 38px; }
+  .form-card { padding: 32px 28px; }
+  .map-frame { height: 320px; }
+}
+
+@media (max-width: 768px) {
+  .hero.contact-hero { padding: 96px 0 56px; }
+  .hero.contact-hero h2 { font-size: 30px; }
+  .contact-hero .contact-hero-sub {
+    font-size: 1em;
+    max-width: 100%;
   }
-  
-  .form-group {
-    margin-bottom: 25px;
-  }
-  
-  .form-group label {
-    display: block;
-    color: var(--primary-color);
-    font-weight: 600;
-    margin-bottom: 10px;
-  }
-  
-  .form-control {
-    width: 100%;
-    padding: 14px 18px;
-    background-color: var(--secondary-color);
-    border: 1px solid var(--divider-color);
-    border-radius: 10px;
-    color: var(--primary-color);
-    font-size: 16px;
-    font-family: var(--default-font);
-    transition: all 0.3s ease-in-out;
-  }
-  
-  .form-control:focus {
-    outline: none;
-    border-color: var(--accent-color);
-  }
-  
-  .form-control::placeholder {
-    color: var(--text-color);
-    opacity: 0.6;
-  }
-  
-  textarea.form-control {
-    resize: vertical;
-    min-height: 140px;
-  }
-  
-  .contact-info-box {
-    background-color: var(--secondary-color);
-    border-radius: 20px;
-    padding: 40px;
-  }
-  
-  .contact-info-box h3 {
-    color: var(--primary-color);
-    font-size: 28px;
-    font-weight: 600;
-    margin-bottom: 35px;
-  }
-  
-  .contact-info-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 20px;
-    margin-bottom: 30px;
-  }
-  
-  .contact-info-item:last-child {
-    margin-bottom: 0;
-  }
-  
-  .contact-info-item .icon-box {
-    position: relative;
-    width: 56px;
-    height: 56px;
-    min-width: 56px;
-    background: var(--accent-color);
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
+  .contact-hero-brands { margin-top: 24px; }
+  .brands-row { gap: 8px; }
+  .brand-chip {
+    min-height: 44px;
+    min-width: 0;
+    padding: 8px 12px;
+    flex: 1 1 calc(25% - 8px);
     justify-content: center;
-    overflow: hidden;
   }
-  
-  .contact-info-item .icon-box::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    background: var(--primary-color);
-    width: 100%;
-    height: 100%;
-    transform: rotate(180deg) scale(0);
-    transition: all 0.4s ease-in-out;
-    z-index: 0;
+  .brand-chip img {
+    max-height: 24px;
+    max-width: 48px;
   }
-  
-  .contact-info-item:hover .icon-box::before {
-    transform: rotate(0) scale(1);
+  .form-card {
+    padding: 28px 24px;
+    border-radius: 16px;
   }
-  
-  .contact-info-item .icon-box i {
-    position: relative;
-    color: var(--white-color);
-    font-size: 20px;
-    z-index: 1;
-    transition: all 0.4s ease-in-out;
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
   }
-  
-  .contact-info-item:hover .icon-box i {
-    filter: brightness(1) invert(1);
+  .contact-hero-trust {
+    gap: 16px 24px;
+    padding-top: 16px;
   }
-  
-  .contact-info-content h4 {
-    color: var(--primary-color);
-    font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 6px;
+  .contact-hero-trust strong { font-size: 18px; }
+  .contact-hero-info { gap: 10px; }
+  .info-item { font-size: 13.5px; }
+  .map-frame { height: 260px; }
+  .contact-map-card { padding: 20px; border-radius: 16px; }
+  .map-directions { width: 100%; justify-content: center; }
+  /* Dropdown custom mobile: panel full-width melekat */
+  .custom-select-list {
+    left: 12px !important;
+    right: 12px !important;
+    min-width: 0;
+    width: auto;
   }
-  
-  .contact-info-content a,
-  .contact-info-content p {
-    color: var(--text-color);
-    text-decoration: none;
-    transition: all 0.3s ease-in-out;
-    margin-bottom: 0;
-  }
-  
-  .contact-info-content a:hover {
-    color: var(--accent-color);
-  }
-  
-  @media (max-width: 768px) {
-    .form-row {
-      grid-template-columns: 1fr;
-    }
-  }
+}
+
+@media (max-width: 480px) {
+  .form-card { padding: 24px 20px; }
+  .form-card-head h3 { font-size: 20px; }
+  /* Ringkasan error bisa wrap 2-3 baris di layar sempit */
+  #msgSubmit { height: 116px; }
+}
 </style>
+
+<script>
+  // Fokus pertama: field nama (progressive enhancement — tanpa JS form tetap berfungsi normal)
+  if (!(window as any).__contactFormInit) {
+    (window as any).__contactFormInit = true;
+    window.addEventListener('load', () => {
+      document.querySelector<HTMLInputElement>('#name')?.focus({ preventScroll: true });
+    });
+  }
+
+  // Custom dropdown "Saya tertarik pada" — panel di-portal ke <body> agar
+  // backdrop-filter (glass) bekerja, pola sama dengan dropdown navbar.
+  // v2: reposition saat scroll/resize + clamp ke viewport (tidak keluar layar,
+  // tidak ikut bergeser saat halaman di-scroll).
+  if (!(window as any).__contactSelectInit) {
+    (window as any).__contactSelectInit = true;
+
+    function initCustomSelect() {
+      const wrap = document.getElementById('interestSelect');
+      if (!wrap || (wrap as any).__selectReady) return;
+      (wrap as any).__selectReady = true;
+
+      const btn = wrap.querySelector<HTMLButtonElement>('.custom-select-btn');
+      const valueEl = wrap.querySelector<HTMLElement>('.custom-select-value');
+      const hidden = wrap.querySelector<HTMLInputElement>('input[name="subject"]');
+      const list = wrap.querySelector<HTMLUListElement>('.custom-select-list');
+      if (!btn || !valueEl || !hidden || !list) return;
+
+      let portal: HTMLUListElement | null = null;
+      let isOpen = false;
+
+      const close = () => {
+        isOpen = false;
+        wrap.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+        if (portal) portal.hidden = true;
+        window.removeEventListener('scroll', position, true);
+        window.removeEventListener('resize', position);
+        document.removeEventListener('keydown', onKey);
+      };
+
+      const onDocClick = (e: Event) => {
+        const t = e.target as Node;
+        if (!portal?.contains(t) && !btn.contains(t)) close();
+      };
+
+      const onKey = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') { close(); btn.focus(); }
+      };
+
+      // Hitung posisi panel: anchor ke tombol + clamp dalam viewport +
+      // flip ke atas bila ruang bawah kurang. Bila tombol keluar viewport,
+      // dropdown ikut tertutup (konvensi UI — panel tidak "melayang" sendiri).
+      function position() {
+        if (!portal || !isOpen || !btn) return;
+        const r = btn.getBoundingClientRect();
+
+        // Tombol keluar viewport (atas/bawah) → tutup dropdown
+        if (r.bottom < 0 || r.top > window.innerHeight) {
+          close();
+          return;
+        }
+
+        const isMobile = window.innerWidth <= 768;
+        const pw = portal.offsetWidth;
+        const ph = portal.offsetHeight;
+        const margin = 12;
+
+        let top: number;
+        const spaceBelow = window.innerHeight - r.bottom;
+        if (spaceBelow < ph + margin && r.top > ph + margin) {
+          // Flip ke atas (letakkan panel di atas tombol)
+          top = r.top - ph - 8;
+        } else {
+          top = r.bottom + 8;
+        }
+
+        if (isMobile) {
+          portal.style.left = `${margin}px`;
+          portal.style.right = `${margin}px`;
+          portal.style.minWidth = '0';
+        } else {
+          let left = r.left;
+          // Clamp horizontal agar tidak keluar viewport
+          if (left + pw > window.innerWidth - margin) {
+            left = window.innerWidth - margin - pw;
+          }
+          if (left < margin) left = margin;
+          portal.style.left = `${left}px`;
+          portal.style.right = 'auto';
+          portal.style.minWidth = `${Math.max(r.width, 300)}px`;
+        }
+
+        // Clamp vertikal (safety)
+        if (top + ph > window.innerHeight - margin) {
+          top = window.innerHeight - margin - ph;
+        }
+        if (top < margin) top = margin;
+
+        portal.style.top = `${top}px`;
+      }
+
+      const open = () => {
+        if (!portal) {
+          // Portal: pindahkan list ke body (clone) sekali saja
+          portal = list.cloneNode(true) as HTMLUListElement;
+          document.body.appendChild(portal);
+          portal.hidden = false;
+          portal.style.opacity = '0';
+          portal.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
+          portal.style.transform = 'translateY(-4px)';
+
+          portal.addEventListener('click', (e) => {
+            const li = (e.target as HTMLElement).closest('li');
+            if (!li || !portal) return;
+            // Pilih opsi
+            valueEl.textContent = li.dataset.value || '';
+            hidden.value = li.dataset.value || '';
+            portal.querySelectorAll('li').forEach((el) => {
+              const sel = el === li;
+              el.classList.toggle('is-selected', sel);
+              el.setAttribute('aria-selected', String(sel));
+            });
+            // Sinkronkan juga di list asli (untuk aksesibilitas)
+            list.querySelectorAll('li').forEach((el) => {
+              const sel = el.dataset.value === li.dataset.value;
+              el.classList.toggle('is-selected', sel);
+              el.setAttribute('aria-selected', String(sel));
+            });
+            close();
+            btn.focus();
+          });
+        }
+
+        isOpen = true;
+        position();
+        wrap.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+        if (portal) {
+          portal.hidden = false;
+          requestAnimationFrame(() => {
+            if (portal) { portal.style.opacity = '1'; portal.style.transform = 'translateY(0)'; }
+          });
+        }
+        // Reposisi saat scroll (capture agar menangkap scroll container apapun)
+        // & resize — panel selalu menempel pada tombol.
+        window.addEventListener('scroll', position, true);
+        window.addEventListener('resize', position);
+        document.addEventListener('click', onDocClick);
+        document.addEventListener('keydown', onKey);
+      };
+
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (isOpen) close(); else open();
+      });
+
+      // Bersihkan portal saat pindah halaman (View Transitions)
+      wrap.addEventListener('astro:after-swap', () => {
+        if (portal) { portal.remove(); portal = null; }
+        (wrap as any).__selectReady = false;
+      });
+    }
+
+    if ((window as any).__iotaruPageLoadFired) initCustomSelect();
+    else document.addEventListener('DOMContentLoaded', initCustomSelect, { once: true });
+    document.addEventListener('astro:page-load', initCustomSelect);
+  }
+
+  // Validasi form modern: cegah submit bila kosong, tandai field invalid
+  // dengan pesan inline per-field + banner alert glass. Fallback aman:
+  // function.js (mailto) tetap jalan setelah validasi lolos.
+  if (!(window as any).__contactValidateInit) {
+    (window as any).__contactValidateInit = true;
+
+    function initContactValidation() {
+      const form = document.getElementById('contactForm') as HTMLFormElement | null;
+      if (!form || (form as any).__validateReady) return;
+      (form as any).__validateReady = true;
+
+      const msg = document.getElementById('msgSubmit');
+      const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      let alertTimer: number | undefined;
+      let currentAlert: HTMLElement | null = null;
+      const name = form.querySelector<HTMLInputElement>('#name');
+      const email = form.querySelector<HTMLInputElement>('#email');
+      const message = form.querySelector<HTMLTextAreaElement>('#message');
+
+      const clearAlertTimer = () => {
+        if (alertTimer !== undefined) {
+          window.clearTimeout(alertTimer);
+          alertTimer = undefined;
+        }
+      };
+
+      const dismissAlert = (el: HTMLElement) => {
+        if (el.classList.contains('is-leaving')) return;
+        el.classList.add('is-leaving');
+        window.setTimeout(() => el.remove(), 260);
+      };
+
+      const hideErrorAlert = () => {
+        if (currentAlert?.classList.contains('form-alert-error')) {
+          clearAlertTimer();
+          dismissAlert(currentAlert);
+          currentAlert = null;
+        }
+      };
+
+      const showAlert = (kind: 'success' | 'error', title: string, text: string) => {
+        if (!msg) return;
+        clearAlertTimer();
+        msg.innerHTML = `
+          <div class="form-alert form-alert-${kind}" role="${kind === 'error' ? 'alert' : 'status'}">
+            <span class="alert-icon" aria-hidden="true"><i class="fa-solid ${kind === 'success' ? 'fa-circle-check' : 'fa-triangle-exclamation'}"></i></span>
+            <div class="alert-body"><strong>${title}</strong><span>${text}</span></div>
+            <button type="button" class="alert-close" aria-label="Tutup pemberitahuan"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+            ${kind === 'success' ? '<span class="alert-progress" aria-hidden="true"></span>' : ''}
+          </div>`;
+        const alert = msg.querySelector<HTMLElement>('.form-alert');
+        currentAlert = alert;
+        alert?.querySelector('.alert-close')?.addEventListener('click', () => {
+          clearAlertTimer();
+          if (alert) dismissAlert(alert);
+          if (currentAlert === alert) currentAlert = null;
+        });
+        if (kind === 'success') {
+          // Success auto-dismiss 6 detik (progress bar mengikuti)
+          alertTimer = window.setTimeout(() => {
+            if (alert) dismissAlert(alert);
+            if (currentAlert === alert) currentAlert = null;
+          }, 6000);
+        }
+      };
+
+      // Tandai field invalid (border merah + shake) — TANPA teks di bawah
+      // field; seluruh info error cukup lewat alert di bawah tombol.
+      const setFieldError = (el: HTMLElement | null, invalid: boolean) => {
+        if (!el) return;
+        el.classList.toggle('is-invalid', invalid);
+        if (invalid) {
+          // Animasi shake sekali per penandaan (retrigger via reflow)
+          el.classList.remove('shake');
+          void (el as HTMLElement).offsetWidth;
+          el.classList.add('shake');
+          el.addEventListener('animationend', () => el.classList.remove('shake'), { once: true });
+        }
+      };
+
+      const clearAllErrors = () => {
+        form.querySelectorAll('.form-control.is-invalid').forEach((el) => el.classList.remove('is-invalid'));
+      };
+
+      // Validasi on-blur yang sopan: hanya menandai bila isi tidak valid,
+      // atau field yang sudah ditandai dikosongkan kembali. Kosong yang
+      // belum disentuh tidak langsung dihukum.
+      const errorFor = (el: HTMLInputElement | HTMLTextAreaElement): string | null => {
+        if (el === email) {
+          if (!el.value.trim()) return 'Email wajib diisi';
+          if (!emailRe.test(el.value.trim())) return 'Format email tidak valid';
+        } else if (el === name) {
+          if (!el.value.trim()) return 'Nama wajib diisi';
+        } else if (el === message) {
+          if (!el.value.trim()) return 'Pesan wajib diisi';
+        }
+        return null;
+      };
+
+      ([name, email, message] as Array<HTMLInputElement | HTMLTextAreaElement | null>).forEach((el) => {
+        if (!el) return;
+        el.addEventListener('blur', () => {
+          const wasInvalid = el.classList.contains('is-invalid');
+          const err = (el.value.trim() || wasInvalid) ? errorFor(el) : null;
+          setFieldError(el, !!err);
+          // Banner error hilang otomatis saat semua field kembali valid
+          if (!form.querySelector('.is-invalid')) hideErrorAlert();
+        });
+      });
+
+      form.addEventListener('submit', (e) => {
+        if (!name || !email || !message) return;
+        clearAllErrors();
+
+        const errors: Array<[HTMLElement | null, string | null]> = [];
+        let firstInvalid: HTMLElement | null = null;
+
+        if (!name.value.trim()) {
+          errors.push([name, 'Nama wajib diisi']);
+        }
+        if (!email.value.trim()) {
+          errors.push([email, 'Email wajib diisi']);
+        } else if (!emailRe.test(email.value.trim())) {
+          errors.push([email, 'Format email tidak valid']);
+        }
+        if (!message.value.trim()) {
+          errors.push([message, 'Pesan wajib diisi']);
+        }
+
+        if (errors.length) {
+          e.stopImmediatePropagation(); // blokir handler mailto lama
+          e.preventDefault();
+          errors.forEach(([el]) => {
+            if (el) setFieldError(el, true);
+            if (el && !firstInvalid) firstInvalid = el;
+          });
+          // Ringkasan error hanya di alert bawah tombol (tanpa teks per-field)
+          const summary = [...new Set(errors.map(([, t]) => t).filter(Boolean))].join(' · ');
+          showAlert(
+            'error',
+            'Periksa kembali formulir Anda',
+            summary
+          );
+          (firstInvalid as HTMLElement | null)?.focus();
+          (firstInvalid as HTMLElement | null)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return;
+        }
+
+        // Valid — blokir handler mailto lama (function.js membaca $("#subject")
+        // padahal hidden input tidak punya id="subject" → TypeError, mailto tak
+        // pernah jalan & alert tertimpa). Jalankan mailto di sini agar alert
+        // profesional tetap tampil dan mailto benar-benar berfungsi.
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        const subjectVal = (form.querySelector<HTMLInputElement>('input[name="subject"]')?.value || '').trim();
+        const mailtoLink =
+          'mailto:syafrial@iotaru.com?subject=' +
+          encodeURIComponent(subjectVal || 'Contact from ' + name.value.trim()) +
+          '&body=' +
+          encodeURIComponent(
+            'Name: ' + name.value.trim() + '\nEmail: ' + email.value.trim() + '\n\n' + message.value.trim()
+          );
+        window.open(mailtoLink, '_blank');
+        form.reset();
+        // form.reset() tidak menyentuh teks label custom-select — kembalikan manual
+        const selLabel = form.querySelector<HTMLElement>('.custom-select-value');
+        if (selLabel) selLabel.textContent = 'Demo Produk';
+        showAlert('success', 'Membuka aplikasi email…', 'Tim kami akan menghubungi Anda dalam 1×24 jam kerja.');
+      }, true); // capture: jalan sebelum handler jQuery lama
+    }
+
+    if ((window as any).__iotaruPageLoadFired) initContactValidation();
+    else document.addEventListener('DOMContentLoaded', initContactValidation, { once: true });
+    document.addEventListener('astro:page-load', initContactValidation);
+  }
+</script>

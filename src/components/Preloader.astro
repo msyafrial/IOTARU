@@ -1,7 +1,7 @@
 ---
 ---
 
-<div class="preloader" id="preloader">
+<div class="preloader" id="preloader" transition:persist="preloader">
   <div class="loading-container">
     <div class="loading"></div>
   </div>
@@ -9,19 +9,21 @@
 
 <script>
   (function () {
-    var preloader = document.getElementById('preloader');
-    if (!preloader) return;
+    const preloader: HTMLElement | null = document.getElementById('preloader');
+    if (preloader === null) return;
 
-    var dismissed = false;
+    const el = preloader as HTMLElement;
+    let dismissed = false;
 
     function dismissPreloader() {
       if (dismissed) return;
       dismissed = true;
 
-      preloader.style.opacity = '0';
-      preloader.style.visibility = 'hidden';
+      el.style.opacity = '0';
+      el.style.visibility = 'hidden';
       setTimeout(function () {
-        preloader.style.display = 'none';
+        el.style.display = 'none';
+        (window as any).__preloaderDone = true;
         window.dispatchEvent(new Event('preloader:done'));
       }, 300);
     }
@@ -46,7 +48,7 @@
       }
     }
 
-    function loadImage(url, onDone) {
+    function loadImage(url: string, onDone: () => void) {
       var img = new Image();
       img.onload  = onDone;
       img.onerror = onDone; // even on error, don't block preloader
@@ -65,6 +67,17 @@
       checkBothReady();
     });
   })();
+
+  // View Transitions: preloader di-persist antar halaman, tapi kalau swap
+  // terjadi sebelum preloader sempat di-dismiss (mis. navigasi cepat),
+  // pastikan dia disembunyikan paksa agar situs tidak tertutup preloader.
+  document.addEventListener('astro:after-swap', function () {
+    const pre = document.getElementById('preloader');
+    if (pre && pre.style.display !== 'none') {
+      pre.style.display = 'none';
+      (window as any).__preloaderDone = true;
+    }
+  });
 </script>
 
 <style>

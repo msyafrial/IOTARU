@@ -212,9 +212,9 @@ const searchParamsStr = url.searchParams.toString();
 </MainLayout>
 
 <script>
-  (function() {
-    var btn = document.getElementById('seeAllBtn');
+  function initProductFilters() {
     var filters = document.getElementById('productFilters');
+    var btn = document.getElementById('seeAllBtn');
     if (!btn || !filters) return;
 
     var pills = Array.from(filters.querySelectorAll('.filter-pill'));
@@ -248,7 +248,10 @@ const searchParamsStr = url.searchParams.toString();
         }
       });
     }
-  })();
+  }
+
+  // View Transitions: init ulang tiap navigasi client-side.
+  document.addEventListener('astro:page-load', initProductFilters);
 </script>
 
 <style>

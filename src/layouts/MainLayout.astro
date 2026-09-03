@@ -1,4 +1,5 @@
 ---
+import { ClientRouter } from "astro:transitions";
 import "../styles/global.css";
 import criticalCSS from "../styles/critical.css?inline";
 
@@ -18,6 +19,7 @@ const socialImage = image
 
 <html lang="id">
   <head>
+    <ClientRouter />
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -124,6 +126,27 @@ const socialImage = image
     <!-- Non-critical scripts: loaded after window load to not block first paint -->
     <script is:inline>
       (function () {
+        // Guard: jangan muat ulang script berat saat navigasi View Transitions
+        // (elemen <script> ini ikut ter-swap ke dokumen baru tiap navigasi).
+        if (window.__iotaruHeavyLoaded) return;
+        window.__iotaruHeavyLoaded = true;
+
+        // Tandai bahwa astro:page-load sudah lewat. Script berat yang dieksekusi
+        // SETELAH event ini (karena menunggu preloader) harus init manual —
+        // listener 'astro:page-load' yang mereka daftarkan terlambat dan tidak
+        // akan pernah ter-panggil pada kunjungan pertama.
+        document.addEventListener('astro:page-load', function () {
+          window.__iotaruPageLoadFired = true;
+        });
+
+        // View Transitions: setiap navigasi mengganti DOM halaman → guard
+        // init harus di-reset agar astro:page-load berikutnya menjalankan
+        // initSite() lagi (WOW/animasi halaman baru). Tanpa reset ini,
+        // halaman kedua dst tidak pernah ter-init (bug WOW mati saat pindah).
+        document.addEventListener('astro:after-swap', function () {
+          window.__iotaruInitDone = false;
+        });
+
         var nonCritical = [
           "/js/gsap.min.js",
           "/js/ScrollTrigger.min.js",
@@ -138,7 +161,22 @@ const socialImage = image
         ];
 
         function loadScriptsSequentially(scripts, index) {
-          if (index >= scripts.length) return;
+          if (index >= scripts.length) {
+            // Semua script berat selesai dimuat. Pada cold-load, listener
+            // astro:page-load di function.js terdaftar TERLAMBAT (event sudah
+            // lewat) dan fallback flag-nya juga belum ter-set saat function.js
+            // dieksekusi → initSite tidak pernah jalan → WOW mati. Loader-lah
+            // yang tahu tepat kapan semuanya siap, jadi panggil di sini
+            // (window.__iotaruInitSite didefinisikan oleh function.js sendiri;
+            // guard flag mencegah double-init dengan astro:page-load).
+            setTimeout(function () {
+              if (typeof window.__iotaruInitSite === "function" && !window.__iotaruInitDone) {
+                window.__iotaruInitDone = true;
+                window.__iotaruInitSite();
+              }
+            }, 0);
+            return;
+          }
           var s = document.createElement("script");
           s.src = scripts[index];
           s.onload = function () {
@@ -147,8 +185,14 @@ const socialImage = image
           document.body.appendChild(s);
         }
 
-        // Wait until preloader is done (or window load) before loading heavy scripts
+        var loadStarted = false;
+
         function startLoad() {
+          // Guard race: preloader:done dan fallback window load bisa ter-fire
+          // hampir bersamaan → tanpa guard ini DUA rantai paralel jalan dan
+          // semua script dimuat 2× (magiccursor crash: "Cursor already declared").
+          if (loadStarted) return;
+          loadStarted = true;
           loadScriptsSequentially(nonCritical, 0);
         }
 
@@ -164,6 +208,23 @@ const socialImage = image
             },
             { once: true },
           );
+          // Halaman TANPA preloader (semua kecuali home): event preloader:done
+          // tidak akan pernah fire, dan window load bisa stuck lama karena
+          // resource eksternal (mis. iframe Google Maps yang gagal). Fallback
+          // DOMContentLoaded + delay singkat menjamin script berat selalu dimuat.
+          if (!document.getElementById("preloader")) {
+            if (document.readyState !== "loading") {
+              setTimeout(startLoad, 100);
+            } else {
+              document.addEventListener(
+                "DOMContentLoaded",
+                function () {
+                  setTimeout(startLoad, 100);
+                },
+                { once: true },
+              );
+            }
+          }
         }
       })();
     </script>

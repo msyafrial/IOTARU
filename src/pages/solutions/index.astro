@@ -286,7 +286,11 @@ const solutions = (await getCollection("solutions")).sort((a, b) =>
     animation: heroFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
   
-
+@media only screen and (max-width: 1880px) {
+    .bg-section {
+        width: calc(100% - 40px);
+    }
+}
   .hero-delay-1 {
     animation-delay: 0.1s;
   }

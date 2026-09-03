@@ -64,10 +64,7 @@ const milestones = [
   <Navbar />
 
   <!-- Hero Section -->
-  <section
-    class="hero hero-product bg-section dark-section"
-    style="background-image: url(/images/hero-bg-image-6.webp); background-size: cover; background-position: center; background-repeat: no-repeat;"
-  >
+  <section class="hero about-hero bg-section dark-section">
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
@@ -76,11 +73,7 @@ const milestones = [
             <h2 class="text-anime-style-3" data-cursor="-opaque">
               About IOTARU Teknologi Nusantara
             </h2>
-            <p
-              class="wow fadeInUp"
-              data-wow-delay="0.2s"
-              style="margin-top: 10px; color: rgba(255,255,255,0.8); font-size: 1.1em; max-width: 700px; margin-left: auto; margin-right: auto;"
-            >
+            <p class="about-hero-sub wow fadeInUp" data-wow-delay="0.2s">
               Membangun solusi IoT yang aman, skalabel, dan cerdas untuk keamanan,
               monitoring, dan otomasi industri di era digital.
             </p>
@@ -241,13 +234,11 @@ const milestones = [
 
       <div class="row">
         {milestones.map((item, i) => (
-          <div class="col-xl-3 col-md-6">
-            <div class="feature-item wow fadeInUp" data-wow-delay={`${i * 0.15}s`} style="text-align: center; padding: 40px 20px;">
+          <div class="col-6 col-md-6 col-xl-3">
+            <div class="feature-item stat-item wow fadeInUp" data-wow-delay={`${i * 0.15}s`}>
               <div class="feature-item-content">
-                <h2 style="font-size: 3rem; font-weight: 800; color: var(--primary-color, #38bdf8); margin-bottom: 8px;">
-                  {item.number}
-                </h2>
-                <h3 style="font-size: 1rem; font-weight: 600; opacity: 0.85;">{item.label}</h3>
+                <h2 class="stat-number">{item.number}</h2>
+                <h3 class="stat-label">{item.label}</h3>
               </div>
             </div>
           </div>
@@ -404,7 +395,7 @@ const milestones = [
       <div class="row">
         <div class="col-xl-4 col-md-6">
           <div class="wow fadeInUp" data-wow-delay="0s">
-            <figure class="image-anime reveal" style="border-radius: 12px; overflow: hidden; margin-bottom: 24px;">
+            <figure class="image-anime reveal about-team-figure" style="border-radius: 12px; overflow: hidden; margin-bottom: 24px;">
               <Image
                 src={about1}
                 alt="IOTARU Engineering Team"
@@ -412,7 +403,7 @@ const milestones = [
                 quality={80}
                 format="webp"
                 loading="lazy"
-                style="width: 100%; height: 280px; object-fit: cover;"
+                class="about-team-img"
               />
             </figure>
             <div style="text-align: center; padding: 0 16px 32px;">
@@ -424,7 +415,7 @@ const milestones = [
 
         <div class="col-xl-4 col-md-6">
           <div class="wow fadeInUp" data-wow-delay="0.2s">
-            <figure class="image-anime reveal" style="border-radius: 12px; overflow: hidden; margin-bottom: 24px;">
+            <figure class="image-anime reveal about-team-figure" style="border-radius: 12px; overflow: hidden; margin-bottom: 24px;">
               <Image
                 src={about2}
                 alt="IOTARU Software Team"
@@ -432,7 +423,7 @@ const milestones = [
                 quality={80}
                 format="webp"
                 loading="lazy"
-                style="width: 100%; height: 280px; object-fit: cover;"
+                class="about-team-img"
               />
             </figure>
             <div style="text-align: center; padding: 0 16px 32px;">
@@ -444,7 +435,7 @@ const milestones = [
 
         <div class="col-xl-4 col-md-6">
           <div class="wow fadeInUp" data-wow-delay="0.4s">
-            <figure class="image-anime reveal" style="border-radius: 12px; overflow: hidden; margin-bottom: 24px;">
+            <figure class="image-anime reveal about-team-figure" style="border-radius: 12px; overflow: hidden; margin-bottom: 24px;">
               <Image
                 src={about3}
                 alt="IOTARU Deployment Team"
@@ -452,7 +443,7 @@ const milestones = [
                 quality={80}
                 format="webp"
                 loading="lazy"
-                style="width: 100%; height: 280px; object-fit: cover;"
+                class="about-team-img"
               />
             </figure>
             <div style="text-align: center; padding: 0 16px 32px;">
@@ -470,3 +461,117 @@ const milestones = [
 
   <Footer />
 </MainLayout>
+
+<style>
+  /* ==========================================================
+     ABOUT PAGE — mobile refinements (Agustus 2026)
+     Inline styles lama dipindah ke CSS agar responsif.
+     ========================================================== */
+
+  /* ---------- HERO ---------- */
+  /* (0,2,0) menang atas .hero global (0,1,0) & breakpoint global */
+  .hero.about-hero {
+    background-image: url(/images/hero-bg-image-6.webp);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 120px 0 64px;
+    min-height: 340px;
+    margin-top: 20px;
+  }
+
+  /* Sub-teks hero: tidak boleh lebih besar dari judul (hierarki).
+     Inline 1.1em dulu membuat sub > h2 di mobile — diganti 1.05em
+     dan dioverride 1em di mobile. */
+  .about-hero .about-hero-sub {
+    margin: 15px auto 0;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.05em;
+    line-height: 1.65;
+    max-width: 640px;
+  }
+
+  /* ---------- STAT CARDS ("By The Numbers") ---------- */
+  .stat-item {
+    text-align: center;
+  }
+
+  .stat-number {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--primary-color, #38bdf8);
+    margin-bottom: 8px;
+  }
+
+  .stat-label {
+    font-size: 1rem;
+    font-weight: 600;
+    opacity: 0.85;
+  }
+
+  /* ---------- TEAM IMAGES ---------- */
+  .about-team-figure {
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+
+  .about-team-img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 768px) {
+    .hero.about-hero {
+      padding: 96px 0 48px;
+      min-height: 280px;
+    }
+
+    /* Global mobile menyetel .section-title h2 jadi 22px —
+       terlalu kecil untuk judul halaman. Override jadi 30px. */
+    .about-hero .section-title h2 {
+      font-size: 30px;
+      line-height: 1.25;
+    }
+
+    .about-hero .about-hero-sub {
+      font-size: 1em;
+      max-width: 100%;
+    }
+
+    .stat-item {
+      padding: 24px 16px !important;
+      height: calc(100% - 20px);
+    }
+
+    .stat-number {
+      font-size: 2.4rem;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+    }
+
+    .about-team-img {
+      height: 200px;
+    }
+
+    /* CTA utama full-width di mobile untuk konversi & thumb reach */
+    .about-us-btn .btn-default,
+    .how-it-work-btn .btn-default {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .about-hero .section-title h2 {
+      font-size: 26px;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+    }
+  }
+</style>

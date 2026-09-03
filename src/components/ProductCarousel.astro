@@ -58,7 +58,7 @@ const carouselProducts = products
 </section>
 
 <script>
-(function() {
+function initCarousel() {
   const scroll = document.querySelector('.iot-ep-scroll');
   const prevBtn = document.querySelector('.iot-ep-prev');
   const nextBtn = document.querySelector('.iot-ep-next');
@@ -124,7 +124,12 @@ const carouselProducts = products
 
   createDots();
   updateState();
-})();
+}
+
+// View Transitions: init ulang tiap astro:page-load (load awal + setelah swap).
+// Listener global window/resize: elemen carousel dibuat baru per halaman,
+// jadi duplikasi listener hanya memicu recalc tambahan (idempoten).
+document.addEventListener('astro:page-load', initCarousel);
 </script>
 
 <style is:global>

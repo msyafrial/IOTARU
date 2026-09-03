@@ -124,4 +124,19 @@ class Cursor {
     }
 }
 // Init cursor
-const cursor = new Cursor();
+// View Transitions: saat swap, elemen body diganti seluruhnya sehingga
+// .cb-cursor dan listener mousemove-nya hilang. Kursor harus dibuat ulang
+// setelah astro:after-swap (ter-fire setiap swap, TIDAK saat load awal).
+function initCursor() {
+    // Buang sisa kursor lama bila ada, lalu instance baru akan memasang
+    // listener fresh pada body baru.
+    jQuery('.cb-cursor').remove();
+    return new Cursor();
+}
+
+let cursor = initCursor();
+window.__iotaruCursor = cursor;
+
+document.addEventListener('astro:after-swap', function () {
+    window.__iotaruCursor = initCursor();
+});
