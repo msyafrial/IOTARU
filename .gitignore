@@ -23,4 +23,8 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
+temp/
+
+
+
 testsprite_tests\tmp\config.json
