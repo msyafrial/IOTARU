@@ -40,9 +40,32 @@ function imgSrc(img: any): string {
 const mainImage = imgSrc(product.data.image);
 const galleryImages = product.data.gallery.map(imgSrc);
 const allImages = [mainImage, ...galleryImages];
+
+const productSchema = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": `https://iotaru.com/products/${product.id}/#product`,
+  name: product.data.title,
+  description: product.data.description,
+  category: product.data.category,
+  image: allImages.map((img) => new URL(img, Astro.site || "https://iotaru.com").toString()),
+  brand: {
+    "@type": "Brand",
+    name: "IOTARU",
+  },
+  manufacturer: {
+    "@id": "https://iotaru.com/#organization",
+  },
+  url: `https://iotaru.com/products/${product.id}/`,
+};
 ---
 
-<MainLayout title={product.data.title}>
+<MainLayout
+  title={product.data.title}
+  description={product.data.description}
+  image={mainImage}
+  schema={productSchema}
+>
   <Navbar />
 
   <!-- Page Hero Section -->
@@ -52,7 +75,7 @@ const allImages = [mainImage, ...galleryImages];
         <div class="col-lg-12">
           <div class="section-title section-title-center">
             <span class="product-category-badge wow fadeInUp">{product.data.category}</span>
-            <h2 class="text-anime-style-3" data-cursor="-opaque">{product.data.title}</h2>
+            <h1 class="text-anime-style-3" data-cursor="-opaque">{product.data.title}</h1>
             <p class="wow fadeInUp" data-wow-delay="0.2s" style="margin-top: 10px; color: rgba(255,255,255,0.8); font-size: 1em;">
               {product.data.description}
             </p>
@@ -177,7 +200,7 @@ const allImages = [mainImage, ...galleryImages];
 
         <div class="row">
           {relatedProducts.map((relatedProduct, index) => (
-            <div class="col-xl-4 col-md-6" key={relatedProduct.id}>
+            <div class="col-xl-4 col-md-6">
               <div class="related-product-card wow fadeInUp" data-wow-delay={`${index * 0.2}s`}>
                 <a href={`/products/${relatedProduct.id}`} class="related-product-link">
                   <div class="related-product-image">
@@ -250,19 +273,19 @@ const allImages = [mainImage, ...galleryImages];
 
     const slidesContainer = document.getElementById('gallerySlidesContainer');
     const slides = document.querySelectorAll('.gallery-main-slide');
-    const thumbSlides = document.querySelectorAll('.thumb-slide');
+    const thumbSlides = document.querySelectorAll<HTMLElement>('.thumb-slide');
     const thumbInner = document.getElementById('thumbSliderInner');
     const counter = document.getElementById('galleryCounter');
     const prevBtn = document.getElementById('galleryPrev');
     const nextBtn = document.getElementById('galleryNext');
     const total = slides.length;
     let current = 0;
-    let autoPlayInterval;
+    let autoPlayInterval: any;
 
     if (!slidesContainer || total === 0) return;
 
     // Block right-click & drag on gallery
-    function blockDownload(e) {
+    function blockDownload(e: Event) {
       e.preventDefault();
       return false;
     }
@@ -273,7 +296,7 @@ const allImages = [mainImage, ...galleryImages];
       productGallery.addEventListener('dragstart', blockDownload);
     }
 
-    function goToSlide(index) {
+    function goToSlide(index: number) {
       if (index < 0) index = total - 1;
       if (index >= total) index = 0;
 
@@ -284,7 +307,8 @@ const allImages = [mainImage, ...galleryImages];
       if (thumbSlides[index]) thumbSlides[index].classList.add('active');
 
       if (counter) {
-        counter.querySelector('.slide-current').textContent = index + 1;
+        const curEl = counter.querySelector('.slide-current');
+        if (curEl) curEl.textContent = String(index + 1);
       }
 
       if (thumbInner && thumbSlides[index]) {
@@ -312,7 +336,7 @@ const allImages = [mainImage, ...galleryImages];
     thumbSlides.forEach(thumb => {
       thumb.addEventListener('click', (e) => {
         e.stopPropagation();
-        goToSlide(parseInt(thumb.dataset.index));
+        goToSlide(parseInt(thumb.dataset.index || '0', 10));
         resetAutoPlay();
       });
     });
@@ -370,26 +394,26 @@ const allImages = [mainImage, ...galleryImages];
     }
 
     // === LIGHTBOX ===
-    const allImages = productGallery ? JSON.parse(productGallery.dataset.images) : [];
+    const allImages = productGallery?.dataset.images ? JSON.parse(productGallery.dataset.images) : [];
     const lightboxOverlay = document.getElementById('lightboxOverlay');
     if (lightboxOverlay) {
       lightboxOverlay.addEventListener('contextmenu', blockDownload);
     }
     const lightboxBackdrop = document.getElementById('lightboxBackdrop');
     const lightboxContainer = document.getElementById('lightboxContainer');
-    const lightboxImage = document.getElementById('lightboxImage');
+    const lightboxImage = document.getElementById('lightboxImage') as HTMLImageElement | null;
     const lightboxClose = document.getElementById('lightboxClose');
     const lightboxPrevBtn = document.getElementById('lightboxPrev');
     const lightboxNextBtn = document.getElementById('lightboxNext');
     const lightboxCounter = document.getElementById('lightboxCounter');
-    const lightboxThumbs = document.querySelectorAll('.lightbox-thumb');
+    const lightboxThumbs = document.querySelectorAll<HTMLElement>('.lightbox-thumb');
     let lightboxCurrent = 0;
     let lightboxOpen = false;
 
-    function openLightbox(index) {
+    function openLightbox(index: number) {
       lightboxCurrent = index;
       updateLightboxImage();
-      lightboxOverlay.classList.add('active');
+      lightboxOverlay?.classList.add('active');
       document.body.style.overflow = 'hidden';
       if (!lightboxOpen) {
         history.pushState({ lightbox: true }, '');
@@ -398,16 +422,19 @@ const allImages = [mainImage, ...galleryImages];
     }
 
     function closeLightbox() {
-      lightboxOverlay.classList.remove('active');
+      lightboxOverlay?.classList.remove('active');
       document.body.style.overflow = '';
       lightboxOpen = false;
     }
 
     function updateLightboxImage() {
-      lightboxImage.src = allImages[lightboxCurrent];
-      lightboxImage.alt = `Image ${lightboxCurrent + 1}`;
+      if (lightboxImage) {
+        lightboxImage.src = allImages[lightboxCurrent];
+        lightboxImage.alt = `Image ${lightboxCurrent + 1}`;
+      }
       if (lightboxCounter) {
-        lightboxCounter.querySelector('.lightbox-current').textContent = lightboxCurrent + 1;
+        const curEl = lightboxCounter.querySelector('.lightbox-current');
+        if (curEl) curEl.textContent = String(lightboxCurrent + 1);
       }
       lightboxThumbs.forEach((t, i) => {
         t.classList.toggle('active', i === lightboxCurrent);
@@ -435,7 +462,7 @@ const allImages = [mainImage, ...galleryImages];
 
     lightboxThumbs.forEach(thumb => {
       thumb.addEventListener('click', () => {
-        lightboxCurrent = parseInt(thumb.dataset.index);
+        lightboxCurrent = parseInt(thumb.dataset.index || '0', 10);
         updateLightboxImage();
       });
     });
@@ -477,7 +504,7 @@ const allImages = [mainImage, ...galleryImages];
       document.removeEventListener('keydown', (window as any).__galleryLightboxKeydown);
     }
     (window as any).__galleryLightboxKeydown = (e: KeyboardEvent) => {
-      if (!lightboxOverlay.classList.contains('active')) return;
+      if (!lightboxOverlay?.classList.contains('active')) return;
       if (e.key === 'Escape') closeLightbox();
       if (e.key === 'ArrowLeft') lightboxPrev();
       if (e.key === 'ArrowRight') lightboxNext();
@@ -506,6 +533,14 @@ const allImages = [mainImage, ...galleryImages];
     margin-top: 0;
     display: flex;
     align-items: center;
+  }
+
+  .hero.hero-product h1,
+  .hero.hero-product h2 {
+    font-size: 48px;
+    font-weight: 600;
+    line-height: 1.2em;
+    margin-bottom: 0;
   }
 
   .hero.hero-product .container {
@@ -1190,6 +1225,7 @@ const allImages = [mainImage, ...galleryImages];
       margin-top: 16px;
     }
 
+    .hero.hero-product h1,
     .hero.hero-product h2 {
       font-size: 28px;
     }

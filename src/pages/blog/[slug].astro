@@ -26,9 +26,43 @@ const relatedPosts = allPosts.filter(p => p.id !== post.id).slice(0, 2);
 function formatDate(date: Date) {
   return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 }
+
+const postImage = post.data.image
+  ? typeof post.data.image === 'string'
+    ? post.data.image
+    : (post.data.image as any)?.src || '/images/hero.jpg'
+  : '/images/hero.jpg';
+
+const blogSchema = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": `https://iotaru.com/blog/${post.id}/#article`,
+  headline: post.data.title,
+  description: post.data.description,
+  image: new URL(postImage, Astro.site || "https://iotaru.com").toString(),
+  datePublished: post.data.pubDate ? new Date(post.data.pubDate).toISOString() : undefined,
+  author: {
+    "@type": "Organization",
+    name: "IOTARU",
+    url: "https://iotaru.com",
+  },
+  publisher: {
+    "@id": "https://iotaru.com/#organization",
+  },
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": `https://iotaru.com/blog/${post.id}/`,
+  },
+};
 ---
 
-<MainLayout title={post.data.title}>
+<MainLayout
+  title={post.data.title}
+  description={post.data.description}
+  image={postImage}
+  type="article"
+  schema={blogSchema}
+>
   <Navbar />
 
   <!-- Hero Section -->
@@ -44,7 +78,7 @@ function formatDate(date: Date) {
                 ))}
               </div>
             )}
-            <h2 class="text-anime-style-3" data-cursor="-opaque">{post.data.title}</h2>
+            <h1 class="text-anime-style-3" data-cursor="-opaque">{post.data.title}</h1>
             <p class="wow fadeInUp" data-wow-delay="0.2s" style="margin-top: 10px; color: rgba(255,255,255,0.8); font-size: 1em;">
               {post.data.description}
             </p>
@@ -112,6 +146,14 @@ function formatDate(date: Date) {
 </MainLayout>
 
 <style>
+  .hero.hero-product h1,
+  .hero.hero-product h2 {
+    font-size: 48px;
+    font-weight: 600;
+    line-height: 1.2em;
+    margin-bottom: 0;
+  }
+
   .blog-hero-tags {
     display: flex;
     flex-wrap: wrap;
@@ -300,6 +342,11 @@ function formatDate(date: Date) {
   }
 
   @media (max-width: 575px) {
+    .hero.hero-product h1,
+    .hero.hero-product h2 {
+      font-size: 28px;
+    }
+
     .blog-content {
       font-size: 16px;
       line-height: 1.75;

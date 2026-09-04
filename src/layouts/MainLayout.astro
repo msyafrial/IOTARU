@@ -7,7 +7,11 @@ const {
   title,
   description = "IoT-driven automation and monitoring solutions for industries",
   image,
+  noindex = false,
+  type = "website",
+  schema,
 } = Astro.props;
+
 const canonicalURL = new URL(
   Astro.url.pathname,
   Astro.site || "https://iotaru.com",
@@ -15,6 +19,59 @@ const canonicalURL = new URL(
 const socialImage = image
   ? new URL(image, Astro.site || "https://iotaru.com")
   : new URL("/images/iotaru-og.png", Astro.site || "https://iotaru.com");
+
+const isHome = !title || title.toLowerCase() === "home";
+const pageTitle = isHome
+  ? "IOTARU - Solusi IoT, Otomasi & Monitoring Industri"
+  : `IOTARU - ${title}`;
+
+// Structured Data (Schema.org JSON-LD)
+const baseSchemas = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": "https://iotaru.com/#organization",
+    name: "IOTARU Teknologi Nusantara",
+    url: "https://iotaru.com",
+    logo: "https://iotaru.com/images/logo.png",
+    description: "Penyedia solusi IoT, otomasi, dan monitoring industri terpercaya di Indonesia.",
+    email: "syafrial@iotaru.com",
+    telephone: "+6283819510439",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "Jalan Intisari Raya, RT.2/RW.9, Kalisari, Pasar Rebo",
+      addressLocality: "Jakarta Timur",
+      addressRegion: "DKI Jakarta",
+      postalCode: "13780",
+      addressCountry: "ID",
+    },
+    sameAs: [
+      "https://wa.me/6283819510439",
+    ],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": "https://iotaru.com/#website",
+    url: "https://iotaru.com",
+    name: "IOTARU",
+    publisher: {
+      "@id": "https://iotaru.com/#organization",
+    },
+    inLanguage: "id-ID",
+    potentialAction: {
+      "@type": "SearchAction",
+      target: "https://iotaru.com/products/?q={search_term_string}",
+      "query-input": "required name=search_term_string",
+    },
+  },
+];
+
+const customSchemas = schema
+  ? Array.isArray(schema)
+    ? schema
+    : [schema]
+  : [];
 ---
 
 <html lang="id">
@@ -29,22 +86,38 @@ const socialImage = image
       content="IoT, automation, monitoring, SCADA, sensor, industrial"
     />
     <meta name="author" content="IOTARU" />
+    <meta
+      name="robots"
+      content={noindex
+        ? "noindex, nofollow"
+        : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"}
+    />
     <link rel="canonical" href={canonicalURL} />
 
     <!-- Open Graph / Social -->
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={type} />
     <meta property="og:url" content={canonicalURL} />
-    <meta property="og:title" content={`IOTARU - ${title}`} />
+    <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={socialImage} />
     <meta property="og:site_name" content="IOTARU" />
+    <meta property="og:locale" content="id_ID" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={`IOTARU - ${title}`} />
+    <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={socialImage} />
 
-    <title>IOTARU - {title}</title>
-    <link rel="shortcut icon" type="image/x-icon" href="/favicon.svg" />
+    <title>{pageTitle}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate icon" href="/favicon.ico" />
+
+    <!-- Structured Data (JSON-LD) -->
+    {baseSchemas.map((s) => (
+      <script type="application/ld+json" set:html={JSON.stringify(s)} />
+    ))}
+    {customSchemas.map((s) => (
+      <script type="application/ld+json" set:html={JSON.stringify(s)} />
+    ))}
 
     <!-- Preload critical above-the-fold images -->
     <link

@@ -9,7 +9,9 @@ export default defineConfig({
   adapter: node({ mode: 'standalone' }),
   integrations: [
     mdx(),
-    sitemap(),
+    sitemap({
+      filter: (page) => !page.includes('/error') && !page.includes('/404'),
+    }),
   ],
   // Prefetch saat hover: halaman tujuan di-download di background sehingga
   // navigasi View Transitions terasa instan.

@@ -70,7 +70,7 @@ jobs:
       # Emulasi ARM64: wajib agar buildx bisa menjalankan `RUN npm ci`
       # di dalam base image arm64 (node:24-alpine arm64) pada runner amd64.
       - name: Setup QEMU (emulasi arm64)
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v4
         with:
           platforms: arm64
 
@@ -100,6 +100,6 @@ jobs:
       # hanya dibuat saat push tag v*
       - name: Create GitHub Release
         if: startsWith(github.ref, 'refs/tags/')
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           generate_release_notes: true

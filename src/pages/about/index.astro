@@ -55,11 +55,26 @@ const milestones = [
   { number: '24/7', label: 'Monitoring Sistem' },
   { number: '100%', label: 'Security-First' },
 ];
+const aboutSchema = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "@id": "https://iotaru.com/about/#webpage",
+  url: "https://iotaru.com/about",
+  name: "About IOTARU Teknologi Nusantara",
+  description: "IOTARU Teknologi Nusantara — penyedia solusi IoT terpercaya untuk keamanan, monitoring, dan otomasi industri yang aman, skalabel, dan cerdas.",
+  isPartOf: {
+    "@id": "https://iotaru.com/#website",
+  },
+  about: {
+    "@id": "https://iotaru.com/#organization",
+  },
+};
 ---
 
 <MainLayout
   title="About Us"
   description="IOTARU Teknologi Nusantara — penyedia solusi IoT terpercaya untuk keamanan, monitoring, dan otomasi industri yang aman, skalabel, dan cerdas."
+  schema={aboutSchema}
 >
   <Navbar />
 
@@ -70,9 +85,9 @@ const milestones = [
         <div class="col-lg-12">
           <div class="section-title section-title-center">
             <h3 class="wow fadeInUp">Who We Are</h3>
-            <h2 class="text-anime-style-3" data-cursor="-opaque">
+            <h1 class="text-anime-style-3" data-cursor="-opaque">
               About IOTARU Teknologi Nusantara
-            </h2>
+            </h1>
             <p class="about-hero-sub wow fadeInUp" data-wow-delay="0.2s">
               Membangun solusi IoT yang aman, skalabel, dan cerdas untuk keamanan,
               monitoring, dan otomasi industri di era digital.
@@ -480,6 +495,14 @@ const milestones = [
     margin-top: 20px;
   }
 
+  .about-hero .section-title h1,
+  .about-hero .section-title h2 {
+    font-size: 48px;
+    font-weight: 600;
+    line-height: 1.2em;
+    margin-bottom: 0;
+  }
+
   /* Sub-teks hero: tidak boleh lebih besar dari judul (hierarki).
      Inline 1.1em dulu membuat sub > h2 di mobile — diganti 1.05em
      dan dioverride 1em di mobile. */
@@ -531,6 +554,7 @@ const milestones = [
 
     /* Global mobile menyetel .section-title h2 jadi 22px —
        terlalu kecil untuk judul halaman. Override jadi 30px. */
+    .about-hero .section-title h1,
     .about-hero .section-title h2 {
       font-size: 30px;
       line-height: 1.25;
@@ -566,6 +590,7 @@ const milestones = [
   }
 
   @media (max-width: 480px) {
+    .about-hero .section-title h1,
     .about-hero .section-title h2 {
       font-size: 26px;
     }

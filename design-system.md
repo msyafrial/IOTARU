@@ -555,4 +555,19 @@ Selalu reset kondisi CDP (`cacheDisabled: false`, throughput `-1`) setelah tes.
 
 ---
 
+## 15. Standar Teknis SEO & Metadata (Sept 2026)
+
+| Pilar SEO | Standar Implementasi | Lokasi |
+|-----------|----------------------|--------|
+| **Robots & Sitemap** | `public/robots.txt` mengizinkan root `/`, blokir `/error/` & `/404`, serta menautkan `https://iotaru.com/sitemap-index.xml`. | `public/robots.txt`, `@astrojs/sitemap` |
+| **Robots Meta Tag** | Menggunakan `index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1`. Halaman error & 404 wajib `noindex={true}` (`noindex, nofollow`). | `src/layouts/MainLayout.astro` |
+| **Canonical URL** | Selalu self-referencing canonical URL otomatis berbasis `Astro.url.pathname` dan `Astro.site`. | `src/layouts/MainLayout.astro` |
+| **Open Graph & Twitter** | Lengkap dengan `og:type`, `og:title`, `og:description`, `og:image`, `og:site_name`, `og:locale="id_ID"`, `twitter:card="summary_large_image"`. | `src/layouts/MainLayout.astro` |
+| **Structured Data (JSON-LD)** | Global: `Organization` & `WebSite` (SearchAction). Halaman khusus: `Product` pada detail produk, `BlogPosting` pada blog, `AboutPage` & `ContactPage`. | `MainLayout.astro`, `pages/**/*.astro` |
+| **Heading Hierarchy (`<h1>`)** | Setiap halaman wajib memiliki tepat **satu tag `<h1>`** pada judul hero utamanya. Agar tampilan visual tidak berubah, selector CSS scoped hero selalu mengunci ukuran font (`.hero... h1, .hero... h2`). | `src/pages/**/*.astro` |
+| **Unique Meta Description** | Halaman dinamis (`products/[slug]`, `blog/[slug]`, `solutions/[slug]`) wajib mengoper deskripsi spesifik ke `MainLayout` (dilarang fallback ke teks generic yang sama). | `src/pages/**/*.astro` |
+| **Accessibility Image Alt** | Semua tag gambar wajib memiliki `alt` yang relevan dan deskriptif (mis. `alt="IOTARU Logo"`). Ikon dekoratif memakai `aria-hidden="true"`. | `src/components/*.astro` |
+
+---
+
 *Dibuat otomatis dari audit kode — Juli 2026. Perbarui dokumen ini saat token/arsitektur berubah.*

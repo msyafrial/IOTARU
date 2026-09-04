@@ -24,16 +24,35 @@ const stackLogos = [
   { src: ebyteImg, alt: 'Ebyte' },
   { src: simcomImg, alt: 'SIMCom' },
 ];
+
+const contactSchema = {
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "@id": "https://iotaru.com/contact/#webpage",
+  url: "https://iotaru.com/contact",
+  name: "Contact IOTARU Teknologi Nusantara",
+  description: "Hubungi tim IOTARU untuk konsultasi kebutuhan IoT, demo produk, monitoring sistem, dan solusi otomasi industri Anda.",
+  isPartOf: {
+    "@id": "https://iotaru.com/#website",
+  },
+  mainEntity: {
+    "@id": "https://iotaru.com/#organization",
+  },
+};
 ---
 
-<MainLayout title="Contact Us">
+<MainLayout
+  title="Contact Us"
+  description="Hubungi tim IOTARU untuk konsultasi kebutuhan IoT, demo produk, monitoring sistem, dan solusi otomasi industri Anda."
+  schema={contactSchema}
+>
   <Navbar />
 
   <section class="hero bg-section dark-section contact-hero">
     <div class="container">
       <div class="contact-hero-grid">
         <div class="contact-hero-copy">
-          <h2 class="text-anime-style-3" data-cursor="-opaque">Lihat sistem IOTARU bekerja — langsung di lingkungan Anda</h2>
+          <h1 class="text-anime-style-3" data-cursor="-opaque">Lihat sistem IOTARU bekerja — langsung di lingkungan Anda</h1>
           <p class="contact-hero-sub wow fadeInUp" data-wow-delay="0.2s">Dalam 30 menit demo, tim kami menunjukkan monitoring real-time, integrasi sensor, dan dashboard siap pakai untuk industri Anda.</p>
           <div class="contact-hero-brands wow fadeInUp" data-wow-delay="0.3s">
             <p class="brands-label">Teknologi yang kami andalkan</p>
@@ -222,6 +241,7 @@ const stackLogos = [
 
 /* ---------- COPY ---------- */
 /* Teks diberi shadow halus agar terbaca tanpa overlay gelap */
+.hero.contact-hero h1,
 .hero.contact-hero h2 {
   color: var(--white-color);
   font-size: 44px;
@@ -1038,6 +1058,7 @@ a.info-item:focus-visible {
     grid-template-columns: 1fr;
     row-gap: 40px;
   }
+  .hero.contact-hero h1,
   .hero.contact-hero h2 { font-size: 38px; }
   .form-card { padding: 32px 28px; }
   .map-frame { height: 320px; }
@@ -1045,6 +1066,7 @@ a.info-item:focus-visible {
 
 @media (max-width: 768px) {
   .hero.contact-hero { padding: 96px 0 56px; }
+  .hero.contact-hero h1,
   .hero.contact-hero h2 { font-size: 30px; }
   .contact-hero .contact-hero-sub {
     font-size: 1em;
