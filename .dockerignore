@@ -2,5 +2,12 @@ node_modules
 .git
 .github
 testsprite_tests
+testsprite*
+.testsprite
+.playwright-mcp
+playwright-report
+test-results
 tmp
+temp
 .env*
+

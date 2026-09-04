@@ -125,34 +125,34 @@ const contactSchema = {
                   <label for="subject">Saya tertarik pada</label>
                   <div class="custom-select" id="interestSelect">
                     <button type="button" class="custom-select-btn" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="interestLabel">
-                      <span class="custom-select-icon" aria-hidden="true"><i class="fa-solid fa-bullseye"></i></span>
+                      <span class="custom-select-icon" aria-hidden="true"><i class="fa-solid fa-display"></i></span>
                       <span class="custom-select-value">Demo Produk</span>
                       <svg class="custom-select-caret" width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden="true">
                         <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                       </svg>
                     </button>
                     <ul class="custom-select-list" role="listbox" aria-labelledby="interestLabel" hidden>
-                      <li role="option" aria-selected="true" data-value="Demo Produk" class="is-selected">
+                      <li role="option" aria-selected="true" data-value="Demo Produk" data-icon="fa-solid fa-display" class="is-selected" tabindex="-1">
                         <i class="fa-solid fa-display" aria-hidden="true"></i>
                         <span class="opt-copy"><strong>Demo Produk</strong><small>Lihat langsung perangkat &amp; dashboard</small></span>
                         <i class="fa-solid fa-check opt-check" aria-hidden="true"></i>
                       </li>
-                      <li role="option" data-value="Solusi Industri">
+                      <li role="option" data-value="Solusi Industri" data-icon="fa-solid fa-industry" tabindex="-1">
                         <i class="fa-solid fa-industry" aria-hidden="true"></i>
                         <span class="opt-copy"><strong>Solusi Industri</strong><small>Smart city, home &amp; office</small></span>
                         <i class="fa-solid fa-check opt-check" aria-hidden="true"></i>
                       </li>
-                      <li role="option" data-value="Kemitraan">
+                      <li role="option" data-value="Kemitraan" data-icon="fa-solid fa-handshake" tabindex="-1">
                         <i class="fa-solid fa-handshake" aria-hidden="true"></i>
                         <span class="opt-copy"><strong>Kemitraan</strong><small>Reseller, distributor, integrator</small></span>
                         <i class="fa-solid fa-check opt-check" aria-hidden="true"></i>
                       </li>
-                      <li role="option" data-value="Dukungan Teknis">
+                      <li role="option" data-value="Dukungan Teknis" data-icon="fa-solid fa-headset" tabindex="-1">
                         <i class="fa-solid fa-headset" aria-hidden="true"></i>
                         <span class="opt-copy"><strong>Dukungan Teknis</strong><small>Bantuan produk &amp; instalasi</small></span>
                         <i class="fa-solid fa-check opt-check" aria-hidden="true"></i>
                       </li>
-                      <li role="option" data-value="Lainnya">
+                      <li role="option" data-value="Lainnya" data-icon="fa-solid fa-comments" tabindex="-1">
                         <i class="fa-solid fa-comments" aria-hidden="true"></i>
                         <span class="opt-copy"><strong>Lainnya</strong><small>Diskusi kebutuhan spesifik</small></span>
                         <i class="fa-solid fa-check opt-check" aria-hidden="true"></i>
@@ -673,6 +673,11 @@ select.form-control option {
 /* ---------- CUSTOM DROPDOWN "Saya tertarik pada" ---------- */
 .custom-select {
   position: relative;
+  z-index: 20;
+}
+
+.custom-select.open {
+  z-index: 40;
 }
 
 .custom-select-btn {
@@ -716,6 +721,16 @@ select.form-control option {
   border: 1px solid rgba(255, 152, 0, 0.3);
   color: var(--accent-color);
   font-size: 14px;
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.custom-select-icon i {
+  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.18s ease;
+}
+
+.custom-select-icon.is-updating i {
+  transform: scale(0.65);
+  opacity: 0.5;
 }
 
 .custom-select-value {
@@ -733,20 +748,29 @@ select.form-control option {
   color: var(--accent-color);
 }
 
-/* Panel dropdown: glass portal — dipindah ke <body> via JS agar
-   backdrop-filter bekerja (pola yang sama dengan .glass-dropdown navbar). */
+/* Panel dropdown: formula identik dengan .glass-dropdown navbar */
 .custom-select-list {
-  position: fixed;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  width: 100%;
   min-width: 280px;
   margin: 0;
   padding: 8px;
   list-style: none;
-  background: rgba(3, 23, 29, 0.85);
+  background: rgba(3, 23, 29, 0.6);
   backdrop-filter: blur(30px) saturate(160%);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 16px;
-  box-shadow: 0 12px 40px rgba(3, 23, 29, 0.45);
-  z-index: 1300;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  box-shadow: 0 12px 40px rgba(3, 23, 29, 0.28);
+  z-index: 50;
+  animation: csDropIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes csDropIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .custom-select-list li {
@@ -754,29 +778,44 @@ select.form-control option {
   align-items: center;
   gap: 12px;
   padding: 10px 12px;
-  border-radius: 10px;
-  color: rgba(255,255,255,0.85);
+  border-radius: 14px;
+  color: rgba(255, 255, 255, 0.85);
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.2s ease;
 }
 
+/* Hover & focus seragam dengan navbar (.glass-dropdown-item:hover) */
 .custom-select-list li:hover,
+.custom-select-list li:focus,
 .custom-select-list li:focus-visible {
-  background: rgba(255, 152, 0, 0.14);
+  background: rgba(255, 255, 255, 0.1);
   outline: none;
 }
 
+/* Icon box seragam dengan .glass-dropdown-icon navbar */
 .custom-select-list li > i:first-child {
-  width: 32px;
-  height: 32px;
-  min-width: 32px;
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
-  background: rgba(255,255,255,0.07);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   color: var(--accent-color);
-  font-size: 13px;
+  font-size: 14px;
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+/* Hover & focus icon box berubah jadi aksen oranye seperti di navbar */
+.custom-select-list li:hover > i:first-child,
+.custom-select-list li:focus > i:first-child,
+.custom-select-list li:focus-visible > i:first-child,
+.custom-select-list li.is-selected > i:first-child {
+  background: var(--accent-color);
+  border-color: var(--accent-color);
+  color: var(--primary-color);
 }
 
 .opt-copy {
@@ -784,16 +823,17 @@ select.form-control option {
   display: flex;
   flex-direction: column;
   line-height: 1.35;
+  min-width: 0;
 }
 
 .opt-copy strong {
-  color: var(--white-color);
+  color: #fff;
   font-size: 14px;
   font-weight: 600;
 }
 
 .opt-copy small {
-  color: rgba(255,255,255,0.55);
+  color: rgba(255, 255, 255, 0.6);
   font-size: 12px;
 }
 
@@ -808,7 +848,7 @@ li.is-selected .opt-check {
 }
 
 li.is-selected {
-  background: rgba(255, 152, 0, 0.1);
+  background: rgba(255, 152, 0, 0.12);
 }
 
 textarea.form-control {
@@ -1103,13 +1143,6 @@ a.info-item:focus-visible {
   .map-frame { height: 260px; }
   .contact-map-card { padding: 20px; border-radius: 16px; }
   .map-directions { width: 100%; justify-content: center; }
-  /* Dropdown custom mobile: panel full-width melekat */
-  .custom-select-list {
-    left: 12px !important;
-    right: 12px !important;
-    min-width: 0;
-    width: auto;
-  }
 }
 
 @media (max-width: 480px) {
@@ -1129,10 +1162,8 @@ a.info-item:focus-visible {
     });
   }
 
-  // Custom dropdown "Saya tertarik pada" — panel di-portal ke <body> agar
-  // backdrop-filter (glass) bekerja, pola sama dengan dropdown navbar.
-  // v2: reposition saat scroll/resize + clamp ke viewport (tidak keluar layar,
-  // tidak ikut bergeser saat halaman di-scroll).
+  // Custom dropdown "Saya tertarik pada" — panel absolute di dalam .custom-select
+  // (nempel 100% mulus saat scroll, tanpa JS reposition & tanpa getar/jitter).
   if (!(window as any).__contactSelectInit) {
     (window as any).__contactSelectInit = true;
 
@@ -1142,143 +1173,123 @@ a.info-item:focus-visible {
       (wrap as any).__selectReady = true;
 
       const btn = wrap.querySelector<HTMLButtonElement>('.custom-select-btn');
+      const iconWrap = wrap.querySelector<HTMLElement>('.custom-select-icon');
       const valueEl = wrap.querySelector<HTMLElement>('.custom-select-value');
       const hidden = wrap.querySelector<HTMLInputElement>('input[name="subject"]');
       const list = wrap.querySelector<HTMLUListElement>('.custom-select-list');
       if (!btn || !valueEl || !hidden || !list) return;
 
-      let portal: HTMLUListElement | null = null;
       let isOpen = false;
 
       const close = () => {
         isOpen = false;
         wrap.classList.remove('open');
         btn.setAttribute('aria-expanded', 'false');
-        if (portal) portal.hidden = true;
-        window.removeEventListener('scroll', position, true);
-        window.removeEventListener('resize', position);
+        list.hidden = true;
+        document.removeEventListener('click', onDocClick);
         document.removeEventListener('keydown', onKey);
       };
 
-      const onDocClick = (e: Event) => {
-        const t = e.target as Node;
-        if (!portal?.contains(t) && !btn.contains(t)) close();
-      };
-
-      const onKey = (e: KeyboardEvent) => {
-        if (e.key === 'Escape') { close(); btn.focus(); }
-      };
-
-      // Hitung posisi panel: anchor ke tombol + clamp dalam viewport +
-      // flip ke atas bila ruang bawah kurang. Bila tombol keluar viewport,
-      // dropdown ikut tertutup (konvensi UI — panel tidak "melayang" sendiri).
-      function position() {
-        if (!portal || !isOpen || !btn) return;
-        const r = btn.getBoundingClientRect();
-
-        // Tombol keluar viewport (atas/bawah) → tutup dropdown
-        if (r.bottom < 0 || r.top > window.innerHeight) {
-          close();
-          return;
-        }
-
-        const isMobile = window.innerWidth <= 768;
-        const pw = portal.offsetWidth;
-        const ph = portal.offsetHeight;
-        const margin = 12;
-
-        let top: number;
-        const spaceBelow = window.innerHeight - r.bottom;
-        if (spaceBelow < ph + margin && r.top > ph + margin) {
-          // Flip ke atas (letakkan panel di atas tombol)
-          top = r.top - ph - 8;
-        } else {
-          top = r.bottom + 8;
-        }
-
-        if (isMobile) {
-          portal.style.left = `${margin}px`;
-          portal.style.right = `${margin}px`;
-          portal.style.minWidth = '0';
-        } else {
-          let left = r.left;
-          // Clamp horizontal agar tidak keluar viewport
-          if (left + pw > window.innerWidth - margin) {
-            left = window.innerWidth - margin - pw;
-          }
-          if (left < margin) left = margin;
-          portal.style.left = `${left}px`;
-          portal.style.right = 'auto';
-          portal.style.minWidth = `${Math.max(r.width, 300)}px`;
-        }
-
-        // Clamp vertikal (safety)
-        if (top + ph > window.innerHeight - margin) {
-          top = window.innerHeight - margin - ph;
-        }
-        if (top < margin) top = margin;
-
-        portal.style.top = `${top}px`;
-      }
-
       const open = () => {
-        if (!portal) {
-          // Portal: pindahkan list ke body (clone) sekali saja
-          portal = list.cloneNode(true) as HTMLUListElement;
-          document.body.appendChild(portal);
-          portal.hidden = false;
-          portal.style.opacity = '0';
-          portal.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
-          portal.style.transform = 'translateY(-4px)';
-
-          portal.addEventListener('click', (e) => {
-            const li = (e.target as HTMLElement).closest('li');
-            if (!li || !portal) return;
-            // Pilih opsi
-            valueEl.textContent = li.dataset.value || '';
-            hidden.value = li.dataset.value || '';
-            portal.querySelectorAll('li').forEach((el) => {
-              const sel = el === li;
-              el.classList.toggle('is-selected', sel);
-              el.setAttribute('aria-selected', String(sel));
-            });
-            // Sinkronkan juga di list asli (untuk aksesibilitas)
-            list.querySelectorAll('li').forEach((el) => {
-              const sel = el.dataset.value === li.dataset.value;
-              el.classList.toggle('is-selected', sel);
-              el.setAttribute('aria-selected', String(sel));
-            });
-            close();
-            btn.focus();
-          });
-        }
-
         isOpen = true;
-        position();
         wrap.classList.add('open');
         btn.setAttribute('aria-expanded', 'true');
-        if (portal) {
-          portal.hidden = false;
-          requestAnimationFrame(() => {
-            if (portal) { portal.style.opacity = '1'; portal.style.transform = 'translateY(0)'; }
-          });
-        }
-        // Reposisi saat scroll (capture agar menangkap scroll container apapun)
-        // & resize — panel selalu menempel pada tombol.
-        window.addEventListener('scroll', position, true);
-        window.addEventListener('resize', position);
+        list.hidden = false;
         document.addEventListener('click', onDocClick);
         document.addEventListener('keydown', onKey);
       };
 
+      const onDocClick = (e: Event) => {
+        const t = e.target as Node;
+        if (!wrap.contains(t)) close();
+      };
+
+      const selectOption = (li: HTMLElement) => {
+        const val = li.dataset.value || '';
+        const iconClass =
+          li.dataset.icon ||
+          li.querySelector<HTMLElement>(':scope > i:first-child')?.className ||
+          '';
+
+        valueEl.textContent = val;
+        hidden.value = val;
+
+        // Update icon pada tombol select sesuai opsi yang dipilih
+        if (iconWrap && iconClass) {
+          iconWrap.classList.add('is-updating');
+          const btnIcon = iconWrap.querySelector<HTMLElement>('i');
+          if (btnIcon) {
+            btnIcon.className = iconClass;
+          } else {
+            iconWrap.innerHTML = `<i class="${iconClass}"></i>`;
+          }
+          setTimeout(() => {
+            iconWrap.classList.remove('is-updating');
+          }, 150);
+        }
+
+        list.querySelectorAll('li').forEach((el) => {
+          const sel = el === li;
+          el.classList.toggle('is-selected', sel);
+          el.setAttribute('aria-selected', String(sel));
+        });
+        close();
+        btn.focus();
+      };
+
+      const onKey = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') {
+          close();
+          btn.focus();
+          return;
+        }
+        if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+          e.preventDefault();
+          const items = Array.from(list.querySelectorAll<HTMLElement>('li'));
+          if (!items.length) return;
+          const currentIndex = items.findIndex((el) => el === document.activeElement || el.classList.contains('is-selected'));
+          let nextIndex = 0;
+          if (e.key === 'ArrowDown') {
+            nextIndex = currentIndex < items.length - 1 ? currentIndex + 1 : 0;
+          } else {
+            nextIndex = currentIndex > 0 ? currentIndex - 1 : items.length - 1;
+          }
+          items[nextIndex]?.focus();
+        }
+        if (e.key === 'Enter' || e.key === ' ') {
+          const active = document.activeElement as HTMLElement | null;
+          if (active && list.contains(active)) {
+            const li = active.closest<HTMLElement>('li');
+            if (li) {
+              e.preventDefault();
+              selectOption(li);
+            }
+          }
+        }
+      };
+
       btn.addEventListener('click', (e) => {
         e.stopPropagation();
-        if (isOpen) close(); else open();
+        if (isOpen) close();
+        else open();
       });
 
-      // Bersihkan portal saat pindah halaman (View Transitions)
+      btn.addEventListener('keydown', (e) => {
+        if ((e.key === 'ArrowDown' || e.key === 'ArrowUp') && !isOpen) {
+          e.preventDefault();
+          open();
+          const selected = list.querySelector<HTMLElement>('li.is-selected') || list.querySelector<HTMLElement>('li');
+          selected?.focus();
+        }
+      });
+
+      list.addEventListener('click', (e) => {
+        const li = (e.target as HTMLElement).closest('li');
+        if (!li) return;
+        selectOption(li);
+      });
+
       wrap.addEventListener('astro:after-swap', () => {
-        if (portal) { portal.remove(); portal = null; }
         (wrap as any).__selectReady = false;
       });
     }
@@ -1452,9 +1463,19 @@ a.info-item:focus-visible {
           );
         window.open(mailtoLink, '_blank');
         form.reset();
-        // form.reset() tidak menyentuh teks label custom-select — kembalikan manual
+        // form.reset() tidak menyentuh teks label, icon & hidden value custom-select — kembalikan manual
         const selLabel = form.querySelector<HTMLElement>('.custom-select-value');
         if (selLabel) selLabel.textContent = 'Demo Produk';
+        const selIcon = form.querySelector<HTMLElement>('.custom-select-icon i');
+        if (selIcon) selIcon.className = 'fa-solid fa-display';
+        const hiddenSubject = form.querySelector<HTMLInputElement>('input[name="subject"]');
+        if (hiddenSubject) hiddenSubject.value = 'Demo Produk';
+        const listItems = form.querySelectorAll<HTMLLIElement>('.custom-select-list li');
+        listItems.forEach((li, idx) => {
+          const isFirst = idx === 0;
+          li.classList.toggle('is-selected', isFirst);
+          li.setAttribute('aria-selected', String(isFirst));
+        });
         showAlert('success', 'Membuka aplikasi email…', 'Tim kami akan menghubungi Anda dalam 1×24 jam kerja.');
       }, true); // capture: jalan sebelum handler jQuery lama
     }

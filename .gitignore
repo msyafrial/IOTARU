@@ -1,6 +1,7 @@
 # build output
 dist/
-# generated types
+
+# generated types & cache
 .astro/
 
 # dependencies
@@ -11,20 +12,41 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
-
+*.log
 
 # environment variables
 .env
-.env.production
+.env.*
+!.env.example
 
-# macOS-specific files
+# macOS & Windows system files
 .DS_Store
+Thumbs.db
+ehthumbs.db
+[Dd]esktop.ini
 
-# jetbrains setting folder
+# IDE & editors
 .idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
 
+# Temporary & scratch folders
 temp/
+tmp/
+*.tmp
 
+# Testing & automation tools (Playwright, TestSprite, etc.)
+.playwright-mcp/
+playwright-report/
+test-results/
+.testsprite/
+testsprite_tests/
+testsprite*/
 
+# Python cache (TestSprite / local scripts)
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
 
-testsprite_tests\tmp\config.json
