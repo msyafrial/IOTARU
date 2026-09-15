@@ -1,9 +1,9 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig, passthroughImageService } from 'astro/config';
 import mdx from '@astrojs/mdx';
+import sitemap from '@astrojs/sitemap';
 import cloudflare from '@astrojs/cloudflare';
 import node from '@astrojs/node';
-import sitemap from '@astrojs/sitemap';
 
 // Dual-target: Cloudflare Workers / Pages vs Node.js Standalone (Docker / VPS).
 // Otomatis aktif saat DEPLOY_TARGET='cloudflare' atau saat berjalan di Cloudflare build (CF_PAGES).
@@ -13,7 +13,14 @@ const isCloudflare =
 
 // https://astro.build/config
 export default defineConfig({
-  adapter: isCloudflare ? cloudflare() : node({ mode: 'standalone' }),
+  adapter: isCloudflare
+    ? cloudflare({
+        imageService: 'passthrough',
+      })
+    : node({ mode: 'standalone' }),
+  image: {
+    service: passthroughImageService(),
+  },
   integrations: [
     mdx(),
     sitemap({

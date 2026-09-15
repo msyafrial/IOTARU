@@ -387,6 +387,8 @@ Aturan:
 - Gambar konten utama hero: preload + `fetchpriority="high"`.
 - Gambar di bawah lipatan: `loading="lazy"`.
 - Format preferensi: **WebP** untuk foto besar.
+- **Logo stack / ikon vektor**: Gunakan impor statis langsung (`<img src={item.img.src} width={...} height={...} />`) alih-alih `<Image />` runtime tanpa parameter format. Ini memastikan aset dilayani langsung oleh Cloudflare Static Assets / CDN Edge Cache dengan HTTP 200 tanpa memicu runtime endpoint `/_image` yang dapat menghasilkan HTTP 400 (`Unsupported format: null`).
+- **Ikon SVG**: Selalu gunakan `<img>` atau inline SVG langsung, hindari pemrosesan melalui image service raster.
 
 ---
 

@@ -58,7 +58,16 @@ const contactSchema = {
             <p class="brands-label">Teknologi yang kami andalkan</p>
             <div class="brands-row">
               {stackLogos.map((logo) => (
-                <span class="brand-chip"><Image src={logo.src} alt={logo.alt} width={96} /></span>
+                <span class="brand-chip">
+                  <img
+                    src={logo.src.src}
+                    alt={logo.alt}
+                    width={logo.src.width}
+                    height={logo.src.height}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </span>
               ))}
             </div>
           </div>

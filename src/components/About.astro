@@ -65,6 +65,7 @@ const features = [
                   src={phone}
                   alt="Smart Security Solution"
                   width={320}
+                  format="webp"
                   loading="lazy"
                 />
               </figure>
@@ -112,11 +113,12 @@ const features = [
             {features.map((feature) => (
               <div class="about-us-item">
                 <div class="icon-box">
-                  <Image
-                    src={feature.icon}
+                  <img
+                    src={feature.icon.src}
                     alt={feature.title}
-                    width={48}
-                    height={48}
+                    width="48"
+                    height="48"
+                    loading="lazy"
                   />
                 </div>
 
@@ -158,11 +160,12 @@ const features = [
 
             <div class="about-excellence-box">
               <div class="icon-box">
-                <Image
-                  src={iconQuality}
+                <img
+                  src={iconQuality.src}
                   alt="Quality-Driven Engineering Approach"
-                  width={56}
-                  height={56}
+                  width="56"
+                  height="56"
+                  loading="lazy"
                 />
               </div>
 
